@@ -31,28 +31,6 @@ long double zero(void) {return 0.0;}
 
 long double one(void) {return 1.0;}
 
-tensor_3D *matrix_dot_product(tensor_3D *tensor1, int z1, tensor_3D *tensor2, int z2) {
-  tensor_3D *tensor3 = make_tensor_3D(zero, tensor1->x, tensor2->y, 1);
-  for (int y = 0; y < tensor1->x; y++) {
-    for (int x = 0; x < tensor2->y; x++) {
-      for (int k = 0; k < tensor1->y; k++) {
-        tensor3->tensor[0][y][x] += tensor1->tensor[z1][y][k] * tensor2->tensor[z2][k][x];
-      }
-    }
-  }
-  return tensor3;
-}
-
-tensor_3D *matrix_map(long double (*f)(long double), int z, tensor_3D *tensor1) {
-  tensor_3D *tensor2 = make_tensor_3D(zero, tensor1->x, tensor1->y, 1);
-  for (int y = 0; y < tensor1->y; y++) {
-    for (int x = 0; x < tensor1->x; x++) {
-      tensor2->tensor[0][y][x] = f(tensor1->tensor[z][y][x]);
-    }
-  }
-  return tensor2;
-}
-
 tensor_3D *make_tensor_3D(long double (*init)(void), int x, int y, int z) {
   tensor_3D *tensor = NULL;
   assert((tensor = calloc(1, sizeof(tensor_3D))));
@@ -84,6 +62,28 @@ tensor_3D *destroy_tensor_3D(tensor_3D *tensor) {
       return NULL;
 }
 
+tensor_3D *matrix_dot_product(tensor_3D *tensor1, int z1, tensor_3D *tensor2, int z2) {
+  tensor_3D *tensor3 = make_tensor_3D(zero, tensor1->x, tensor2->y, 1);
+  for (int y = 0; y < tensor1->x; y++) {
+    for (int x = 0; x < tensor2->y; x++) {
+      for (int k = 0; k < tensor1->y; k++) {
+        tensor3->tensor[0][y][x] += tensor1->tensor[z1][y][k] * tensor2->tensor[z2][k][x];
+      }
+    }
+  }
+  return tensor3;
+}
+
+tensor_3D *matrix_map(long double (*f)(long double), int z, tensor_3D *tensor1) {
+  tensor_3D *tensor2 = make_tensor_3D(zero, tensor1->x, tensor1->y, 1);
+  for (int y = 0; y < tensor1->y; y++) {
+    for (int x = 0; x < tensor1->x; x++) {
+      tensor2->tensor[0][y][x] = f(tensor1->tensor[z][y][x]);
+    }
+  }
+  return tensor2;
+}
+
 void copy_time_steps(int n, tensor_3D *tensor1, int z1, tensor_3D *tensor2, int z2) {
   for (int z = 0; z < n; z++) {
     for (int y = 0; y < tensor2->y; y++) {
@@ -112,6 +112,18 @@ tensor_3D *drop_time_step(tensor_3D *tensor1) {
   tensor_3D *tensor2 = make_tensor_3D(zero, tensor1->x, tensor1->y, tensor1->z - 1);
   copy_time_steps(tensor2->z, tensor1, 0, tensor2, 0);
   tensor1 = destroy_tensor_3D(tensor1);
+  return tensor2;
+}
+
+tensor_3D *sum_time_steps(tensor_3D *tensor1) {
+  tensor_3D *tensor2 = make_tensor_3D(zero, tensor1->x, tensor1->y, 1);
+  for (int z = 0; z < tensor1->z; z++) {
+    for (int y = 0; y < tensor1->y; y++) {
+      for (int x = 0; x < tensor1->x; x++) {
+        tensor2->tensor[0][y][x] += tensor1->tensor[z][y][x];
+      }
+    }
+  }
   return tensor2;
 }
 
