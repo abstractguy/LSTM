@@ -5,12 +5,12 @@ long double sigmoid(long double x) {
   return 1.0 / (1.0 + (long double)expl(-x));
 }
 
-void matrix_sigmoid(tensor_3D *tensor, int z) {
-  matrix_map(tensor, z, sigmoid);
+tensor_3D *matrix_sigmoid(tensor_3D *tensor, int z) {
+  return matrix_map(sigmoid, z, tensor);
 }
 
-void matrix_tanh(tensor_3D *tensor, int z) {
-  matrix_map(tensor, z, tanhl);
+tensor_3D *matrix_tanh(tensor_3D *tensor, int z) {
+  return matrix_map(tanhl, z, tensor);
 }
 
 long double sigmoid_derivative(long double x) {
@@ -31,31 +31,26 @@ long double zero(void) {return 0.0;}
 
 long double one(void) {return 1.0;}
 
-void matrix_dot_product(tensor_3D *tensor1, int z1, tensor_3D *tensor2, int z2, tensor_3D *tensor3, int z3) {
+tensor_3D *matrix_dot_product(tensor_3D *tensor1, int z1, tensor_3D *tensor2, int z2) {
+  tensor_3D *tensor3 = make_tensor_3D(zero, tensor1->x, tensor2->y, 1);
   for (int y = 0; y < tensor1->x; y++) {
     for (int x = 0; x < tensor2->y; x++) {
-      tensor3->tensor[z3][y][x] = 0.0;
       for (int k = 0; k < tensor1->y; k++) {
-        tensor3->tensor[z3][y][x] += tensor1->tensor[z1][y][k] * tensor2->tensor[z2][k][x];
+        tensor3->tensor[0][y][x] += tensor1->tensor[z1][y][k] * tensor2->tensor[z2][k][x];
       }
     }
   }
+  return tensor3;
 }
 
-void matrix_for_each(tensor_3D *tensor, int z, long double (*f)(void)) {
-  for (int y = 0; y < tensor->y; y++) {
-    for (int x = 0; x < tensor->x; x++) {
-      tensor->tensor[z][y][x] = (long double)f();
+tensor_3D *matrix_map(long double (*f)(long double), int z, tensor_3D *tensor1) {
+  tensor_3D *tensor2 = make_tensor_3D(zero, tensor1->x, tensor1->y, 1);
+  for (int y = 0; y < tensor1->y; y++) {
+    for (int x = 0; x < tensor1->x; x++) {
+      tensor2->tensor[0][y][x] = f(tensor1->tensor[z][y][x]);
     }
   }
-}
-
-void matrix_map(tensor_3D *tensor, int z, long double (*f)(long double)) {
-  for (int y = 0; y < tensor->y; y++) {
-    for (int x = 0; x < tensor->x; x++) {
-      tensor->tensor[z][y][x] = (long double)f(tensor->tensor[z][y][x]);
-    }
-  }
+  return tensor2;
 }
 
 tensor_3D *make_tensor_3D(long double (*init)(void), int x, int y, int z) {

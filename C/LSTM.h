@@ -48,13 +48,12 @@
   } LSTM_type;
 
   long double sigmoid(long double);
-  void matrix_sigmoid(tensor_3D *, int);
-  void matrix_tanh(tensor_3D *, int);
+  tensor_3D *matrix_sigmoid(tensor_3D *, int);
+  tensor_3D *matrix_tanh(tensor_3D *, int);
   long double sigmoid_derivative(long double), tanh_derivative(long double);
   long double random_long_double(void), zero(void), one(void);
-  void matrix_dot_product(tensor_3D *, int, tensor_3D *, int, tensor_3D *, int);
-  void matrix_for_each(tensor_3D *, int, long double (*)(void));
-  void matrix_map(tensor_3D *, int, long double (*)(long double));
+  tensor_3D *matrix_dot_product(tensor_3D *, int, tensor_3D *, int);
+  tensor_3D *matrix_map(long double (*)(long double), int, tensor_3D *);
   tensor_3D *make_tensor_3D(long double (*)(void), int, int, int);
   tensor_3D *destroy_tensor_3D(tensor_3D *);
   void copy_time_steps(int, tensor_3D *, int, tensor_3D *, int);
