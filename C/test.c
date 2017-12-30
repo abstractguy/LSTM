@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
       for (int y = 0; y < LSTM->LSTM[i]->y; y++) {
         printf("\n\t\t");
         for (int x = 0; x < LSTM->LSTM[i]->x; x++) {
-          printf("%5.4f ", LSTM->LSTM[i]->tensor[z][y][x]);
+          printf("%5.4Lf ", LSTM->LSTM[i]->tensor[z][y][x]);
         }
       }
     }
