@@ -1,5 +1,4 @@
 // printing.h
-
 #ifndef PRINTING_H
   #define PRINTING_H
   #include <stdio.h>

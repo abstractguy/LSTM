@@ -30,16 +30,11 @@
   #define CELL_UPDATES_END UPDATES_END
 
   typedef enum {
-    Xt_i, Yt_k, Bt_h, St_c, At_iota,
-    Bt_iota, At_phi, Bt_phi, At_c, Bt_c,
-    At_omega, Bt_omega, Wi_iota, Wi_phi,
-    Wi_c, Wi_omega, Wh_iota, Wh_phi,
-    Wh_c, Wh_omega, Wc_iota, Wc_phi,
-    Wc_omega, Dt_k, Dt_omega, Dt_s, Dt_c,
-    Dt_phi, Dt_iota, Ui_iota, Ui_phi,
-    Ui_c, Ui_omega, Uh_iota, Uh_phi,
-    Uh_c, Uh_omega, Uc_iota, Uc_phi,
-    Uc_omega
+    Xt_i, Yt_k, Bt_h, St_c, At_iota, Bt_iota, At_phi, Bt_phi, At_c, Bt_c,
+    At_omega, Bt_omega, Wi_iota, Wi_phi, Wi_c, Wi_omega, Wh_iota, Wh_phi,
+    Wh_c, Wh_omega, Wc_iota, Wc_phi, Wc_omega, Dt_k, Dt_omega, Dt_s, Dt_c,
+    Dt_phi, Dt_iota, Ui_iota, Ui_phi, Ui_c, Ui_omega, Uh_iota, Uh_phi,
+    Uh_c, Uh_omega, Uc_iota, Uc_phi, Uc_omega
   } index;
 
   typedef struct {
@@ -53,7 +48,8 @@
   } LSTM_type;
 
   long double sigmoid(long double);
-  void matrix_sigmoid(tensor_3D *, int), matrix_tanh(tensor_3D *, int);
+  void matrix_sigmoid(tensor_3D *, int);
+  void matrix_tanh(tensor_3D *, int);
   long double sigmoid_derivative(long double), tanh_derivative(long double);
   long double random_long_double(void), zero(void), one(void);
   void matrix_dot_product(tensor_3D *, int, tensor_3D *, int, tensor_3D *, int);
