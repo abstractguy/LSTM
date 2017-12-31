@@ -62,16 +62,15 @@ tensor_3D *destroy_tensor_3D(tensor_3D *tensor) {
       return NULL;
 }
 
-tensor_3D *matrix_dot_product(tensor_3D *tensor1, int z1, tensor_3D *tensor2, int z2) {
-  tensor_3D *tensor3 = make_tensor_3D(zero, tensor1->x, tensor2->y, 1);
+void matrix_dot_product(tensor_3D *tensor1, int z1, tensor_3D *tensor2, int z2, tensor_3D *tensor3, int z3) {
   for (int y = 0; y < tensor1->x; y++) {
     for (int x = 0; x < tensor2->y; x++) {
+      tensor3->tensor[z3][y][x] = 0.0;
       for (int k = 0; k < tensor1->y; k++) {
-        tensor3->tensor[0][y][x] += tensor1->tensor[z1][y][k] * tensor2->tensor[z2][k][x];
+        tensor3->tensor[z3][y][x] += tensor1->tensor[z1][y][k] * tensor2->tensor[z2][k][x];
       }
     }
   }
-  return tensor3;
 }
 
 tensor_3D *matrix_map(long double (*f)(long double), int z, tensor_3D *tensor1) {
@@ -124,6 +123,7 @@ tensor_3D *sum_time_steps(tensor_3D *tensor1) {
       }
     }
   }
+  tensor1 = destroy_tensor_3D(tensor1);
   return tensor2;
 }
 
