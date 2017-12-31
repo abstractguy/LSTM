@@ -114,17 +114,33 @@ tensor_3D *drop_time_step(tensor_3D *tensor1) {
   return tensor2;
 }
 
-tensor_3D *sum_time_steps(tensor_3D *tensor1) {
-  tensor_3D *tensor2 = make_tensor_3D(zero, tensor1->x, tensor1->y, 1);
+long double sum(long double x, long double y) {
+  return x + y;
+}
+
+long double product(long double x, long double y) {
+  return x * y;
+}
+
+tensor_3D *tensor_fold(long double (*f)(long double, long double), tensor_3D *tensor1, long double (*init)(void)) {
+  tensor_3D *tensor2 = make_tensor_3D(init, tensor1->x, tensor1->y, 1);
   for (int z = 0; z < tensor1->z; z++) {
     for (int y = 0; y < tensor1->y; y++) {
       for (int x = 0; x < tensor1->x; x++) {
-        tensor2->tensor[0][y][x] += tensor1->tensor[z][y][x];
+        tensor2->tensor[0][y][x] = f(tensor2->tensor[0][y][x], tensor1->tensor[z][y][x]);
       }
     }
   }
   tensor1 = destroy_tensor_3D(tensor1);
   return tensor2;
+}
+
+tensor_3D *sum_time_steps(tensor_3D *tensor) {
+  return tensor_fold(sum, tensor, zero);
+}
+
+tensor_3D *multiply_time_steps(tensor_3D *tensor) {
+  return tensor_fold(product, tensor, one);
 }
 
 LSTM_type *make_LSTM(int x, int y) {
