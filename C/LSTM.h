@@ -60,7 +60,6 @@
   tensor_3D *tensor_deep_copy(tensor_3D *);
   tensor_3D *append_time_step(tensor_3D *, int, tensor_3D *);
   tensor_3D *drop_time_step(tensor_3D *);
-  //tensor_3D *sum_time_steps(tensor_3D *);
   long double sum(long double, long double);
   long double product(long double, long double);
   tensor_3D *tensor_fold(long double (*)(long double, long double), tensor_3D *, long double (*)(void));
