@@ -43,41 +43,37 @@ void feedforward_once(LSTM_type *LSTM) {
   LSTM->LSTM[At_c] = append_time_step(temp1, 0, LSTM->LSTM[At_c]);
   temp1 = destroy_tensor_3D(temp1);
 
+
   // Cell activations:
-/*
-  (push! St_c LSTM
-    (matrix-map +
-      (matrix-map *
-        (second (vector-ref LSTM St_c))
-        (first
-          (vector-ref LSTM Bt_phi)))
-      (matrix-map *
-        (matrix-tanh
-          (first
-            (vector-ref LSTM At_c)))
-        (first
-          (vector-ref LSTM Bt_iota)))))
-*/
+
+  // temp1 =
+  //   element_wise_multiply(
+  //     tanh(first(LSTM, At_c)),
+  //     first(LSTM, Bt_iota));
+  temp2 = matrix_tanh(LSTM->LSTM[At_c], LSTM->LSTM[At_c]->z - 1);
   temp1 = make_tensor_3D(zero, LSTM->x, LSTM->y, 2);
-  temp2 = make_tensor_3D(zero, LSTM->x, LSTM->y, 2);
+  copy_time_steps(1, temp2, 0, temp1, 0);
+  copy_time_steps(1, LSTM->LSTM[Bt_iota], LSTM->LSTM[Bt_iota]->z - 1, temp1, 1);
+  temp1 = multiply_time_steps(temp1);
+  copy_time_steps(1, temp1, 0, temp2, 1);
+  temp1 = destroy_tensor_3D(temp1);
+
+  // temp2 =
+  //   element_wise_multiply(
+  //     second(LSTM, St_c),
+  //     first(LSTM, Bt_phi));
+  temp1 = make_tensor_3D(zero, LSTM->x, LSTM->y, 2);
   copy_time_steps(1, LSTM->LSTM[St_c], LSTM->LSTM[St_c]->z - 2, temp1, 0);
   copy_time_steps(1, LSTM->LSTM[Bt_phi], LSTM->LSTM[Bt_phi]->z - 1, temp1, 1);
   temp1 = multiply_time_steps(temp1);
   copy_time_steps(1, temp1, 0, temp2, 0);
   temp1 = destroy_tensor_3D(temp1);
-  temp1 = make_tensor_3D(zero, LSTM->x, LSTM->y, 1);
-  temp1 = matrix_tanh(LSTM->LSTM[At_c], LSTM->LSTM[At_c]->z - 1);
-  copy_time_steps(1, temp1, 0, temp2, 1);
-  temp1 = destroy_tensor_3D(temp1);
-  temp1 = make_tensor_3D(zero, LSTM->x, LSTM->y, 2);
-  copy_time_steps(1, temp2, 1, temp1, 0);
-  copy_time_steps(1, LSTM->LSTM[Bt_iota], LSTM->LSTM[Bt_iota]->z - 1, temp1, 1);
-  temp1 = multiply_time_steps(temp1);
-  copy_time_steps(1, temp1, 0, temp2, 1);
+
+  // push(LSTM, St_c, sum(temp1, temp2));
   temp2 = sum_time_steps(temp2);
   LSTM->LSTM[St_c] = append_time_step(temp2, 0, LSTM->LSTM[St_c]);
-  temp1 = destroy_tensor_3D(temp1);
   temp2 = destroy_tensor_3D(temp2);
+
 
   // Output preactivations:
     temp1 = make_tensor_3D(zero, LSTM->x, LSTM->y, 3);

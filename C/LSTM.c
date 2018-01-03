@@ -196,3 +196,16 @@ LSTM_type *destroy_LSTM(LSTM_type *LSTM) {
   } free(LSTM);
     return NULL;
 }
+
+tensor_3D *first(LSTM_type *LSTM, index i) {
+  tensor_3D *tensor = make_tensor_3D(zero, LSTM->LSTM[i]->x, LSTM->LSTM[i]->y, 1);
+  copy_time_steps(1, LSTM->LSTM[i], LSTM->LSTM[i]->z - 1, tensor, 0);
+  return tensor;
+}
+
+tensor_3D *second(LSTM_type *LSTM, index i) {
+  tensor_3D *tensor = make_tensor_3D(zero, LSTM->LSTM[i]->x, LSTM->LSTM[i]->y, 1);
+  copy_time_steps(1, LSTM->LSTM[i], LSTM->LSTM[i]->z - 2, tensor, 0);
+  return tensor;
+}
+

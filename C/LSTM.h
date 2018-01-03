@@ -66,4 +66,6 @@
   tensor_3D *sum_time_steps(tensor_3D *);
   tensor_3D *multiply_time_steps(tensor_3D *);
   LSTM_type *make_LSTM(int, int), *destroy_LSTM(LSTM_type *);
+  tensor_3D *first(LSTM_type *, index);
+  tensor_3D *second(LSTM_type *, index);
 #endif
