@@ -14,12 +14,12 @@ int main(int argc, char *argv[]) {
   };
 
   long double outputs[6][1][2] = {
+    {{1, 1}},
     {{0, 1}},
     {{0, 1}},
     {{1, 0}},
     {{1, 0}},
-    {{0, 1}},
-    {{1, 1}}
+    {{0, 1}}
   };
 
   LSTM->LSTM[Xt_i] = destroy_tensor_3D(LSTM->LSTM[Xt_i]);
