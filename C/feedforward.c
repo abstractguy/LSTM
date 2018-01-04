@@ -8,7 +8,7 @@ void feedforward_once(LSTM_type *LSTM) {
   tensor_3D *temp1 = NULL, *temp2 = NULL;
 
   // Input preactivations:
-  temp1 = make_tensor_3D(zero, LSTM->x, LSTM->y, 3);
+  temp1 = make_tensor_3D(zero, LSTM->LSTM[Xt_i]->x, LSTM->LSTM[Wi_iota]->y, 3);
   matrix_dot_product(LSTM->LSTM[Xt_i], LSTM->LSTM[Xt_i]->z - 1, LSTM->LSTM[Wi_iota], 0, temp1, 0);
   matrix_dot_product(LSTM->LSTM[Bt_h], LSTM->LSTM[Bt_h]->z - 2, LSTM->LSTM[Wh_iota], 0, temp1, 1);
   matrix_dot_product(LSTM->LSTM[St_c], LSTM->LSTM[St_c]->z - 2, LSTM->LSTM[Wc_iota], 0, temp1, 2);

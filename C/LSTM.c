@@ -63,11 +63,12 @@ tensor_3D *destroy_tensor_3D(tensor_3D *tensor) {
 }
 
 void matrix_dot_product(tensor_3D *tensor1, int z1, tensor_3D *tensor2, int z2, tensor_3D *tensor3, int z3) {
-  for (int y = 0; y < tensor1->x; y++) {
-    for (int x = 0; x < tensor2->y; x++) {
-      tensor3->tensor[z3][y][x] = 0.0;
-      for (int k = 0; k < tensor1->y; k++) {
-        tensor3->tensor[z3][y][x] += tensor1->tensor[z1][y][k] * tensor2->tensor[z2][k][x];
+  assert(tensor1->x == tensor2->y);
+  for (int i = 0; i < tensor1->y; i++) {
+    for (int j = 0; j < tensor2->x; j++) {
+      tensor3->tensor[z3][i][j] = 0.0;
+      for (int k = 0; k < tensor1->x; k++) {
+        tensor3->tensor[z3][i][j] += tensor1->tensor[z1][i][k] * tensor2->tensor[z2][k][j];
       }
     }
   }
