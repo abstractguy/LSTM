@@ -4,7 +4,7 @@
 
 // First test!
 int main(int argc, char *argv[]) {
-  LSTM_type *LSTM = make_LSTM(4, 1);
+  LSTM_type *LSTM = make_LSTM(1, 4);
   long double inputs[5][4][1] = {
     {{1},{1},{1},{1}},
     {{1},{1},{1},{1}},
