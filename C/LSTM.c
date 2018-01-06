@@ -1,5 +1,6 @@
 // LSTM.c
 #include "LSTM.h"
+#include <stdio.h>
 
 long double sigmoid(long double x) {
   return 1.0 / (1.0 + (long double)expl(-x));
@@ -63,6 +64,8 @@ tensor_3D *destroy_tensor_3D(tensor_3D *tensor) {
 }
 
 void matrix_dot_product(tensor_3D *tensor1, int z1, tensor_3D *tensor2, int z2, tensor_3D *tensor3, int z3) {
+  printf("\ntensor1: z: %u, y: %u, x: %u\n", tensor1->z, tensor1->y, tensor1->x);
+  printf("\ntensor2: z: %u, y: %u, x: %u\n", tensor2->z, tensor2->y, tensor2->x);
   assert(tensor1->x == tensor2->y);
   for (int i = 0; i < tensor1->y; i++) {
     for (int j = 0; j < tensor2->x; j++) {
@@ -157,7 +160,7 @@ LSTM_type *make_LSTM(int x, int y) {
   LSTM->LSTM[Yt_k] = make_tensor_3D(zero, x, y * 2, 1);
 
   for (index i = GATES_BEGIN; i < GATES_END; i++) {
-    LSTM->LSTM[i] = make_tensor_3D(one, x, y, 2);
+    LSTM->LSTM[i] = make_tensor_3D(one, y, x, 2);
   }
 
   for (index i = INPUT_WEIGHTS_BEGIN; i < INPUT_WEIGHTS_END; i++) {
@@ -165,7 +168,7 @@ LSTM_type *make_LSTM(int x, int y) {
   }
 
   for (index i = HIDDEN_WEIGHTS_BEGIN; i < HIDDEN_WEIGHTS_END; i++) {
-    LSTM->LSTM[i] = make_tensor_3D(random_long_double, x, x, 1);
+    LSTM->LSTM[i] = make_tensor_3D(random_long_double, y, y, 1);
   }
 
   for (index i = CELL_WEIGHTS_BEGIN; i < CELL_WEIGHTS_END; i++) {
@@ -173,19 +176,19 @@ LSTM_type *make_LSTM(int x, int y) {
   }
 
   for (index i = ERRORS_BEGIN; i < ERRORS_END; i++) {
-    LSTM->LSTM[i] = make_tensor_3D(zero, x, y, 1);
+    LSTM->LSTM[i] = make_tensor_3D(zero, y, x, 1);
   }
 
   for (index i = INPUT_UPDATES_BEGIN; i < INPUT_UPDATES_END; i++) {
-    LSTM->LSTM[i] = make_tensor_3D(random_long_double, x, y, 1);
+    LSTM->LSTM[i] = make_tensor_3D(zero, x, y, 1);
   }
 
   for (index i = HIDDEN_UPDATES_BEGIN; i < HIDDEN_UPDATES_END; i++) {
-    LSTM->LSTM[i] = make_tensor_3D(random_long_double, x, x, 1);
+    LSTM->LSTM[i] = make_tensor_3D(zero, y, y, 1);
   }
 
   for (index i = CELL_UPDATES_BEGIN; i < CELL_UPDATES_END; i++) {
-    LSTM->LSTM[i] = make_tensor_3D(random_long_double, x, y, 1);
+    LSTM->LSTM[i] = make_tensor_3D(zero, x, y, 1);
   }
 
   return LSTM;
