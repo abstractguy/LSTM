@@ -26,6 +26,8 @@ LSTM_type *make_LSTM(unsigned int rows, unsigned int columns) {
   LSTM = LSTM_initialize_tensors(LSTM, HIDDEN_UPDATES_BEGIN, HIDDEN_UPDATES_END, zero, 1, rows, rows);
 
   LSTM = LSTM_initialize_tensors(LSTM, CELL_UPDATES_BEGIN, CELL_UPDATES_END, zero, 1, rows, columns);
+
+  return LSTM;
 }
 
 LSTM_type *destroy_LSTM(LSTM_type *LSTM) {
@@ -33,8 +35,6 @@ LSTM_type *destroy_LSTM(LSTM_type *LSTM) {
     for (unsigned int time = 0; time < LSTM->tensor[tensor].time; time++) {
       LSTM->tensor[tensor].matrix[time] = destroy_matrix(LSTM->tensor[tensor].matrix[time]);
     }
-    free(LSTM->tensor[tensor].matrix);
-    LSTM->tensor[tensor].matrix = NULL;
   } free(LSTM);
     return NULL;
 }
