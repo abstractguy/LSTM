@@ -30,8 +30,8 @@ LSTM_type *make_LSTM(unsigned int rows, unsigned int columns) {
 
 LSTM_type *destroy_LSTM(LSTM_type *LSTM) {
   for (index tensor = 0; tensor < LSTM_SIZE; tensor++) {
-    for (unsigned int time = 0; time < LSTM->tensor[tensor]->time; time++) {
-      LSTM->tensor[tensor]->matrix[time] = destroy_matrix(
+    for (unsigned int time = 0; time < LSTM->tensor[tensor].time; time++) {
+      LSTM->tensor[tensor].matrix[time] = destroy_matrix(LSTM->tensor[tensor].matrix[time]);
     }
     LSTM->tensor[tensor] = destroy_tensor_3D(LSTM->tensor[tensor]);
   } free(LSTM);
@@ -40,11 +40,11 @@ LSTM_type *destroy_LSTM(LSTM_type *LSTM) {
 
 void LSTM_initialize_tensors(LSTM_type *LSTM, index begin, index end, long double (*init)(void), unsigned int time, unsigned int rows, unsigned int columns) {
   for (index tensor = begin; tensor < end; tensor++) {
-    LSTM->tensor[tensor]->time = time;
-    assert(LSTM->tensor[tensor]->matrix = calloc(time, sizeof(matrix)));
+    LSTM->tensor[tensor].time = time;
+    assert(LSTM->tensor[tensor].matrix = calloc(time, sizeof(matrix)));
     for (unsigned int t = 0; t < time; t++) {
-      LSTM->tensor[tensor]->matrix[t] = make_matrix(rows, columns);
-      matrix_for_each(init, LSTM->tensor[tensor]->matrix[t]);
+      LSTM->tensor[tensor].matrix[t] = make_matrix(rows, columns);
+      matrix_for_each(init, LSTM->tensor[tensor].matrix[t]);
     }
   }
 }
