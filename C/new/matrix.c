@@ -3,18 +3,17 @@
 
 matrix *make_matrix(unsigned int rows, unsigned int columns) {
   matrix *matrix1 = NULL;
-  assert(matrix1 = calloc(1, sizeof(matrix)))	;
+  assert((matrix1 = calloc(1, sizeof(matrix))));
   matrix1->rows = rows;
   matrix1->columns = columns;
-  assert(matrix1->matrix = calloc(rows, sizeof(long double *)));
-    for (unsigned int row = 0; row < rows; row++) {
-      assert(tensor->tensor[row] = calloc(columns, sizeof(long double)));
-    }
+  assert((matrix1->matrix = calloc(rows, sizeof(long double *))));
+  for (unsigned int row = 0; row < rows; row++) {
+    assert((matrix1->matrix[row] = calloc(columns, sizeof(long double))));
   } return matrix1;
 }
 
 matrix *destroy_matrix(matrix *matrix1) {
-  for (unsigned int row = 0; i < matrix1->rows; row++) {
+  for (unsigned int row = 0; row < matrix1->rows; row++) {
     free(matrix1->matrix[row]);
     matrix1->matrix[row] = NULL;
   } free(matrix1->matrix);

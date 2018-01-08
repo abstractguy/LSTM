@@ -38,12 +38,12 @@
   typedef struct {
     struct {
       unsigned int time;
-      matrix_type *matrix;
+      matrix *matrix;
     } tensor[LSTM_SIZE];
   } LSTM_type;
 
   LSTM_type *make_LSTM(unsigned int, unsigned int);
   LSTM_type *destroy_LSTM(LSTM_type *);
-  void LSTM_initialize_tensors(LSTM_type *, index, index, long double (*)(void), unsigned int, unsigned int, unsigned int);
+  LSTM_type *LSTM_initialize_tensors(LSTM_type *, index, index, long double (*)(long double), unsigned int, unsigned int, unsigned int);
 
 #endif
