@@ -33,7 +33,8 @@ LSTM_type *destroy_LSTM(LSTM_type *LSTM) {
     for (unsigned int time = 0; time < LSTM->tensor[tensor].time; time++) {
       LSTM->tensor[tensor].matrix[time] = destroy_matrix(LSTM->tensor[tensor].matrix[time]);
     }
-    LSTM->tensor[tensor] = destroy_tensor_3D(LSTM->tensor[tensor]);
+    free(LSTM->tensor[tensor].matrix);
+    LSTM->tensor[tensor].matrix = NULL;
   } free(LSTM);
     return NULL;
 }

@@ -12,9 +12,9 @@
 
   matrix *make_matrix(unsigned int, unsigned int);
   matrix *destroy_matrix(matrix *);
-  long double random_long_double(void);
-  long double zero(void);
-  long double one(void);
+  long double random_long_double(long double);
+  long double zero(long double);
+  long double one(long double);
   void matrix_for_each(long double (*)(long double), matrix *);
 
 #endif
