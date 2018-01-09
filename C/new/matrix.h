@@ -5,6 +5,8 @@
   #include <assert.h>
   #include <math.h>
 
+  #define NOT_USED(x) ((void)x)
+
   typedef struct {
     unsigned int rows, columns;
     long double **matrix;

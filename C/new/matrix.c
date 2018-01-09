@@ -23,12 +23,13 @@ matrix *destroy_matrix(matrix *matrix1) {
 }
 
 long double random_long_double(long double x) {
+  NOT_USED(x);
   return 2.0 * (((long double)rand()) / ((long double)RAND_MAX)) - 1.0;
 }
 
-long double zero(long double x) {return 0.0;}
+long double zero(long double x) {NOT_USED(x); return 0.0;}
 
-long double one(long double x) {return 1.0;}
+long double one(long double x) {NOT_USED(x); return 1.0;}
 
 void matrix_for_each(long double (*f)(long double), matrix *matrix1) {
   for (unsigned int row = 0; row < matrix1->rows; row++) {
