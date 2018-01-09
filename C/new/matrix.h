@@ -18,5 +18,6 @@
   long double zero(long double);
   long double one(long double);
   void matrix_for_each(long double (*)(long double), matrix *);
+  matrix *dot_product(matrix *, matrix *);
 
 #endif

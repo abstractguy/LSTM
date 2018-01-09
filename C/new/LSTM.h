@@ -44,6 +44,6 @@
 
   LSTM_type *make_LSTM(unsigned int, unsigned int);
   LSTM_type *destroy_LSTM(LSTM_type *);
-  LSTM_type *LSTM_initialize_tensors(LSTM_type *, index, index, long double (*)(long double), unsigned int, unsigned int, unsigned int);
+  void LSTM_initialize_tensors(LSTM_type *, index, index, long double (*)(long double), unsigned int, unsigned int, unsigned int);
 
 #endif

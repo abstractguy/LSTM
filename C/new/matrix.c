@@ -38,3 +38,16 @@ void matrix_for_each(long double (*f)(long double), matrix *matrix1) {
     }
   }
 }
+
+matrix *dot_product(matrix *matrix1, matrix *matrix2) {
+  matrix *matrix3 = make_matrix(matrix1->columns, matrix2->rows);
+  assert(matrix1->rows == matrix2->columns);
+  matrix_for_each(zero, matrix3);
+  for (unsigned int row1 = 0; row1 < matrix1->rows; row1++) {
+    for (unsigned int column2 = 0; column2 < matrix2->columns; column2++) {
+      for (unsigned int column1 = 0; column1 < matrix1->columns; column1++) {
+        matrix3->matrix[row1][column2] += matrix1->matrix[row1][column1] * matrix2->matrix[column1][column2];
+      }
+    }
+  } return matrix3;
+}
