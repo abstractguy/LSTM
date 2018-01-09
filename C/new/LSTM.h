@@ -38,7 +38,7 @@
   typedef struct {
     struct {
       unsigned int time;
-      matrix *matrix;
+      matrix **matrix;
     } tensor[LSTM_SIZE];
   } LSTM_type;
 
