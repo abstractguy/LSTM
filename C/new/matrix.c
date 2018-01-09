@@ -52,5 +52,14 @@ matrix *dot_product(matrix *matrix1, matrix *matrix2) {
         matrix3->matrix[row1][column2] += matrix1->matrix[row1][column1] * matrix2->matrix[column1][column2];
       }
     }
-  } return matrix3;
+  }   return matrix3;
+}
+
+matrix *matrix_copy(matrix *matrix1) {
+  matrix *matrix2 = make_matrix(matrix1->rows, matrix1->columns);
+  for (unsigned int row = 0; row < matrix1->rows; row++) {
+    for (unsigned int column = 0; column < matrix1->columns; column++) {
+      matrix2->matrix[row][column] = matrix1->matrix[row][column];
+    }
+  } return matrix2;
 }
