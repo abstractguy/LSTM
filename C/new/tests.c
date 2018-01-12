@@ -33,8 +33,6 @@ int main(int argc, char *argv[]) {
 
   // TEST 3a:
   print_matrix(fold(add, zero, 2, matrix1, matrix2));
-  matrix1 = destroy_matrix(matrix1);
-  matrix2 = destroy_matrix(matrix2);
 
   LSTM = destroy_LSTM(LSTM);
   return 0;

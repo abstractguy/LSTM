@@ -85,14 +85,6 @@ matrix *matrix_initialize(long double (*init)(long double), matrix *matrix1) {
   return matrix2;
 }
 
-long double add(long double x, long double y) {
-  return x + y;
-}
-
-long double multiply(long double x, long double y) {
-  return x * y;
-}
-
 long double sigmoid(long double x) {
   return 1.0 / (1.0 + (long double)expl(-x));
 }

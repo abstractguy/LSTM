@@ -23,8 +23,6 @@
   matrix *matrix_copy_shape(matrix *);
   matrix *matrix_copy(matrix *);
   matrix *matrix_initialize(long double (*)(long double), matrix *);
-  long double add(long double, long double);
-  long double multiply(long double, long double);
   long double sigmoid(long double);
   matrix *matrix_sigmoid(matrix *);
   matrix *matrix_tanh(matrix *);

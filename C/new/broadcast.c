@@ -66,3 +66,11 @@ matrix *fold(long double (*f)(long double, long double), long double (*init)(lon
 
   return matrix2;
 }
+
+long double add(long double x, long double y) {
+  return x + y;
+}
+
+long double multiply(long double x, long double y) {
+  return x * y;
+}
