@@ -92,3 +92,27 @@ long double add(long double x, long double y) {
 long double multiply(long double x, long double y) {
   return x * y;
 }
+
+long double sigmoid(long double x) {
+  return 1.0 / (1.0 + (long double)expl(-x));
+}
+
+matrix *matrix_sigmoid(matrix *matrix1) {
+  matrix_for_each(sigmoid, matrix1);
+  return matrix1;
+}
+
+matrix *matrix_tanh(matrix *matrix1) {
+  matrix_for_each(tanhl, matrix1);
+  return matrix1;
+}
+
+long double sigmoid_derivative(long double x) {
+  long double y = sigmoid(x);
+  return y * (1.0 - y);
+}
+
+long double tanh_derivative(long double x) {
+  long double y = tanhl(x);
+  return 1.0 - y * y;
+}

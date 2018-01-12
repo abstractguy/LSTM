@@ -25,5 +25,10 @@
   matrix *matrix_initialize(long double (*)(long double), matrix *);
   long double add(long double, long double);
   long double multiply(long double, long double);
+  long double sigmoid(long double);
+  matrix *matrix_sigmoid(matrix *);
+  matrix *matrix_tanh(matrix *);
+  long double sigmoid_derivative(long double);
+  long double tanh_derivative(long double);
 
 #endif
