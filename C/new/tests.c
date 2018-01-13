@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
   // TEST 3:
   matrix3 = destroy_matrix(matrix3);
   matrix4 = destroy_matrix(matrix4);
-  matrix5 = destroy_matrix(matrix5);
+  //matrix5 = destroy_matrix(matrix5);
 
   LSTM = destroy_LSTM(LSTM);
   return 0;

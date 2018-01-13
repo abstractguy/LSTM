@@ -43,8 +43,8 @@ matrix *broadcast_function(long double (*f)(long double, long double), matrix *m
 
   matrix5 = matrix_map2(f, matrix3, matrix4);
 
-  matrix3 = destroy_matrix(matrix3);
-  matrix4 = destroy_matrix(matrix4);
+  //matrix3 = destroy_matrix(matrix3);
+  //matrix4 = destroy_matrix(matrix4);
 
   return matrix5;
 }
