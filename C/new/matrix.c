@@ -42,15 +42,6 @@ void matrix_for_each(long double (*f)(long double), matrix *matrix1) {
   }
 }
 
-matrix *matrix_map2(long double (*f)(long double, long double), matrix *matrix1, matrix *matrix2) {
-  matrix *matrix3 = make_matrix(matrix1->rows, matrix1->columns);
-  for (unsigned int row = 0; row < matrix1->rows; row++) {
-    for (unsigned int column = 0; column < matrix1->columns; column++) {
-      matrix3->matrix[row][column] = f(matrix1->matrix[row][column], matrix2->matrix[row][column]);
-    }
-  } return matrix3;
-}
-
 matrix *dot_product(matrix *matrix1, matrix *matrix2) {
   matrix *matrix3 = make_matrix(matrix1->columns, matrix2->rows);
   assert(matrix1->rows == matrix2->columns);
@@ -79,7 +70,13 @@ matrix *matrix_copy(matrix *matrix1) {
   } return matrix2;
 }
 
-matrix *matrix_initialize(long double (*init)(long double), matrix *matrix1) {
+matrix *matrix_initialize(long double (*init)(long double), unsigned int x, unsigned int y) {
+  matrix *matrix1 = make_matrix(x, y);
+  matrix_for_each(init, matrix1);
+  return matrix1;
+}
+
+matrix *matrix_initialize_from_matrix(long double (*init)(long double), matrix *matrix1) {
   matrix *matrix2 = matrix_copy(matrix1);
   matrix_for_each(init, matrix2);
   return matrix2;

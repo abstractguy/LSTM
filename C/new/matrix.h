@@ -18,11 +18,11 @@
   long double zero(long double);
   long double one(long double);
   void matrix_for_each(long double (*)(long double), matrix *);
-  matrix *matrix_map2(long double (*)(long double, long double), matrix *, matrix *);
   matrix *dot_product(matrix *, matrix *);
   matrix *matrix_copy_shape(matrix *);
   matrix *matrix_copy(matrix *);
-  matrix *matrix_initialize(long double (*)(long double), matrix *);
+  matrix *matrix_initialize(long double (*)(long double), unsigned int, unsigned int);
+  matrix *matrix_initialize_from_matrix(long double (*)(long double), matrix *);
   long double sigmoid(long double);
   matrix *matrix_sigmoid(matrix *);
   matrix *matrix_tanh(matrix *);

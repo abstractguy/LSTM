@@ -1,10 +1,19 @@
 // broadcast.c
 #include "broadcast.h"
 
+matrix *matrix_map2(long double (*f)(long double, long double), matrix *matrix1, matrix *matrix2) {
+  matrix *matrix3 = make_matrix(matrix1->rows, matrix1->columns);
+  for (unsigned int row = 0; row < matrix1->rows; row++) {
+    for (unsigned int column = 0; column < matrix1->columns; column++) {
+      matrix3->matrix[row][column] = f(matrix1->matrix[row][column], matrix2->matrix[row][column]);
+    }
+  } return matrix3;
+}
+
 matrix *broadcast_vertical(matrix *matrix1, matrix *matrix2) {
   matrix *matrix3 = NULL;
 
-  if ((matrix1->rows == 1) && (matrix2->rows > 1)) {
+  if (matrix1->rows == 1 && matrix2->rows > 1) {
     matrix3 = make_matrix(matrix2->rows, matrix1->columns);
 
     for (unsigned int row = 0; row < matrix2->rows; row++) {
@@ -18,7 +27,7 @@ matrix *broadcast_vertical(matrix *matrix1, matrix *matrix2) {
 
 matrix *broadcast_horizontal(matrix *matrix1, matrix *matrix2) {
   matrix *matrix3 = NULL;
-  if ((matrix1->columns == 1) && (matrix2->columns > 1)) {
+  if (matrix1->columns == 1 && matrix2->columns > 1) {
     matrix3 = make_matrix(matrix1->rows, matrix2->columns);
     for (unsigned int row = 0; row < matrix1->rows; row++) {
       for (unsigned int column = 0; column < matrix2->columns; column++) {
@@ -50,7 +59,7 @@ matrix *broadcast_function(long double (*f)(long double, long double), matrix *m
 }
 
 matrix *fold(long double (*f)(long double, long double), long double (*init)(long double), unsigned int times, matrix *matrix1, ...) {
-  matrix *matrix2 = matrix_initialize(init, matrix1);
+  matrix *matrix2 = matrix_initialize_from_matrix(init, matrix1);
   unsigned int time = times - 1;
 
   va_list args;
