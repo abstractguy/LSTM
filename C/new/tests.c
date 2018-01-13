@@ -40,6 +40,8 @@ int main(int argc, char *argv[]) {
   //print_matrix(matrix3);
 
   // TEST 3:
+  matrix1 = destroy_matrix(matrix1);
+  matrix2 = destroy_matrix(matrix2);
   matrix3 = destroy_matrix(matrix3);
   matrix4 = destroy_matrix(matrix4);
   //matrix5 = destroy_matrix(matrix5);
