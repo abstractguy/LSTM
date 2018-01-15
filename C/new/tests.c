@@ -18,14 +18,14 @@ int main(int argc, char *argv[]) {
 
   // TEST 3:
   matrix1 =
-    fold(multiply, one, 2, 
+    product(2, 
       matrix_tanh(first(LSTM, At_c)), 
       first(LSTM, Bt_iota));
   matrix2 =
-    fold(multiply, one, 2, 
+    product(2, 
       second(LSTM, St_c), 
       first(LSTM, Bt_phi));
-  matrix3 = fold(add, zero, 2, matrix1, matrix2);
+  matrix3 = sum(2, matrix1, matrix2);
   push(LSTM, St_c, matrix3);
 
   // TEST 1:

@@ -8,8 +8,10 @@
   matrix *broadcast_vertical(matrix *, matrix *);
   matrix *broadcast_horizontal(matrix *, matrix *);
   matrix *broadcast_function(long double (*)(long double, long double), matrix *, matrix *);
-  matrix *fold(long double (*)(long double, long double), long double (*)(long double), unsigned int, matrix *, ...);
+  matrix *fold(long double (*)(long double, long double), long double (*)(long double), unsigned int, matrix *, va_list);
   long double add(long double, long double);
   long double multiply(long double, long double);
+  matrix *sum(unsigned int, matrix *, ...);
+  matrix *product(unsigned int, matrix *, ...);
 
 #endif

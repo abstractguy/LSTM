@@ -53,28 +53,45 @@ matrix *broadcast_function(long double (*f)(long double, long double), matrix *m
   matrix5 = matrix_map2(f, matrix3, matrix4);
 
   matrix3 = destroy_matrix(matrix3);
-  //matrix4 = destroy_matrix(matrix4);
 
   return matrix5;
 }
 
-matrix *fold(long double (*f)(long double, long double), long double (*init)(long double), unsigned int times, matrix *matrix1, ...) {
+matrix *fold(long double (*f)(long double, long double), long double (*init)(long double), unsigned int times, matrix *matrix1, va_list args) {
   matrix *matrix2 = matrix_initialize_from_matrix(init, matrix1);
+  //matrix *matrix3 = NULL;
   unsigned int time = times - 1;
-
-  va_list args;
-  va_start(args, matrix1);
 
   matrix2 = broadcast_function(f, matrix2, matrix1);
 
   for (unsigned int t = 0; t < time; t++) {
+    //matrix3 = va_arg(args, matrix *);
+    //matrix2 = broadcast_function(f, matrix2, matrix3);
+    //matrix3 = destroy_matrix(matrix3);
     matrix2 = broadcast_function(f, matrix2, va_arg(args, matrix *));
   }
 
-  va_end(args);
-
+  //matrix1 = destroy_matrix(matrix1);
   return matrix2;
 }
 
 long double add(long double x, long double y) {return x + y;}
 long double multiply(long double x, long double y) {return x * y;}
+
+matrix *sum(unsigned int n, matrix *matrix1, ...) {
+  matrix *matrix2 = NULL;
+  va_list args;
+  va_start(args, matrix1);
+  matrix2 = fold(add, zero, n, matrix1, args);
+  va_end(args);
+  return matrix2;
+}
+
+matrix *product(unsigned int n, matrix *matrix1, ...) {
+  matrix *matrix2 = NULL;
+  va_list args;
+  va_start(args, matrix1);
+  matrix2 = fold(multiply, one, n, matrix1, args);
+  va_end(args);
+  return matrix2;
+}
