@@ -89,13 +89,11 @@ long double sigmoid(long double x) {
 matrix *matrix_sigmoid(matrix *matrix1) {
   matrix_for_each(sigmoid, matrix1);
   return matrix1;
-  //return matrix_initialize_from_matrix(sigmoid, matrix1);
 }
 
 matrix *matrix_tanh(matrix *matrix1) {
   matrix_for_each(tanhl, matrix1);
   return matrix1;
-  //return matrix_initialize_from_matrix(tanhl, matrix1);
 }
 
 long double sigmoid_derivative(long double x) {

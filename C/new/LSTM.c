@@ -43,11 +43,11 @@ void LSTM_initialize_tensors(LSTM_type *LSTM, index begin, index end, long doubl
 }
 
 matrix *first(LSTM_type *LSTM, index tensor) {
-  return LSTM->tensor[tensor].matrix[LSTM->tensor[tensor].time - 1];
+  return matrix_copy(LSTM->tensor[tensor].matrix[LSTM->tensor[tensor].time - 1]);
 }
 
 matrix *second(LSTM_type *LSTM, index tensor) {
-  return LSTM->tensor[tensor].matrix[LSTM->tensor[tensor].time - 2];
+  return matrix_copy(LSTM->tensor[tensor].matrix[LSTM->tensor[tensor].time - 2]);
 }
 
 void push(LSTM_type *LSTM, index tensor, matrix *matrix1) {

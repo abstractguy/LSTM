@@ -59,19 +59,19 @@ matrix *broadcast_function(long double (*f)(long double, long double), matrix *m
 
 matrix *fold(long double (*f)(long double, long double), long double (*init)(long double), unsigned int times, matrix *matrix1, va_list args) {
   matrix *matrix2 = matrix_initialize_from_matrix(init, matrix1);
-  //matrix *matrix3 = NULL;
+  matrix *matrix3 = NULL;
   unsigned int time = times - 1;
 
   matrix2 = broadcast_function(f, matrix2, matrix1);
 
   for (unsigned int t = 0; t < time; t++) {
-    //matrix3 = va_arg(args, matrix *);
-    //matrix2 = broadcast_function(f, matrix2, matrix3);
-    //matrix3 = destroy_matrix(matrix3);
-    matrix2 = broadcast_function(f, matrix2, va_arg(args, matrix *));
+    matrix3 = va_arg(args, matrix *);
+    matrix2 = broadcast_function(f, matrix2, matrix3);
+    matrix3 = destroy_matrix(matrix3);
+    //matrix2 = broadcast_function(f, matrix2, va_arg(args, matrix *));
   }
 
-  //matrix1 = destroy_matrix(matrix1);
+  matrix1 = destroy_matrix(matrix1);
   return matrix2;
 }
 
