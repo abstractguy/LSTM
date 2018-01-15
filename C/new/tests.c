@@ -8,10 +8,11 @@ int main(int argc, char *argv[]) {
   NOT_USED(argc);
   NOT_USED(argv);
 
-  // TEST 2:
-  //push(LSTM, At_iota, dot_product(first(LSTM, Xt_i), first(LSTM, Wi_iota)));
+  /* TEST 2:
+  push(LSTM, At_iota, dot_product(first(LSTM, Xt_i), first(LSTM, Wi_iota)));
+  */
 
-  // TEST 3:
+  /* TEST 3:
   push(LSTM, St_c, 
     sum(2, 
       product(2, 
@@ -20,6 +21,10 @@ int main(int argc, char *argv[]) {
       product(2, 
         second(LSTM, St_c), 
         first(LSTM, Bt_phi))));
+  */
+
+  // TEST 4:
+  feedforward_once(LSTM);
 
   // TEST 1:
   print_LSTM(LSTM);

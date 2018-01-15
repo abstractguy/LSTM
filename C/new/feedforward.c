@@ -2,11 +2,6 @@
 #include "feedforward.h"
 
 void feedforward_once(LSTM_type *LSTM) {
-  matrix *matrix1 = NULL;
-  matrix *matrix2 = NULL;
-  matrix *matrix3 = NULL;
-  matrix *matrix4 = NULL;
-
   // Input preactivations:
   push(LSTM, At_iota, 
     sum(3, 
