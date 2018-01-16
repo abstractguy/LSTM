@@ -1,7 +1,7 @@
 // LSTM.h
 #ifndef LSTM_H
   #define LSTM_H
-  #include "broadcast.h"
+  #include "matrix.h"
   #define LSTM_SIZE            40
   #define GATES_BEGIN          Bt_h
   #define WEIGHTS_BEGIN        Wi_iota

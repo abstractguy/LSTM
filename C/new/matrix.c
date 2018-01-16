@@ -105,3 +105,56 @@ long double tanh_derivative(long double x) {
   long double y = tanhl(x);
   return 1.0 - y * y;
 }
+
+matrix *matrix_map2(long double (*f)(long double, long double), matrix *matrix1, matrix *matrix2) {
+  matrix *matrix3 = make_matrix(matrix1->rows, matrix1->columns);
+  for (unsigned int row = 0; row < matrix1->rows; row++) {
+    for (unsigned int column = 0; column < matrix1->columns; column++) {
+      matrix3->matrix[row][column] = f(matrix1->matrix[row][column], matrix2->matrix[row][column]);
+    }
+  } return matrix3;
+}
+
+matrix *fold(long double (*f)(long double, long double), long double (*init)(long double), unsigned int times, matrix *matrix1, va_list args) {
+  matrix *matrix2 = make_matrix(matrix1->rows, 1);
+  matrix *matrix3 = NULL;
+  unsigned int time = times - 1;
+  matrix_for_each(init, matrix2);
+
+  for (unsigned int column = 0; column < matrix1->columns; column++) {
+    for (unsigned int row = 0; row < matrix1->rows; row++) {
+      matrix2->matrix[row][0] = f(matrix2->matrix[row][0], matrix1->matrix[row][column]);
+    }
+  }
+
+  for (unsigned int n = 0; n < time; n++) {
+    matrix3 = va_arg(args, matrix *);
+    for (unsigned int column = 0; column < matrix3->columns; column++) {
+      for (unsigned int row = 0; row < matrix2->rows; row++) {
+        matrix2->matrix[row][0] = f(matrix2->matrix[row][0], matrix3->matrix[row][column]);
+      }
+    } matrix3 = destroy_matrix(matrix3);
+  }   matrix1 = destroy_matrix(matrix1);
+      return matrix2;
+}
+
+long double add(long double x, long double y) {return x + y;}
+long double multiply(long double x, long double y) {return x * y;}
+
+matrix *sum(unsigned int n, matrix *matrix1, ...) {
+  matrix *matrix2 = NULL;
+  va_list args;
+  va_start(args, matrix1);
+  matrix2 = fold(add, zero, n, matrix1, args);
+  va_end(args);
+  return matrix2;
+}
+
+matrix *product(unsigned int n, matrix *matrix1, ...) {
+  matrix *matrix2 = NULL;
+  va_list args;
+  va_start(args, matrix1);
+  matrix2 = fold(multiply, one, n, matrix1, args);
+  va_end(args);
+  return matrix2;
+}
