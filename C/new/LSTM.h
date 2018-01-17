@@ -44,6 +44,7 @@
   void LSTM_initialize_tensors(LSTM_type *, index, index, long double (*)(long double), unsigned int, unsigned int, unsigned int);
   matrix *first(LSTM_type *, index);
   matrix *second(LSTM_type *, index);
+  matrix *third(LSTM_type *, index);
   void push(LSTM_type *, index, matrix *);
   matrix *pop(LSTM_type *, index);
 

@@ -50,6 +50,10 @@ matrix *second(LSTM_type *LSTM, index tensor) {
   return matrix_copy(LSTM->tensor[tensor].matrix[LSTM->tensor[tensor].time - 2]);
 }
 
+matrix *third(LSTM_type *LSTM, index tensor) {
+  return matrix_copy(LSTM->tensor[tensor].matrix[LSTM->tensor[tensor].time - 3]);
+}
+
 void push(LSTM_type *LSTM, index tensor, matrix *matrix1) {
   LSTM->tensor[tensor].matrix = realloc(LSTM->tensor[tensor].matrix, sizeof(matrix *) + sizeof(matrix) * (LSTM->tensor[tensor].time + 1));
   assert(LSTM->tensor[tensor].matrix);

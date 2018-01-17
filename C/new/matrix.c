@@ -168,3 +168,16 @@ matrix *subtract(unsigned int n, matrix *matrix1, ...) {
   va_end(args);
   return matrix2;
 }
+
+matrix *transpose(matrix *matrix1) {
+  matrix *matrix2 = make_matrix(matrix1->columns, matrix1->rows);
+
+  for (unsigned int row = 0; row < matrix1->columns; row++) {
+    for (unsigned int column = 0; column < matrix1->rows; column++) {
+      matrix2->matrix[row][column] = matrix1->matrix[column][row];
+    }
+  }
+
+  matrix1 = destroy_matrix(matrix1);
+  return matrix2;
+}

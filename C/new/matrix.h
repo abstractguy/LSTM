@@ -37,5 +37,6 @@
   matrix *sum(unsigned int, matrix *, ...);
   matrix *product(unsigned int, matrix *, ...);
   matrix *subtract(unsigned int, matrix *, ...);
+  matrix *transpose(matrix *);
 
 #endif

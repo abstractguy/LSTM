@@ -1,4 +1,5 @@
 // feedback.c
+#include "feedback.h"
 
 void feedback_once(LSTM_type *LSTM) {
   matrix *net_error = 
@@ -9,27 +10,29 @@ void feedback_once(LSTM_type *LSTM) {
   // Output errors:
   push(LSTM, Dt_k, 
     sum(7, 
-      dot_product(2, 
+      dot_product(
         matrix_copy(net_error), 
-        transpose(first(Wc_iota))), 
-      dot_product(2, 
+        transpose(first(LSTM, Wc_iota))), 
+      dot_product(
         matrix_copy(net_error), 
-        transpose(first(Wc_phi))), 
-      dot_product(2, 
+        transpose(first(LSTM, Wc_phi))), 
+      dot_product(
         matrix_copy(net_error), 
-        transpose(first(Wc_omega))), 
-      dot_product(2, 
+        transpose(first(LSTM, Wc_omega))), 
+      dot_product(
         first(LSTM, Dt_omega), 
-        transpose(first(Wh_omega))), 
-      dot_product(2, 
+        transpose(first(LSTM, Wh_omega))), 
+      dot_product(
         first(LSTM, Dt_c), 
-        transpose(first(Wh_c))), 
-      dot_product(2, 
+        transpose(first(LSTM, Wh_c))), 
+      dot_product(
         first(LSTM, Dt_phi), 
-        transpose(first(Wh_phi))), 
-      dot_product(2, 
+        transpose(first(LSTM, Wh_phi))), 
+      dot_product(
         first(LSTM, Dt_iota), 
-        transpose(first(Wh_iota)))));
+        transpose(first(LSTM, Wh_iota)))));
+
+  net_error = destroy_matrix(net_error);
 
   // Output gate errors:
   push(LSTM, Dt_omega, 
