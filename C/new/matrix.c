@@ -140,6 +140,7 @@ matrix *fold(long double (*f)(long double, long double), long double (*init)(lon
 
 long double add(long double x, long double y) {return x + y;}
 long double multiply(long double x, long double y) {return x * y;}
+long double minus(long double x, long double y) {return x - y;}
 
 matrix *sum(unsigned int n, matrix *matrix1, ...) {
   matrix *matrix2 = NULL;
@@ -155,6 +156,15 @@ matrix *product(unsigned int n, matrix *matrix1, ...) {
   va_list args;
   va_start(args, matrix1);
   matrix2 = fold(multiply, one, n, matrix1, args);
+  va_end(args);
+  return matrix2;
+}
+
+matrix *subtract(unsigned int n, matrix *matrix1, ...) {
+  matrix *matrix2 = NULL;
+  va_list args;
+  va_start(args, matrix1);
+  matrix2 = fold(minus, zero, n, matrix1, args);
   va_end(args);
   return matrix2;
 }

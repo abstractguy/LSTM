@@ -1,4 +1,5 @@
 // tests.c
+#include "feedforward.h"
 #include "printing.h"
 int main(int argc, char *argv[]) {
   // TEST 1:

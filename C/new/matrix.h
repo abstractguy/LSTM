@@ -33,7 +33,9 @@
   matrix *fold(long double (*)(long double, long double), long double (*)(long double), unsigned int, matrix *, va_list);
   long double add(long double, long double);
   long double multiply(long double, long double);
+  long double minus(long double, long double);
   matrix *sum(unsigned int, matrix *, ...);
   matrix *product(unsigned int, matrix *, ...);
+  matrix *subtract(unsigned int, matrix *, ...);
 
 #endif
