@@ -83,5 +83,5 @@ void feedback_once(LSTM_type *LSTM) {
       sigmoid_derivative(second(LSTM, At_iota)), 
       dot_product(
         first(LSTM, Dt_s), 
-        transpose(matrix_tanh(second(LSTM, At_c)))));
+        transpose(matrix_tanh(second(LSTM, At_c))))));
 }

@@ -96,14 +96,24 @@ matrix *matrix_tanh(matrix *matrix1) {
   return matrix1;
 }
 
-long double sigmoid_derivative(long double x) {
+long double sigmoid_derivative_helper(long double x) {
   long double y = sigmoid(x);
   return y * (1.0 - y);
 }
 
-long double tanh_derivative(long double x) {
+long double tanh_derivative_helper(long double x) {
   long double y = tanhl(x);
   return 1.0 - y * y;
+}
+
+matrix *sigmoid_derivative(matrix *matrix1) {
+  matrix_for_each(sigmoid_derivative_helper, matrix1);
+  return matrix1;
+}
+
+matrix *tanh_derivative(matrix *matrix1) {
+  matrix_for_each(tanh_derivative_helper, matrix1);
+  return matrix1;
 }
 
 matrix *matrix_map2(long double (*f)(long double, long double), matrix *matrix1, matrix *matrix2) {

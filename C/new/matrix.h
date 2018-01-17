@@ -27,8 +27,10 @@
   long double sigmoid(long double);
   matrix *matrix_sigmoid(matrix *);
   matrix *matrix_tanh(matrix *);
-  long double sigmoid_derivative(long double);
-  long double tanh_derivative(long double);
+  long double sigmoid_derivative_helper(long double);
+  long double tanh_derivative_helper(long double);
+  matrix *sigmoid_derivative(matrix *);
+  matrix *tanh_derivative(matrix *);
   matrix *matrix_map2(long double (*)(long double, long double), matrix *, matrix *);
   matrix *fold(long double (*)(long double, long double), long double (*)(long double), unsigned int, matrix *, va_list);
   long double add(long double, long double);
