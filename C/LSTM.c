@@ -66,3 +66,18 @@ matrix *pop(LSTM_type *LSTM, index tensor) {
   assert(LSTM->tensor[tensor].matrix);
   return matrix1;
 }
+
+void push_all(LSTM_type *LSTM, index tensor, unsigned int time, unsigned int rows, unsigned int columns, long double ***steps) {
+  LSTM->tensor[tensor].time = time;
+  LSTM->tensor[tensor].matrix = realloc(LSTM->tensor[tensor].matrix, sizeof(matrix *) + sizeof(matrix) * time);
+  assert(LSTM->tensor[tensor].matrix);
+  for (unsigned int n = 0; n < time; n++) {
+    LSTM->tensor[tensor].matrix[n]->rows = rows;
+    LSTM->tensor[tensor].matrix[n]->columns = columns;
+    for (unsigned int row = 0; row < rows; row++) {
+      for (unsigned int column = 0; column < columns; column++) {
+        LSTM->tensor[tensor].matrix[n]->matrix[row][column] = steps[n][row][column];
+      }
+    }
+  }
+}

@@ -53,7 +53,9 @@ matrix *dot_product(matrix *matrix1, matrix *matrix2) {
         matrix3->matrix[row1][column2] += matrix1->matrix[row1][column1] * matrix2->matrix[column1][column2];
       }
     }
-  } return matrix3;
+  } matrix1 = destroy_matrix(matrix1);
+    matrix2 = destroy_matrix(matrix2);
+    return matrix3;
 }
 
 matrix *matrix_copy_shape(matrix *matrix1) {
