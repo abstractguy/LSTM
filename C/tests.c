@@ -24,12 +24,39 @@ int main(int argc, char *argv[]) {
   };
 
 /* Yt_k:
-(((1 1)
-  (1 1)
-  (1 1)
-  (1 1))
+(((0 0)  // bullshit
+  (0 0)  // bullshit
+  (1 0)  // control end (1 ..
+  (1 0)) // control end .. 1)
+ ((1 0)  // answer is 1: (1 ..
+  (0 1)  // answer is 1: .. 0)
+  (0 1)  // output answer (0 ..
+  (0 1)) // output answer .. 0)
+ ((1 0)  // answer is 1: (1 ..
+  (0 1)  // answer is 1: .. 0)
+  (0 1)  // output answer (0 ..
+  (0 1)) // output answer .. 0)
+ ((1 0)  // answer is 1: (1 ..
+  (0 1)  // answer is 1: .. 0)
+  (0 1)  // output answer (0 ..
+  (0 1)) // output answer .. 0)
+ ((0 1)  // answer is 0: (0 ..
+  (1 0)  // answer is 0: .. 1)
+  (0 1)  // output answer (0 ..
+  (0 1)) // output answer .. 0)
  ((
 
+(define answer
+  (list (list (list 0 1) (list 0 1)
+              (list 1 0) (list 1 0))
+        (list (list 0 1) (list 1 0)
+              (list 1 0) (list 1 0))
+        (list (list 1 0) (list 0 1)
+              (list 1 0) (list 1 0))
+        (list (list 1 0) (list 1 0)
+              (list 1 0) (list 1 0))
+        (list (list 1 1) (list 1 1)
+              (list 1 1) (list 1 1))))
 
 (((0 0)
   (0 0)
