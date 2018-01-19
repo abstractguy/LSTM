@@ -3,13 +3,17 @@
 #include "feedback.h"
 #include "printing.h"
 
+#define X 1
+#define Y 4
+#define Z 11
+
 int main(int argc, char *argv[]) {
   // TEST 1:
   LSTM_type *LSTM = make_LSTM(4, 1);
 
   // TEST 4/5:
   // Xt_i:
-  long double inputs[11][4][1] = {
+  long double inputs[Z][Y][X] = {
     {{0},{0},{0},{0}}, // End of input
     {{0},{0},{0},{1}}, // Dummy input
     {{0},{0},{0},{1}}, // Dummy input
@@ -24,7 +28,7 @@ int main(int argc, char *argv[]) {
   };
 
   // Yt_k:
-  long double outputs[11][4][2] = {
+  long double outputs[Z][Y][X * 2] = {
     {{0, 0},  // bullshit
      {0, 0},  // bullshit
      {0, 1},  // control end (0 ..
@@ -89,6 +93,10 @@ int main(int argc, char *argv[]) {
         second(LSTM, St_c), 
         first(LSTM, Bt_phi))));
   */
+
+  // TEST 5:
+  push_all(LSTM, Xt_i, Z, Y, X, inputs);
+  push_all(LSTM, Xt_i, Z, Y, X * 2, outputs);
 
   // TEST 4:
   feedforward_once(LSTM);
