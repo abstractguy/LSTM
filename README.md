@@ -7,9 +7,9 @@ Status: In development
 
 Development branch: LSTM/C/
 
-Development status: Writing the last files
+Development status: Testing everything
 
-To write: Feedback
+To write: Integration of all components in a main loop.
 
 How to build:
 
@@ -17,6 +17,6 @@ How to build:
   
   cd LSTM/C/
 
-  gcc matrix.c LSTM.c feedforward.c printing.c tests.c -lm -o LSTM
-  
+  gcc matrix.c LSTM.c feedforward.c feedback.c update.c printing.c tests.c -lm -o LSTM
+
   ./LSTM

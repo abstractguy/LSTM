@@ -7,4 +7,4 @@
   void update_forward_once(LSTM_type *);
   void update_backward_once(LSTM_type *);
 
-}
+#endif
