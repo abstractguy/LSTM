@@ -47,6 +47,6 @@
   matrix *third(LSTM_type *, index);
   void push(LSTM_type *, index, matrix *);
   matrix *pop(LSTM_type *, index);
-  void push_all(LSTM_type *, index, unsigned int, unsigned int, unsigned int, long double ***);
+  void push_all(LSTM_type *, index, unsigned int, unsigned int, unsigned int, long double *);
 
 #endif
