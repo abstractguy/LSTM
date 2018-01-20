@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
 
   // TEST 4/5:
   // Xt_i:
-  long double inputs[Z][Y][X] = {
+  long double inputs[11][4][1] = {
     {{0.0},{0.0},{0.0},{0.0}}, // End of input
     {{0.0},{0.0},{0.0},{1.0}}, // Dummy input
     {{0.0},{0.0},{0.0},{1.0}}, // Dummy input
@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
   };
 
   // Yt_k:
-  long double outputs[Z][Y][X * 2] = {
+  long double outputs[11][4][2] = {
     {{0.0, 0.0},  // bullshit
      {0.0, 0.0},  // bullshit
      {0.0, 1.0},  // control end (0 ..
@@ -95,11 +95,11 @@ int main(int argc, char *argv[]) {
   */
 
   // TEST 5:
-  push_all(LSTM, Xt_i, Z, Y, X, (long double *)inputs);
-  push_all(LSTM, Xt_i, Z, Y, X * 2, (long double *)outputs);
+  push_all(LSTM, Xt_i, (long double *)inputs);
+  push_all(LSTM, Yt_k, (long double *)outputs);
 
   // TEST 4:
-  feedforward_once(LSTM);
+  //feedforward_once(LSTM);
 
   // TEST 5:
   //feedback_once(LSTM);

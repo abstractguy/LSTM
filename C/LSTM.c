@@ -6,9 +6,11 @@ LSTM_type *make_LSTM(unsigned int rows, unsigned int columns) {
   assert(LSTM);
   srand(1);
   // Empty inputs (Xt_i):
-  LSTM_initialize_tensors(LSTM, 0, 1, zero, 1, columns, rows);
+  //LSTM_initialize_tensors(LSTM, 0, 1, zero, 1, columns, rows);
+  LSTM_initialize_tensors(LSTM, 0, 1, zero, 11, columns, rows);
   // Empty outputs (Yt_k):
-  LSTM_initialize_tensors(LSTM, 1, 2, zero, 1, rows, columns * 2);
+  //LSTM_initialize_tensors(LSTM, 1, 2, zero, 1, rows, columns * 2);
+  LSTM_initialize_tensors(LSTM, 1, 2, zero, 11, rows, columns * 2);
   LSTM_initialize_tensors(LSTM, GATES_BEGIN, GATES_END, one, 2, columns, rows);
   LSTM_initialize_tensors(LSTM, INPUT_WEIGHTS_BEGIN, INPUT_WEIGHTS_END, random_long_double, 1, rows, columns);
   LSTM_initialize_tensors(LSTM, HIDDEN_WEIGHTS_BEGIN, HIDDEN_WEIGHTS_END, random_long_double, 1, rows, rows);
@@ -36,8 +38,7 @@ void LSTM_initialize_tensors(LSTM_type *LSTM, index begin, index end, long doubl
     LSTM->tensor[tensor].matrix = calloc(1, sizeof(matrix *) + sizeof(matrix) * time);
     assert(LSTM->tensor[tensor].matrix);
     for (unsigned int t = 0; t < time; t++) {
-      LSTM->tensor[tensor].matrix[t] = make_matrix(rows, columns);
-      matrix_for_each(init, LSTM->tensor[tensor].matrix[t]);
+      LSTM->tensor[tensor].matrix[t] = matrix_initialize(init, rows, columns);
     }
   }
 }
@@ -67,12 +68,11 @@ matrix *pop(LSTM_type *LSTM, index tensor) {
   return matrix1;
 }
 
-void push_all(LSTM_type *LSTM, index tensor, unsigned int time, unsigned int rows, unsigned int columns, long double *steps) {
-  LSTM->tensor[tensor].time = time;
-  LSTM->tensor[tensor].matrix = realloc(LSTM->tensor[tensor].matrix, sizeof(matrix *) + sizeof(matrix) * time);
-  assert(LSTM->tensor[tensor].matrix);
+void push_all(LSTM_type *LSTM, index tensor, long double *steps) {
+  unsigned int time = LSTM->tensor[tensor].time, rows, columns;
   for (unsigned int n = 0; n < time; n++) {
-    LSTM->tensor[tensor].matrix[n] = make_matrix(rows, columns);
+    rows = LSTM->tensor[tensor].matrix[n]->rows;
+    columns = LSTM->tensor[tensor].matrix[n]->columns;
     for (unsigned int row = 0; row < rows; row++) {
       for (unsigned int column = 0; column < columns; column++) {
         LSTM->tensor[tensor].matrix[n]->matrix[row][column] = *(steps + n * rows * columns + row * columns + column);
