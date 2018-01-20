@@ -14,65 +14,65 @@ int main(int argc, char *argv[]) {
   // TEST 4/5:
   // Xt_i:
   long double inputs[Z][Y][X] = {
-    {{0},{0},{0},{0}}, // End of input
-    {{0},{0},{0},{1}}, // Dummy input
-    {{0},{0},{0},{1}}, // Dummy input
-    {{0},{0},{0},{1}}, // Dummy input
-    {{0},{0},{0},{1}}, // Dummy input
-    {{0},{0},{1},{0}}, // Output trigger
-    {{0},{0},{1},{1}}, // First possibility:  NAND(0, 0) = 1
-    {{0},{1},{1},{1}}, // Second possibility: NAND(0, 1) = 1
-    {{1},{0},{1},{1}}, // Third possibility:  NAND(1, 0) = 1
-    {{1},{1},{1},{1}}, // Fourth possibility: NAND(1, 1) = 0
-    {{0},{0},{0},{1}}  // Dummy input
+    {{0.0},{0.0},{0.0},{0.0}}, // End of input
+    {{0.0},{0.0},{0.0},{1.0}}, // Dummy input
+    {{0.0},{0.0},{0.0},{1.0}}, // Dummy input
+    {{0.0},{0.0},{0.0},{1.0}}, // Dummy input
+    {{0.0},{0.0},{0.0},{1.0}}, // Dummy input
+    {{0.0},{0.0},{1.0},{0.0}}, // Output trigger
+    {{0.0},{0.0},{1.0},{1.0}}, // First possibility:  NAND(0, 0) = 1
+    {{0.0},{1.0},{1.0},{1.0}}, // Second possibility: NAND(0, 1) = 1
+    {{1.0},{0.0},{1.0},{1.0}}, // Third possibility:  NAND(1, 0) = 1
+    {{1.0},{1.0},{1.0},{1.0}}, // Fourth possibility: NAND(1, 1) = 0
+    {{0.0},{0.0},{0.0},{1.0}}  // Dummy input
   };
 
   // Yt_k:
   long double outputs[Z][Y][X * 2] = {
-    {{0, 0},  // bullshit
-     {0, 0},  // bullshit
-     {0, 1},  // control end (0 ..
-     {0, 1}}, // control end .. 0)
-    {{1, 0},  // answer is 1: (1 ..
-     {0, 1},  // answer is 1: .. 0)
-     {0, 1},  // output answer (0 ..
-     {1, 0}}, // output answer .. 1)
-    {{1, 0},  // answer is 1: (1 ..
-     {0, 1},  // answer is 1: .. 0)
-     {0, 1},  // output answer (0 ..
-     {1, 0}}, // output answer .. 1)
-    {{1, 0},  // answer is 1: (1 ..
-     {0, 1},  // answer is 1: .. 0)
-     {0, 1},  // output answer (0 ..
-     {1, 0}}, // output answer .. 1)
-    {{0, 1},  // answer is 0: (0 ..
-     {1, 0},  // answer is 0: .. 1)
-     {0, 1},  // output answer (0 ..
-     {1, 0}}, // output answer .. 1)
-    {{0, 0},  // bullshit
-     {0, 0},  // bullshit
-     {1, 0},  // control trigger: (1 ..
-     {0, 1}}, // control trigger: .. 0)
-    {{0, 0},  // bullshit
-     {0, 0},  // bullshit
-     {1, 0},  // control input: (1 ..
-     {1, 0}}, // control input: .. 1)
-    {{0, 0},  // bullshit
-     {0, 0},  // bullshit
-     {1, 0},  // control input: (1 ..
-     {1, 0}}, // control input: .. 1)
-    {{0, 0},  // bullshit
-     {0, 0},  // bullshit
-     {1, 0},  // control input: (1 ..
-     {1, 0}}, // control input: .. 1)
-    {{0, 0},  // bullshit
-     {0, 0},  // bullshit
-     {1, 0},  // control input: (1 ..
-     {1, 0}}, // control input: .. 1)
-    {{0, 0},  // bullshit
-     {0, 0},  // bullshit
-     {0, 1},  // output answer (0 ..
-     {1, 0}}  // output answer .. 1)
+    {{0.0, 0.0},  // bullshit
+     {0.0, 0.0},  // bullshit
+     {0.0, 1.0},  // control end (0 ..
+     {0.0, 1.0}}, // control end .. 0)
+    {{1.0, 0.0},  // answer is 1: (1 ..
+     {0.0, 1.0},  // answer is 1: .. 0)
+     {0.0, 1.0},  // output answer (0 ..
+     {1.0, 0.0}}, // output answer .. 1)
+    {{1.0, 0.0},  // answer is 1: (1 ..
+     {0.0, 1.0},  // answer is 1: .. 0)
+     {0.0, 1.0},  // output answer (0 ..
+     {1.0, 0.0}}, // output answer .. 1)
+    {{1.0, 0.0},  // answer is 1: (1 ..
+     {0.0, 1.0},  // answer is 1: .. 0)
+     {0.0, 1.0},  // output answer (0 ..
+     {1.0, 0.0}}, // output answer .. 1)
+    {{0.0, 1.0},  // answer is 0: (0 ..
+     {1.0, 0.0},  // answer is 0: .. 1)
+     {0.0, 1.0},  // output answer (0 ..
+     {1.0, 0.0}}, // output answer .. 1)
+    {{0.0, 0.0},  // bullshit
+     {0.0, 0.0},  // bullshit
+     {1.0, 0.0},  // control trigger: (1 ..
+     {0.0, 1.0}}, // control trigger: .. 0)
+    {{0.0, 0.0},  // bullshit
+     {0.0, 0.0},  // bullshit
+     {1.0, 0.0},  // control input: (1 ..
+     {1.0, 0.0}}, // control input: .. 1)
+    {{0.0, 0.0},  // bullshit
+     {0.0, 0.0},  // bullshit
+     {1.0, 0.0},  // control input: (1 ..
+     {1.0, 0.0}}, // control input: .. 1)
+    {{0.0, 0.0},  // bullshit
+     {0.0, 0.0},  // bullshit
+     {1.0, 0.0},  // control input: (1 ..
+     {1.0, 0.0}}, // control input: .. 1)
+    {{0.0, 0.0},  // bullshit
+     {0.0, 0.0},  // bullshit
+     {1.0, 0.0},  // control input: (1 ..
+     {1.0, 0.0}}, // control input: .. 1)
+    {{0.0, 0.0},  // bullshit
+     {0.0, 0.0},  // bullshit
+     {0.0, 1.0},  // output answer (0 ..
+     {1.0, 0.0}}  // output answer .. 1)
   };
 
   // TEST 1:
@@ -95,8 +95,8 @@ int main(int argc, char *argv[]) {
   */
 
   // TEST 5:
-  push_all(LSTM, Xt_i, Z, Y, X, inputs);
-  push_all(LSTM, Xt_i, Z, Y, X * 2, outputs);
+  push_all(LSTM, Xt_i, Z, Y, X, (long double *)inputs);
+  push_all(LSTM, Xt_i, Z, Y, X * 2, (long double *)outputs);
 
   // TEST 4:
   feedforward_once(LSTM);
