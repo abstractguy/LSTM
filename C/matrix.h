@@ -34,7 +34,6 @@
   long double tanh_derivative_helper(long double);
   matrix *sigmoid_derivative(matrix *);
   matrix *tanh_derivative(matrix *);
-  matrix *matrix_map2(long double (*)(long double, long double), matrix *, matrix *);
   matrix *broadcast_function(long double (*)(long double, long double), matrix *, matrix *);
   matrix *fold(unsigned int, long double (*)(long double, long double), matrix *, ...);
   long double add(long double, long double);
