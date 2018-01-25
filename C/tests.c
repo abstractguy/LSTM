@@ -94,12 +94,12 @@ int main(int argc, char *argv[]) {
         first(LSTM, Bt_phi))));
   */
 
-  // TEST 5:
+  // TEST 4/5:
   push_all(LSTM, Xt_i, (long double *)inputs);
   push_all(LSTM, Yt_k, (long double *)outputs);
 
   // TEST 4:
-  //feedforward_once(LSTM);
+  feedforward_once(LSTM);
 
   // TEST 5:
   //feedback_once(LSTM);

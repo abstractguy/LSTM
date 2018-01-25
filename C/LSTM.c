@@ -6,10 +6,8 @@ LSTM_type *make_LSTM(unsigned int rows, unsigned int columns) {
   assert(LSTM);
   srand(1);
   // Empty inputs (Xt_i):
-  //LSTM_initialize_tensors(LSTM, 0, 1, zero, 1, columns, rows);
   LSTM_initialize_tensors(LSTM, 0, 1, zero, 11, columns, rows);
   // Empty outputs (Yt_k):
-  //LSTM_initialize_tensors(LSTM, 1, 2, zero, 1, rows, columns * 2);
   LSTM_initialize_tensors(LSTM, 1, 2, zero, 11, rows, columns * 2);
   LSTM_initialize_tensors(LSTM, GATES_BEGIN, GATES_END, one, 2, columns, rows);
   LSTM_initialize_tensors(LSTM, INPUT_WEIGHTS_BEGIN, INPUT_WEIGHTS_END, random_long_double, 1, rows, columns);
