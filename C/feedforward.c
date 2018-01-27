@@ -38,13 +38,15 @@ void feedforward_once(LSTM_type *LSTM) {
 
   // Cell preactivations:
   push(LSTM, At_c, 
+    //transpose(
     sum(2, 
       product(2, 
-        first(LSTM, Xt_i), 
+        transpose(first(LSTM, Xt_i)), 
         first(LSTM, Wi_c)), 
       product(2, 
-        second(LSTM, Bt_h), 
+        transpose(second(LSTM, Bt_h)), 
         first(LSTM, Wh_c))));
+    //);
 
   // Cell activations:
   push(LSTM, St_c, 
