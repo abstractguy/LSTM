@@ -4,8 +4,8 @@
 void feedback_once(LSTM_type *LSTM) {
   matrix *net_error = 
     subtract(2, 
-      first(LSTM, Yt_k), 
-      first(LSTM, Bt_c));
+      second(LSTM, Yt_k), 
+      second(LSTM, Bt_c));
 
   // Output errors:
   push(LSTM, Dt_k, 

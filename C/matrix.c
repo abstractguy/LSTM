@@ -178,3 +178,37 @@ matrix *transpose(matrix *matrix1) {
   matrix1 = destroy_matrix(matrix1);
   return matrix2;
 }
+
+matrix *apply_vertically(long double (*f)(long double, long double), matrix *matrix1) {
+  matrix *matrix2 = NULL;
+  if (matrix1->columns == 1) return matrix1;
+  else {
+    matrix2 = make_matrix(matrix1->rows, 1);
+    for (unsigned int row = 0; row < matrix1->rows; row++) {
+      matrix2->matrix[row][0] = matrix1->matrix[row][0];
+    }
+    for (unsigned int column = 1; column < matrix1->columns; column++) {
+      for (unsigned int row = 0; row < matrix1->rows; row++) {
+        matrix2->matrix[row][0] = f(matrix2->matrix[row][0], matrix1->matrix[row][column]);
+      }
+    } matrix1 = destroy_matrix(matrix1);
+      return matrix2;
+  }
+}
+
+matrix *fold_vertically(unsigned int time, long double (*f)(long double, long double), matrix *matrix1, ...) {
+  matrix *matrix2 = NULL;
+  va_list args;
+  matrix1 = apply_vertically(f, matrix1);
+  if (time > 1) {
+    va_start(args, matrix1);
+    for (unsigned int n = 1; n < time; n++) {
+      matrix2 = apply_vertically(f, va_arg(args, matrix *));
+      for (unsigned int row = 0; row < matrix1->rows; row++) {
+        matrix1->matrix[row][0] =
+          f(matrix1->matrix[row][0],
+            matrix2->matrix[row][0]);
+      } matrix2 = destroy_matrix(matrix2);
+    }   va_end(args);
+  }     return matrix1;
+}
