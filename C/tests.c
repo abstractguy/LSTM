@@ -3,10 +3,6 @@
 #include "feedback.h"
 #include "printing.h"
 
-#define X 1
-#define Y 4
-#define Z 11
-
 int main(int argc, char *argv[]) {
   // TEST 1:
   LSTM_type *LSTM = make_LSTM(4, 1);
@@ -99,7 +95,7 @@ int main(int argc, char *argv[]) {
   push_all(LSTM, Yt_k, (long double *)outputs);
 
   // TEST 4:
-  feedforward_once(LSTM);
+  //feedforward_once(LSTM);
 
   // TEST 5:
   //feedback_once(LSTM);

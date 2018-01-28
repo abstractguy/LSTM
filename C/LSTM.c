@@ -6,17 +6,20 @@ LSTM_type *make_LSTM(unsigned int rows, unsigned int columns) {
   assert(LSTM);
   srand(1);
   // Empty inputs (Xt_i):
-  LSTM_initialize_tensors(LSTM, 0, 1, zero, 11, columns, rows);
-  // Empty outputs (Yt_k):
-  LSTM_initialize_tensors(LSTM, 1, 2, zero, 11, rows, columns * 2);
-  LSTM_initialize_tensors(LSTM, GATES_BEGIN, GATES_END, one, 2, columns, rows);
-  LSTM_initialize_tensors(LSTM, INPUT_WEIGHTS_BEGIN, INPUT_WEIGHTS_END, random_long_double, 1, rows, columns);
-  LSTM_initialize_tensors(LSTM, HIDDEN_WEIGHTS_BEGIN, HIDDEN_WEIGHTS_END, random_long_double, 1, rows, rows);
-  LSTM_initialize_tensors(LSTM, CELL_WEIGHTS_BEGIN, CELL_WEIGHTS_END, random_long_double, 1, rows, columns);
-  LSTM_initialize_tensors(LSTM, ERRORS_BEGIN, ERRORS_END, zero, 1, columns, rows);
-  LSTM_initialize_tensors(LSTM, INPUT_UPDATES_BEGIN, INPUT_UPDATES_END, zero, 1, rows, columns);
-  LSTM_initialize_tensors(LSTM, HIDDEN_UPDATES_BEGIN, HIDDEN_UPDATES_END, zero, 1, rows, rows);
-  LSTM_initialize_tensors(LSTM, CELL_UPDATES_BEGIN, CELL_UPDATES_END, zero, 1, rows, columns);
+  LSTM_initialize(LSTM, INPUTS_BEGIN, INPUTS_END, zero, 11, rows, columns);
+  // Empty outputs (Yt_k and Bt_c):
+  LSTM_initialize(LSTM, OUTPUTS_BEGIN, OUTPUTS_END, random_long_double, 11, rows, columns * 2);
+  // Empty errors  (Dt_k and Dt_c):
+  LSTM_initialize(LSTM, OUTPUT_ERRORS_BEGIN, OUTPUT_ERRORS_END, zero, 11, rows, columns * 2);
+
+  LSTM_initialize(LSTM, GATES_BEGIN, GATES_END, one, 2, rows, columns);
+  LSTM_initialize(LSTM, INPUT_WEIGHTS_BEGIN, INPUT_WEIGHTS_END, random_long_double, 1, rows, columns);
+  LSTM_initialize(LSTM, HIDDEN_WEIGHTS_BEGIN, HIDDEN_WEIGHTS_END, random_long_double, 1, rows, rows);
+  LSTM_initialize(LSTM, CELL_WEIGHTS_BEGIN, CELL_WEIGHTS_END, random_long_double, 1, rows, columns);
+  LSTM_initialize(LSTM, ERRORS_BEGIN, ERRORS_END, zero, 1, rows, columns);
+  LSTM_initialize(LSTM, INPUT_UPDATES_BEGIN, INPUT_UPDATES_END, zero, 1, rows, columns);
+  LSTM_initialize(LSTM, HIDDEN_UPDATES_BEGIN, HIDDEN_UPDATES_END, zero, 1, rows, rows);
+  LSTM_initialize(LSTM, CELL_UPDATES_BEGIN, CELL_UPDATES_END, zero, 1, rows, columns);
   return LSTM;
 }
 
@@ -30,7 +33,7 @@ LSTM_type *destroy_LSTM(LSTM_type *LSTM) {
       return NULL;
 }
 
-void LSTM_initialize_tensors(LSTM_type *LSTM, index begin, index end, long double (*init)(long double), unsigned int time, unsigned int rows, unsigned int columns) {
+void LSTM_initialize(LSTM_type *LSTM, index begin, index end, long double (*init)(long double), unsigned int time, unsigned int rows, unsigned int columns) {
   for (index tensor = begin; tensor < end; tensor++) {
     LSTM->tensor[tensor].time = time;
     LSTM->tensor[tensor].matrix = calloc(1, sizeof(matrix *) + sizeof(matrix) * time);

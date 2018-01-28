@@ -63,13 +63,13 @@ void feedforward_once(LSTM_type *LSTM) {
   push(LSTM, At_omega, 
     sum(3, 
       product(2, 
-        first(LSTM, Xt_i), 
+        transpose(first(LSTM, Xt_i)), 
         first(LSTM, Wi_omega)), 
       product(2, 
-        second(LSTM, Bt_h), 
+        transpose(second(LSTM, Bt_h)), 
         first(LSTM, Wh_omega)), 
       product(2, 
-        first(LSTM, St_c), 
+        transpose(first(LSTM, St_c)), 
         first(LSTM, Wc_omega))));
 
   // Output activations:
