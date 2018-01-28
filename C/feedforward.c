@@ -46,11 +46,11 @@ void feedforward_once(LSTM_type *LSTM) {
 
   // Cell activations:
   push(LSTM, St_c, 
-    sum(2, 
-      product(2, 
+    fold(2, add, 
+      fold(2, multiply, 
         matrix_tanh(first(LSTM, At_c)), 
         first(LSTM, Bt_iota)), 
-      product(2, 
+      fold(2, multiply, 
         second(LSTM, St_c), 
         first(LSTM, Bt_phi))));
 
@@ -72,7 +72,7 @@ void feedforward_once(LSTM_type *LSTM) {
 
   // Cell outputs:
   push(LSTM, Bt_c, 
-    product(2, 
+    fold(2, multiply, 
       matrix_sigmoid(first(LSTM, St_c)), 
       first(LSTM, Bt_omega)));
 
