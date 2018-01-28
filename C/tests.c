@@ -95,7 +95,7 @@ int main(int argc, char *argv[]) {
   push_all(LSTM, Yt_k, (long double *)outputs);
 
   // TEST 4:
-  //feedforward_once(LSTM);
+  feedforward_once(LSTM);
 
   // TEST 5:
   //feedback_once(LSTM);
