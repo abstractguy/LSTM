@@ -251,10 +251,17 @@
           m n LSTM input done?)
 
   ;; Input gates
-  (join-signals! At_iota LSTM
-    (list first Xt_i Wi_iota)
-    (list second Bt_h Wh_iota)
-    (list second St_c Wc_iota))
+  (push! At_iota LSTM
+    (matrix-map +
+      (matrix-multiply
+        (first (vector-ref LSTM Xt_i))
+        (vector-ref LSTM Wi_iota))
+      (matrix-multiply
+        (second (vector-ref LSTM Bt_h))
+        (vector-ref LSTM Wh_iota))
+      (matrix-multiply
+        (second (vector-ref LSTM St_c))
+        (vector-ref LSTM Wc_iota))))
 
   (push! Bt_iota LSTM
     (matrix-sigmoid
@@ -262,10 +269,17 @@
         (vector-ref LSTM At_iota))))
 
   ;; Forget gates
-  (join-signals! At_phi LSTM
-    (list first Xt_i Wi_phi)
-    (list second Bt_h Wh_phi)
-    (list second St_c Wc_phi))
+  (push! At_phi LSTM
+    (matrix-map +
+      (matrix-multiply
+        (first (vector-ref LSTM Xt_i))
+        (vector-ref LSTM Wi_phi))
+      (matrix-multiply
+        (second (vector-ref LSTM Bt_h))
+        (vector-ref LSTM Wh_phi))
+      (matrix-multiply
+        (second (vector-ref LSTM St_c))
+        (vector-ref LSTM Wc_phi))))
 
   (push! Bt_phi LSTM
     (matrix-sigmoid
@@ -273,9 +287,14 @@
         (vector-ref LSTM At_phi))))
 
   ;; Cells
-  (join-signals! At_c LSTM
-    (list first Xt_i Wi_c)
-    (list second Bt_h Wh_c))
+  (push! At_c LSTM
+    (matrix-map +
+      (matrix-multiply
+        (first (vector-ref LSTM Xt_i))
+        (vector-ref LSTM Wi_c))
+      (matrix-multiply
+        (second (vector-ref LSTM Bt_h))
+        (vector-ref LSTM Wh_c))))
 
   (push! St_c LSTM
     (matrix-map +
@@ -291,10 +310,17 @@
           (vector-ref LSTM Bt_iota)))))
 
   ;; Output gates
-  (join-signals! At_omega LSTM
-    (list first Xt_i Wi_omega)
-    (list second Bt_h Wh_omega)
-    (list first St_c Wc_omega))
+  (push! At_omega LSTM
+    (matrix-map +
+      (matrix-multiply
+        (first (vector-ref LSTM Xt_i))
+        (vector-ref LSTM Wi_omega))
+      (matrix-multiply
+        (second (vector-ref LSTM Bt_h))
+        (vector-ref LSTM Wh_omega))
+      (matrix-multiply
+        (first (vector-ref LSTM St_c))
+        (vector-ref LSTM Wc_omega))))
 
   (push! Bt_omega LSTM
     (matrix-sigmoid
@@ -485,7 +511,7 @@
   (lambda (x) #t))
 
 ;;(LSTM-backpropagate!
-;;  LSTM input answer)
+  ;;LSTM input answer)
 
 
 
