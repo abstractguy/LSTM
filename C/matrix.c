@@ -44,7 +44,7 @@ void matrix_for_each(long double (*f)(long double), matrix *matrix1) {
 
 matrix *dot_product(matrix *matrix1, matrix *matrix2) {
   matrix *matrix3 = make_matrix(matrix1->rows, matrix2->columns);
-  assert(matrix1->rows == matrix2->columns);
+  assert(matrix1->columns == matrix2->rows);
   matrix_for_each(zero, matrix3);
 
   for (unsigned int row1 = 0; row1 < matrix1->rows; row1++) {
