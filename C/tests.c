@@ -98,7 +98,7 @@ int main(int argc, char *argv[]) {
   feedforward_once(LSTM);
 
   // TEST 5:
-  feedback_once(LSTM);
+  //feedback_once(LSTM);
 
   // TEST 1:
   print_LSTM(LSTM);

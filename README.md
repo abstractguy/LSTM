@@ -17,6 +17,12 @@ How to build:
   
   cd LSTM/C/
 
+  # For convolutional network test (NAND gate):
+  gcc -Os -Wall -Wextra -o CNN -lm matrix.c printing.c CNN.c
+
+  ./CNN
+
+  # For LSTM tests:
   gcc matrix.c LSTM.c feedforward.c feedback.c update.c printing.c tests.c -lm -o LSTM
 
   ./LSTM

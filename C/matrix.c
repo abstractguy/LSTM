@@ -212,3 +212,13 @@ matrix *fold_vertically(unsigned int time, long double (*f)(long double, long do
     }   va_end(args);
   }     return matrix1;
 }
+
+void matrix_push_all(matrix *matrix1, long double *array) {
+  unsigned int rows    = matrix1->rows,
+               columns = matrix1->columns;
+  for (unsigned int row = 0; row < rows; row++) {
+    for (unsigned int column = 0; column < columns; column++) {
+      matrix1->matrix[row][column] = array[row * columns + column];
+    }
+  }
+}
