@@ -34,6 +34,8 @@ long double zero(long double x) {NOT_USED(x); return 0.0;}
 
 long double one(long double x) {NOT_USED(x); return 1.0;}
 
+long double one_third(long double x) {NOT_USED(x); return 1.0 / 3.0;}
+
 void matrix_for_each(long double (*f)(long double), matrix *matrix1) {
   for (unsigned int row = 0; row < matrix1->rows; row++) {
     for (unsigned int column = 0; column < matrix1->columns; column++) {
@@ -93,6 +95,15 @@ matrix *matrix_sigmoid(matrix *matrix1) {
   return matrix1;
 }
 
+matrix *sigmoid_derivative(matrix *matrix1) {
+  return
+    fold(2, multiply, 
+      matrix1,
+      fold(2, minus, 
+        matrix_initialize_from_matrix(one, matrix1), 
+        matrix_copy(matrix1)));
+}
+
 matrix *matrix_tanh(matrix *matrix1) {
   matrix_for_each(tanhl, matrix1);
   return matrix1;
@@ -108,10 +119,12 @@ long double tanh_derivative_helper(long double x) {
   return 1.0 - y * y;
 }
 
+/*
 matrix *sigmoid_derivative(matrix *matrix1) {
   matrix_for_each(sigmoid_derivative_helper, matrix1);
   return matrix1;
 }
+*/
 
 matrix *tanh_derivative(matrix *matrix1) {
   matrix_for_each(tanh_derivative_helper, matrix1);

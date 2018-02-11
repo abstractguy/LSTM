@@ -3,7 +3,7 @@
 #include "feedback.h"
 #include "printing.h"
 
-int main(int argc, char *argv[]) {
+int main(void) {
   // TEST 1:
   LSTM_type *LSTM = make_LSTM(4, 1);
 
@@ -70,10 +70,6 @@ int main(int argc, char *argv[]) {
      {0.0, 1.0},  // output answer (0 ..
      {1.0, 0.0}}  // output answer .. 1)
   };
-
-  // TEST 1:
-  NOT_USED(argc);
-  NOT_USED(argv);
 
   /* TEST 2:
   push(LSTM, At_iota, dot_product(first(LSTM, Xt_i), first(LSTM, Wi_iota)));

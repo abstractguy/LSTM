@@ -34,6 +34,7 @@
   long double random_long_double(long double);
   long double zero(long double);
   long double one(long double);
+  long double one_third(long double);
   void matrix_for_each(long double (*)(long double), matrix *);
   matrix *dot_product(matrix *, matrix *);
   matrix *matrix_copy_shape(matrix *);
