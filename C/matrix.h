@@ -8,21 +8,21 @@
 
   #define NOT_USED(x) ((void)x)
 
+/*
   #define sum(n, matrix1, ...) \
     fold_vertically(n, add, matrix1, __VA_ARGS__)
   #define product(n, matrix1, ...) \
     fold_vertically(n, multiply, matrix1, __VA_ARGS__)
   #define subtract(n, matrix1, ...) \
     fold_vertically(n, minus, matrix1, __VA_ARGS__)
+*/
 
-/*
   #define sum(n, matrix1, ...) \
     fold(n, add, matrix1, __VA_ARGS__)
   #define product(n, matrix1, ...) \
     fold(n, multiply, matrix1, __VA_ARGS__)
   #define subtract(n, matrix1, ...) \
     fold(n, minus, matrix1, __VA_ARGS__)
-*/
 
   typedef struct {
     unsigned int rows, columns;
@@ -34,10 +34,8 @@
   long double random_long_double(long double);
   long double zero(long double);
   long double one(long double);
-  long double one_third(long double);
   void matrix_for_each(long double (*)(long double), matrix *);
   matrix *dot_product(matrix *, matrix *);
-  matrix *matrix_copy_shape(matrix *);
   matrix *matrix_copy(matrix *);
   matrix *matrix_initialize(long double (*)(long double), unsigned int, unsigned int);
   matrix *matrix_initialize_from_matrix(long double (*)(long double), matrix *);
@@ -54,8 +52,8 @@
   long double multiply(long double, long double);
   long double minus(long double, long double);
   matrix *transpose(matrix *);
-  matrix *apply_vertically(long double (*)(long double, long double), matrix *);
-  matrix *fold_vertically(unsigned int, long double (*)(long double, long double), matrix *, ...);
+  //matrix *apply_vertically(long double (*)(long double, long double), matrix *);
+  //matrix *fold_vertically(unsigned int, long double (*)(long double, long double), matrix *, ...);
   void matrix_push_all(matrix *, long double *);
 
 #endif

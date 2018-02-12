@@ -21,13 +21,12 @@ int main(void) {
     answer  = matrix_sigmoid(dot_product(matrix_copy(in),
                                          matrix_copy(weights)));
     if (epoch == 59999) {puts("Feedforward:"); print_matrix(answer);}
-    errors  = fold(2, multiply, sigmoid_derivative(answer),
-                                fold(2, minus, matrix_copy(out), 
-                                               matrix_copy(answer)));
+    errors  = product(2, sigmoid_derivative(answer),
+                         subtract(2, matrix_copy(out), 
+                                     matrix_copy(answer)));
     if (epoch == 59999) {puts("Feedback:");    print_matrix(errors);}
-    weights = fold(2, add, weights, 
-                           dot_product(transpose(matrix_copy(in)), 
-                                       errors));
+    weights = sum(2, weights, dot_product(transpose(matrix_copy(in)), 
+                                          errors));
     if (epoch == 59999) {puts("New weights:"); print_matrix(weights);}
   } in = destroy_matrix(in); out = destroy_matrix(out);
     weights = destroy_matrix(weights);
