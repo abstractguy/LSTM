@@ -8,9 +8,9 @@ LSTM_type *make_LSTM(unsigned int rows, unsigned int columns) {
   // Empty inputs (Xt_i):
   LSTM_initialize(LSTM, INPUTS_BEGIN, INPUTS_END, zero, 11, rows, columns);
   // Empty outputs (Yt_k and Bt_c):
-  LSTM_initialize(LSTM, OUTPUTS_BEGIN, OUTPUTS_END, random_long_double, 11, rows, columns * 2);
+  LSTM_initialize(LSTM, OUTPUTS_BEGIN, OUTPUTS_END, random_long_double, 11, rows, columns);
   // Empty errors  (Dt_k and Dt_c):
-  LSTM_initialize(LSTM, OUTPUT_ERRORS_BEGIN, OUTPUT_ERRORS_END, zero, 11, rows, columns * 2);
+  LSTM_initialize(LSTM, OUTPUT_ERRORS_BEGIN, OUTPUT_ERRORS_END, zero, 11, rows, columns);
 
   LSTM_initialize(LSTM, GATES_BEGIN, GATES_END, one, 2, rows, columns);
   LSTM_initialize(LSTM, INPUT_WEIGHTS_BEGIN, INPUT_WEIGHTS_END, random_long_double, 1, rows, columns);
