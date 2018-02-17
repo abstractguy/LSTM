@@ -4,48 +4,45 @@
 void feedforward_once(LSTM_type *LSTM) {
   // Input preactivations:
   push(LSTM, At_iota, 
-    transpose(
-      sum(3, 
-        dot_product(
-          transpose(first(LSTM, Xt_i)), 
-          first(LSTM, Wi_iota)),
-        dot_product(
-          transpose(second(LSTM, Bt_h)), 
-          first(LSTM, Wh_iota)),
-        dot_product(
-          transpose(second(LSTM, St_c)),
-          first(LSTM, Wc_iota)))));
+    sum(3, 
+      dot_product(
+        first(LSTM, Xt_i), 
+        first(LSTM, Wi_iota)),
+      dot_product(
+        second(LSTM, Bt_h), 
+        first(LSTM, Wh_iota)),
+      dot_product(
+        second(LSTM, St_c),
+        first(LSTM, Wc_iota))));
 
   // Input activations:
   push(LSTM, Bt_iota, matrix_sigmoid(first(LSTM, At_iota)));
 
   // Forget preactivations:
   push(LSTM, At_phi, 
-    transpose(
-      sum(3, 
-        dot_product(
-          transpose(first(LSTM, Xt_i)), 
-          first(LSTM, Wi_phi)),
-        dot_product(
-          transpose(second(LSTM, Bt_h)), 
-          first(LSTM, Wh_phi)),
-        dot_product(
-          transpose(second(LSTM, St_c)),
-          first(LSTM, Wc_phi)))));
+    sum(3, 
+      dot_product(
+        first(LSTM, Xt_i), 
+        first(LSTM, Wi_phi)),
+      dot_product(
+        second(LSTM, Bt_h), 
+        first(LSTM, Wh_phi)),
+      dot_product(
+        second(LSTM, St_c),
+        first(LSTM, Wc_phi))));
 
   // Forget activations
   push(LSTM, Bt_phi, matrix_sigmoid(first(LSTM, At_phi)));
 
   // Cell preactivations:
   push(LSTM, At_c, 
-    transpose(
-      sum(2, 
-        dot_product(
-          transpose(first(LSTM, Xt_i)), 
-          first(LSTM, Wi_c)), 
-        dot_product(
-          transpose(second(LSTM, Bt_h)), 
-          first(LSTM, Wh_c)))));
+    sum(2, 
+      dot_product(
+        first(LSTM, Xt_i), 
+        first(LSTM, Wi_c)), 
+      dot_product(
+        second(LSTM, Bt_h), 
+        first(LSTM, Wh_c))));
 
   // Cell activations:
   push(LSTM, St_c, 
@@ -59,17 +56,16 @@ void feedforward_once(LSTM_type *LSTM) {
 
   // Output preactivations:
   push(LSTM, At_omega, 
-   transpose(
-      sum(3, 
-        dot_product(
-          transpose(first(LSTM, Xt_i)), 
-          first(LSTM, Wi_omega)), 
-        dot_product(
-          transpose(second(LSTM, Bt_h)), 
-          first(LSTM, Wh_omega)), 
-        dot_product(
-          transpose(first(LSTM, St_c)), 
-          first(LSTM, Wc_omega)))));
+    sum(3, 
+      dot_product(
+        first(LSTM, Xt_i), 
+        first(LSTM, Wi_omega)), 
+      dot_product(
+        second(LSTM, Bt_h), 
+        first(LSTM, Wh_omega)), 
+      dot_product(
+        first(LSTM, St_c), 
+        first(LSTM, Wc_omega))));
 
   // Output activations:
   push(LSTM, Bt_omega, matrix_sigmoid(first(LSTM, At_omega)));
