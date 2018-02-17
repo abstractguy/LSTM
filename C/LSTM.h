@@ -3,20 +3,16 @@
   #define LSTM_H
   #include "matrix.h"
   #define LSTM_SIZE            40
-  #define INPUTS_BEGIN         Xt_i
-  #define OUTPUTS_BEGIN        Yt_k
-  #define OUTPUT_ERRORS_BEGIN  Dt_k
-  #define GATES_BEGIN          Bt_h
+  #define INPUT_OUTPUT_BEGIN   Xt_i
+  #define GATES_BEGIN          Bt_c
   #define INPUT_WEIGHTS_BEGIN  Wi_iota
   #define HIDDEN_WEIGHTS_BEGIN Wh_iota
   #define CELL_WEIGHTS_BEGIN   Wc_iota
-  #define ERRORS_BEGIN         Dt_s
+  #define ERRORS_BEGIN         Dt_k
   #define INPUT_UPDATES_BEGIN  Ui_iota
   #define HIDDEN_UPDATES_BEGIN Uh_iota
   #define CELL_UPDATES_BEGIN   Uc_iota
-  #define INPUTS_END           OUTPUTS_BEGIN
-  #define OUTPUTS_END          OUTPUT_ERRORS_BEGIN
-  #define OUTPUT_ERRORS_END    GATES_BEGIN
+  #define INPUT_OUTPUT_END     GATES_BEGIN
   #define GATES_END            INPUT_WEIGHTS_BEGIN
   #define INPUT_WEIGHTS_END    HIDDEN_WEIGHTS_BEGIN
   #define HIDDEN_WEIGHTS_END   CELL_WEIGHTS_BEGIN
@@ -31,11 +27,11 @@
   #define UPDATES_END          CELL_UPDATES_END
 
   typedef enum {
-    Xt_i, Yt_k, Bt_c, Dt_k, Dt_c, Bt_h, St_c, At_iota, Bt_iota,
+    Xt_i, Yt_k, Bt_c, Bt_h, St_c, At_iota, Bt_iota,
     At_phi, Bt_phi, At_c, At_omega, Bt_omega, Wi_iota, Wi_phi, Wi_c,
     Wi_omega, Wh_iota, Wh_phi, Wh_c, Wh_omega, Wc_iota, Wc_phi, Wc_omega,
-    Dt_s, Dt_omega, Dt_phi, Dt_iota, Ui_iota, Ui_phi, Ui_c, Ui_omega,
-    Uh_iota, Uh_phi, Uh_c, Uh_omega, Uc_iota, Uc_phi, Uc_omega
+    Dt_k, Dt_c, Dt_s, Dt_omega, Dt_phi, Dt_iota, Ui_iota, Ui_phi, Ui_c,
+    Ui_omega, Uh_iota, Uh_phi, Uh_c, Uh_omega, Uc_iota, Uc_phi, Uc_omega
   } index;
 
   typedef struct {
