@@ -52,8 +52,6 @@
   long double multiply(long double, long double);
   long double minus(long double, long double);
   matrix *transpose(matrix *);
-  //matrix *apply_vertically(long double (*)(long double, long double), matrix *);
-  //matrix *fold_vertically(unsigned int, long double (*)(long double, long double), matrix *, ...);
   void matrix_push_all(matrix *, long double *);
 
 #endif
