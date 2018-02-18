@@ -41,7 +41,7 @@ void feedback_once(LSTM_type *LSTM) {
       dot_product(
         first(LSTM, Dt_k), 
         transpose(matrix_tanh(second(LSTM, St_c))))));
-/*
+
   // Cell state errors:
   push(LSTM, Dt_s, 
     sum(5, 
@@ -53,13 +53,13 @@ void feedback_once(LSTM_type *LSTM) {
         first(LSTM, Bt_phi), 
         second(LSTM, Dt_s)), 
       product(2, 
-        first(LSTM, Wc_iota), 
+        transpose(first(LSTM, Wc_iota)), 
         second(LSTM, Dt_iota)), 
       product(2, 
-        first(LSTM, Wc_phi), 
+        transpose(first(LSTM, Wc_phi)), 
         second(LSTM, Dt_phi)), 
       product(2, 
-        first(LSTM, Wc_omega), 
+        transpose(first(LSTM, Wc_omega)), 
         first(LSTM, Dt_omega))));
 
   // Cell output errors:
@@ -68,7 +68,7 @@ void feedback_once(LSTM_type *LSTM) {
       second(LSTM, Bt_iota), 
       tanh_derivative(second(LSTM, At_c)), 
       first(LSTM, Dt_s)));
-*/
+
   // Forget gate errors:
   push(LSTM, Dt_phi, 
     product(2, 
