@@ -5,8 +5,28 @@
 
 int main(void) {
   // TEST 1:
-  LSTM_type *LSTM = make_LSTM(4, 1);
+  LSTM_type *LSTM = make_LSTM(1, 1);
 
+  // TEST 4/5:
+  // XOR inputs (Xt_i):
+  long double inputs[5][1][1] = {
+    {{0.0}}, // NAND(1, 0) = 1
+    {{1.0}}, // NAND(1, 1) = 0
+    {{1.0}}, // NAND(0, 1) = 1
+    {{0.0}}, // NAND(0, 0) = 0
+    {{0.0}}  // Dummy input
+  };
+
+  // XOR outputs (Yt_k):
+  long double outputs[5][1][1] = {
+    {{1.0}}, // NAND(1, 0) = 1
+    {{0.0}}, // NAND(1, 1) = 0
+    {{1.0}}, // NAND(0, 1) = 1
+    {{0.0}}, // NAND(0, 0) = 0
+    {{0.0}}  // Dummy output
+  };
+
+/*
   // TEST 4/5:
   // Xt_i:
   long double inputs[11][4][1] = {
@@ -70,6 +90,7 @@ int main(void) {
      {0.0, 1.0},  // output answer (0 ..
      {1.0, 0.0}}  // output answer .. 1)
   };
+*/
 
   /* TEST 2:
   push(LSTM, At_iota, dot_product(first(LSTM, Xt_i), first(LSTM, Wi_iota)));

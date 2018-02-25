@@ -7,8 +7,8 @@ LSTM_type *make_LSTM(unsigned int rows, unsigned int columns) {
   srand(1);
 
   // Empty input/outputs to initialize (Xt_i, Yt_k):
-  LSTM_initialize(LSTM, Xt_i, Yt_k, zero, 11, columns, rows);
-  LSTM_initialize(LSTM, Yt_k, GATES_BEGIN, zero, 11, rows, columns);
+  LSTM_initialize(LSTM, Xt_i, Yt_k, zero, 5, columns, rows);
+  LSTM_initialize(LSTM, Yt_k, GATES_BEGIN, zero, 5, rows, columns);
 
   LSTM_initialize(LSTM, GATES_BEGIN, GATES_END, one, 2, columns, rows);
   LSTM_initialize(LSTM, INPUT_WEIGHTS_BEGIN, INPUT_WEIGHTS_END, random_long_double, 1, rows, columns);
