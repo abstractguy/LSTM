@@ -39,7 +39,7 @@
     } tensor[LSTM_SIZE];
   } LSTM_type;
 
-  LSTM_type *make_LSTM(unsigned int, unsigned int);
+  LSTM_type *make_LSTM(unsigned int, unsigned int, unsigned int);
   LSTM_type *destroy_LSTM(LSTM_type *);
   void LSTM_initialize(LSTM_type *, index, index, long double (*)(long double), unsigned int, unsigned int, unsigned int);
   matrix *first(LSTM_type *, index);

@@ -5,7 +5,7 @@
 
 int main(void) {
   // TEST 1:
-  LSTM_type *LSTM = make_LSTM(1, 1);
+  LSTM_type *LSTM = make_LSTM(5, 1, 1);
 
   // TEST 4/5:
   // XOR inputs (Xt_i):
