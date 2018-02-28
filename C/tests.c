@@ -1,6 +1,7 @@
 // tests.c
 #include "feedforward.h"
 #include "feedback.h"
+#include "update.h"
 #include "printing.h"
 
 int main(void) {
@@ -50,6 +51,9 @@ int main(void) {
 
   // TEST 5:
   feedback_once(LSTM);
+
+  // TEST 6:
+  update_forward_once(LSTM);
 
   // TEST 1:
   print_LSTM(LSTM);
