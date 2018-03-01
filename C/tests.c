@@ -4,6 +4,8 @@
 #include "update.h"
 #include "printing.h"
 
+void run_LSTM(LSTM_type *);
+
 int main(void) {
   // TEST 1:
   LSTM_type *LSTM = make_LSTM(5, 1, 1);
@@ -46,14 +48,24 @@ int main(void) {
   push_all(LSTM, Xt_i, (long double *)inputs);
   push_all(LSTM, Yt_k, (long double *)outputs);
 
-  // TEST 4:
-  feedforward_once(LSTM);
+  run_LSTM(LSTM);
 
-  // TEST 5:
-  feedback_once(LSTM);
+  /*
+  // TEST 7:
+  for (unsigned int epoch = 0; epoch < 5; epoch++) {
+    // TEST 4:
+    feedforward_once(LSTM);
 
-  // TEST 6:
-  update_forward_once(LSTM);
+    // TEST 5:
+    feedback_once(LSTM);
+
+    // TEST 6:
+    update_forward_once(LSTM);
+  }
+
+  // TEST 8:
+  update_backward_once(LSTM);
+  */
 
   // TEST 1:
   print_LSTM(LSTM);
@@ -61,4 +73,12 @@ int main(void) {
   // TEST 1:
   LSTM = destroy_LSTM(LSTM);
   return 0;
+}
+
+void run_LSTM(LSTM_type *LSTM) {
+  for (unsigned int epoch = 0; epoch < 5; epoch++) {
+    feedforward_once(LSTM);
+    feedback_once(LSTM);
+    update_forward_once(LSTM);
+  } update_backward_once(LSTM);
 }
