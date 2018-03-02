@@ -23,6 +23,6 @@ How to build:
   ./CNN
 
   # For LSTM tests:
-  gcc matrix.c LSTM.c feedforward.c feedback.c update.c printing.c tests.c -lm -o LSTM
+  gcc -Os -Wall -Wextra -o LSTM -lm matrix.c LSTM.c printing.c feedforward.c feedback.c update.c tests.c
 
   ./LSTM
