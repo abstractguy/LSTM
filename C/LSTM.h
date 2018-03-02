@@ -2,6 +2,7 @@
 #ifndef LSTM_H
   #define LSTM_H
   #include "matrix.h"
+  #include <time.h>
   #define LSTM_SIZE            40
   #define GATES_BEGIN          Bt_c
   #define INPUT_WEIGHTS_BEGIN  Wi_iota
