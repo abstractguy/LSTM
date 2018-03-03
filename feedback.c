@@ -7,57 +7,37 @@ void feedback_once(LSTM_type *LSTM) {
       second(LSTM, Yt_k), 
       second(LSTM, Bt_c));
 
-/*
   // Output errors:
   push(LSTM, Dt_k, 
     sum(7, 
-      dot_product(
-        transpose(first(LSTM, Wc_iota)), 
-        matrix_copy(net_error)), 
-      dot_product(
-        transpose(first(LSTM, Wc_phi)), 
-        matrix_copy(net_error)), 
-      dot_product(
-        transpose(first(LSTM, Wc_omega)), 
-        matrix_copy(net_error)), 
-      dot_product(
-        first(LSTM, Dt_omega), 
-        transpose(first(LSTM, Wh_omega))), 
-      dot_product(
-        first(LSTM, Dt_c), 
-        transpose(first(LSTM, Wh_c))), 
-      dot_product(
-        first(LSTM, Dt_phi), 
-        transpose(first(LSTM, Wh_phi))), 
-      dot_product(
-        first(LSTM, Dt_iota), 
-        transpose(first(LSTM, Wh_iota)))));
-*/
-
-  // Output errors:
-  push(LSTM, Dt_k, 
-    sum(7, 
-      dot_product(
-        matrix_copy(net_error), 
-        transpose(first(LSTM, Wc_iota))), 
-      dot_product(
-        matrix_copy(net_error), 
-        transpose(first(LSTM, Wc_phi))), 
-      dot_product(
-        matrix_copy(net_error), 
-        transpose(first(LSTM, Wc_omega))), 
-      dot_product(
-        first(LSTM, Dt_omega), 
-        transpose(first(LSTM, Wh_omega))), 
-      dot_product(
-        first(LSTM, Dt_c), 
-        transpose(first(LSTM, Wh_c))), 
-      dot_product(
-        first(LSTM, Dt_phi), 
-        transpose(first(LSTM, Wh_phi))), 
-      dot_product(
-        first(LSTM, Dt_iota), 
-        transpose(first(LSTM, Wh_iota)))));
+      transpose(
+        dot_product(
+          matrix_copy(net_error), 
+          transpose(first(LSTM, Wc_iota)))), 
+      transpose(
+        dot_product(
+          matrix_copy(net_error), 
+          transpose(first(LSTM, Wc_phi)))), 
+      transpose(
+        dot_product(
+          matrix_copy(net_error), 
+          transpose(first(LSTM, Wc_omega)))), 
+      transpose(
+        dot_product(
+          first(LSTM, Dt_omega), 
+          transpose(first(LSTM, Wh_omega)))), 
+      transpose(
+        dot_product(
+          first(LSTM, Dt_c), 
+          transpose(first(LSTM, Wh_c)))), 
+      transpose(
+        dot_product(
+          first(LSTM, Dt_phi), 
+          transpose(first(LSTM, Wh_phi)))), 
+      transpose(
+        dot_product(
+          first(LSTM, Dt_iota), 
+          transpose(first(LSTM, Wh_iota))))));
 
   net_error = destroy_matrix(net_error);
 
@@ -99,16 +79,18 @@ void feedback_once(LSTM_type *LSTM) {
   // Forget gate errors:
   push(LSTM, Dt_phi, 
     product(2, 
-      sigmoid_derivative(second(LSTM, At_phi)),
-      dot_product(
-        first(LSTM, Dt_s), 
-        transpose(third(LSTM, St_c)))));
+      sigmoid_derivative(second(LSTM, At_phi)), 
+      transpose(
+        dot_product(
+          first(LSTM, Dt_s), 
+          transpose(third(LSTM, St_c))))));
 
   // Input gate errors:
   push(LSTM, Dt_iota, 
     product(2, 
       sigmoid_derivative(second(LSTM, At_iota)), 
-      dot_product(
-        first(LSTM, Dt_s), 
-        transpose(matrix_tanh(second(LSTM, At_c))))));
+      transpose(
+        dot_product(
+          first(LSTM, Dt_s), 
+          transpose(matrix_tanh(second(LSTM, At_c)))))));
 }

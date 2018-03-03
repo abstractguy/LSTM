@@ -9,30 +9,31 @@ void run_LSTM(LSTM_type *);
 int main(void) {
   LSTM_type *LSTM = make_LSTM(4, 1, 1);
 
-  // XOR inputs (Xt_i):
+  // NAND inputs (Xt_i):
   long double inputs[4][1][1] = {
     {{0.0}}, // NAND(1, 0) = 1
     {{1.0}}, // NAND(1, 1) = 0
     {{1.0}}, // NAND(0, 1) = 1
-    {{0.0}}, // NAND(0, 0) = 0
+    {{0.0}}, // NAND(0, 0) = 1
   };
 
-  // XOR outputs (Yt_k):
+  // NAND outputs (Yt_k):
   long double outputs[4][1][1] = {
     {{1.0}}, // NAND(1, 0) = 1
     {{0.0}}, // NAND(1, 1) = 0
     {{1.0}}, // NAND(0, 1) = 1
-    {{0.0}}, // NAND(0, 0) = 0
+    {{1.0}}, // NAND(0, 0) = 1
   };
 
   push_all(LSTM, Xt_i, (long double *)inputs);
   push_all(LSTM, Yt_k, (long double *)outputs);
 
-  //for (unsigned int epoch = 0; epoch < 1000; epoch++) {
+  for (unsigned int epoch = 0; epoch < 1000; epoch++) {
     run_LSTM(LSTM);
-  //}
+  }
 
-  print_LSTM(LSTM);
+  print_LSTM
+(LSTM);
 
   LSTM = destroy_LSTM(LSTM);
   return 0;

@@ -28,22 +28,22 @@ void update_forward_once(LSTM_type *LSTM) {
   push(LSTM, Uh_iota, 
     sum(2, 
       pop(LSTM, Uh_iota), 
-      dot_product(transpose(second(LSTM, Yt_k)), 
+      dot_product(transpose(second(LSTM, Bt_c)), 
                   first(LSTM, Dt_iota))));
   push(LSTM, Uh_phi, 
     sum(2, 
       pop(LSTM, Uh_phi), 
-      dot_product(transpose(second(LSTM, Yt_k)), 
+      dot_product(transpose(second(LSTM, Bt_c)), 
                   first(LSTM, Dt_phi))));
   push(LSTM, Uh_c, 
     sum(2, 
       pop(LSTM, Uh_c), 
-      dot_product(transpose(second(LSTM, Yt_k)), 
+      dot_product(transpose(second(LSTM, Bt_c)), 
                   first(LSTM, Dt_c))));
   push(LSTM, Uh_omega, 
     sum(2, 
       pop(LSTM, Uh_omega), 
-      dot_product(transpose(second(LSTM, Yt_k)), 
+      dot_product(transpose(second(LSTM, Bt_c)), 
                   first(LSTM, Dt_omega))));
 
   // Calculate cell input gradients

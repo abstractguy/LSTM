@@ -3,7 +3,7 @@
   #define LSTM_H
   #include "matrix.h"
   #include <time.h>
-  #define LSTM_SIZE            40
+  #define LSTM_SIZE            39
   #define GATES_BEGIN          Bt_c
   #define INPUT_WEIGHTS_BEGIN  Wi_iota
   #define HIDDEN_WEIGHTS_BEGIN Wh_iota
@@ -26,7 +26,7 @@
   #define UPDATES_END          CELL_UPDATES_END
 
   typedef enum {
-    Xt_i, Yt_k, Bt_c, Bt_h, St_c, At_iota, Bt_iota, At_phi, Bt_phi, At_c,
+    Xt_i, Yt_k, Bt_c, St_c, At_iota, Bt_iota, At_phi, Bt_phi, At_c,
     At_omega, Bt_omega, Wi_iota, Wi_phi, Wi_c, Wi_omega, Wh_iota, Wh_phi,
     Wh_c, Wh_omega, Wc_iota, Wc_phi, Wc_omega, Dt_k, Dt_c, Dt_s, Dt_omega,
     Dt_phi, Dt_iota, Ui_iota, Ui_phi, Ui_c, Ui_omega, Uh_iota, Uh_phi,
