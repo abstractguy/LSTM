@@ -14,7 +14,7 @@ int main(void) {
     {{0.0}}, // NAND(1, 0) = 1
     {{1.0}}, // NAND(1, 1) = 0
     {{1.0}}, // NAND(0, 1) = 1
-    {{0.0}}, // NAND(0, 0) = 1
+    {{0.0}}  // NAND(0, 0) = 1
   };
 
   // NAND outputs (Yt_k):
@@ -22,7 +22,7 @@ int main(void) {
     {{1.0}}, // NAND(1, 0) = 1
     {{0.0}}, // NAND(1, 1) = 0
     {{1.0}}, // NAND(0, 1) = 1
-    {{1.0}}, // NAND(0, 0) = 1
+    {{1.0}}  // NAND(0, 0) = 1
   };
 
   push_all(LSTM, Xt_i, (long double *)inputs);
