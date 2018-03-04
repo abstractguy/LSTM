@@ -45,9 +45,10 @@ void feedback_once(LSTM_type *LSTM) {
   push(LSTM, Dt_omega, 
     product(2, 
       sigmoid_derivative(second(LSTM, At_omega)), 
-      dot_product(
-        first(LSTM, Dt_k), 
-        transpose(matrix_tanh(second(LSTM, St_c))))));
+      transpose(
+         dot_product(
+         first(LSTM, Dt_k), 
+           transpose(matrix_tanh(second(LSTM, St_c)))))));
 
   // Cell state errors:
   push(LSTM, Dt_s, 
