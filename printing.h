@@ -6,6 +6,4 @@
 
   void print_matrix(matrix *);
   void print_LSTM(LSTM_type *);
-  void print_LSTM_short(LSTM_type *);
-
 #endif

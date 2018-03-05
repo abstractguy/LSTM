@@ -18,11 +18,3 @@ void print_LSTM(LSTM_type *LSTM) {
     } putchar('\n');
   }
 }
-
-void print_LSTM_short(LSTM_type *LSTM) {
-  for (index tensor = 0; tensor < LSTM_SIZE; tensor++) {
-    printf("\nType %u:", tensor);
-    print_matrix(LSTM->tensor[tensor].matrix[LSTM->tensor[tensor].time-1]);
-    putchar('\n');
-  }
-}
