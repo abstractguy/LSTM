@@ -68,18 +68,6 @@ matrix *matrix_copy(matrix *matrix1) {
   } return matrix2;
 }
 
-matrix *matrix_initialize(long double (*init)(long double), unsigned int x, unsigned int y) {
-  matrix *matrix1 = make_matrix(x, y);
-  matrix_for_each(init, matrix1);
-  return matrix1;
-}
-
-matrix *matrix_initialize_from_matrix(long double (*init)(long double), matrix *matrix1) {
-  matrix *matrix2 = matrix_copy(matrix1);
-  matrix_for_each(init, matrix2);
-  return matrix2;
-}
-
 long double sigmoid(long double x) {
   return 1.0 / (1.0 + (long double)expl(-x));
 }

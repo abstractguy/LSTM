@@ -28,8 +28,6 @@
   void matrix_for_each(long double (*)(long double), matrix *);
   matrix *dot_product(matrix *, matrix *);
   matrix *matrix_copy(matrix *);
-  matrix *matrix_initialize(long double (*)(long double), unsigned int, unsigned int);
-  matrix *matrix_initialize_from_matrix(long double (*)(long double), matrix *);
   long double sigmoid(long double);
   matrix *matrix_sigmoid(matrix *);
   matrix *matrix_tanh(matrix *);
@@ -44,5 +42,4 @@
   long double minus(long double, long double);
   matrix *transpose(matrix *);
   void matrix_push_all(matrix *, long double *);
-
 #endif

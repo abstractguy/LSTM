@@ -47,7 +47,8 @@ void LSTM_initialize(LSTM_type *LSTM, index begin, index end, long double (*init
     LSTM->tensor[tensor].matrix = calloc(1, sizeof(matrix *) + sizeof(matrix) * time);
     assert(LSTM->tensor[tensor].matrix);
     for (unsigned int t = 0; t < time; t++) {
-      LSTM->tensor[tensor].matrix[t] = matrix_initialize(init, rows, columns);
+      LSTM->tensor[tensor].matrix[t] = make_matrix(rows, columns);
+      matrix_for_each(init, LSTM->tensor[tensor].matrix[t]);
     }
   }
 }
