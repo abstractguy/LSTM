@@ -4,5 +4,4 @@
   #include "LSTM.h"
 
   void feedback_once(LSTM_type *);
-
 #endif
