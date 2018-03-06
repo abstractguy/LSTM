@@ -27,6 +27,7 @@
   long double one(long double);
   void matrix_for_each(long double (*)(long double), matrix *);
   matrix *dot_product(matrix *, matrix *);
+  matrix *matrix_copy_shape(matrix *);
   matrix *matrix_copy(matrix *);
   long double sigmoid(long double);
   matrix *matrix_sigmoid(matrix *);

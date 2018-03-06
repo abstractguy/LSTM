@@ -58,8 +58,12 @@ matrix *dot_product(matrix *matrix1, matrix *matrix2) {
     return matrix3;
 }
 
+matrix *matrix_copy_shape(matrix *matrix1) {
+  return make_matrix(matrix1->rows, matrix1->columns);
+}
+
 matrix *matrix_copy(matrix *matrix1) {
-  matrix *matrix2 = make_matrix(matrix1->rows, matrix1->columns);
+  matrix *matrix2 = matrix_copy_shape(matrix1);
 
   for (unsigned int row = 0; row < matrix1->rows; row++) {
     for (unsigned int column = 0; column < matrix1->columns; column++) {

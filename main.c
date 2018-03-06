@@ -39,8 +39,8 @@ int main(void) {
 }
 
 void run_LSTM(LSTM_type *LSTM) {
+  feedforward(LSTM);
   for (unsigned int epoch = 0; epoch < 4; epoch++) {
-    feedforward_once(LSTM);
     feedback_once(LSTM);
     update_forward_once(LSTM);
   } update_backward_once(LSTM);
