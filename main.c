@@ -27,19 +27,14 @@ int main(void) {
 
   push_all(LSTM, Xt_i, (long double *)inputs);
   push_all(LSTM, Yt_k, (long double *)outputs);
-
-  for (unsigned int epoch = 0; epoch < 50; epoch++) {
-    run_LSTM(LSTM);
-  }
-
+  for (unsigned int epoch = 0; epoch < 25; epoch++) run_LSTM(LSTM);
   print_LSTM(LSTM);
-
   LSTM = destroy_LSTM(LSTM);
   return 0;
 }
 
 void run_LSTM(LSTM_type *LSTM) {
-  feedforward(LSTM);
+  for (unsigned int epoch = 0; epoch < 4; epoch++) feedforward_once(LSTM);
   for (unsigned int epoch = 0; epoch < 4; epoch++) {
     feedback_once(LSTM);
     update_forward_once(LSTM);
