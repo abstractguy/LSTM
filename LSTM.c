@@ -13,8 +13,8 @@ LSTM_type *make_LSTM(unsigned int t, unsigned int rows, unsigned int columns) {
   LSTM_initialize(LSTM, Yt_k, GATES_BEGIN, zero, t, rows, columns);
 
   LSTM_initialize(LSTM, GATES_BEGIN, GATES_END, 
-                  one, 1, columns, rows);
-  LSTM_copy_last_matrix_to_beginning(LSTM, GATES_BEGIN, GATES_END);
+                  one, 2, columns, rows);
+  //LSTM_copy_last_matrix_to_beginning(LSTM, GATES_BEGIN, GATES_END);
   LSTM_initialize(LSTM, INPUT_WEIGHTS_BEGIN, INPUT_WEIGHTS_END, 
                   random_long_double, 1, rows, columns);
   LSTM_initialize(LSTM, HIDDEN_WEIGHTS_BEGIN, HIDDEN_WEIGHTS_END, 
@@ -22,8 +22,8 @@ LSTM_type *make_LSTM(unsigned int t, unsigned int rows, unsigned int columns) {
   LSTM_initialize(LSTM, CELL_WEIGHTS_BEGIN, CELL_WEIGHTS_END, 
                   random_long_double, 1, rows, columns);
   LSTM_initialize(LSTM, ERRORS_BEGIN, ERRORS_END, 
-                  zero, 1, columns, rows);
-  LSTM_copy_last_matrix_to_beginning(LSTM, ERRORS_BEGIN, ERRORS_END);
+                  zero, 2, columns, rows);
+  //LSTM_copy_last_matrix_to_beginning(LSTM, ERRORS_BEGIN, ERRORS_END);
   LSTM_initialize(LSTM, INPUT_UPDATES_BEGIN, INPUT_UPDATES_END, 
                   zero, 1, rows, columns);
   LSTM_initialize(LSTM, HIDDEN_UPDATES_BEGIN, HIDDEN_UPDATES_END, 
