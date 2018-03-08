@@ -57,7 +57,3 @@ void feedforward_once(LSTM_type *LSTM) {
     product(2, matrix_sigmoid(first(LSTM, St_c)), 
                first(LSTM, Bt_omega)));
 }
-
-void feedforward(LSTM_type *LSTM) {
-  for (unsigned int i = 0; i < 4; i++) feedforward_once(LSTM);
-}
