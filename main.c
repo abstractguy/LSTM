@@ -19,16 +19,16 @@ int main(void) {
 
   // NAND outputs (Yt_k):
   long double outputs[5][1][1] = {
+    {{0.0}}, // Dummy output
     {{1.0}}, // NAND(1, 0) = 1
     {{0.0}}, // NAND(1, 1) = 0
     {{1.0}}, // NAND(0, 1) = 1
-    {{1.0}}, // NAND(0, 0) = 1
-    {{0.0}}  // Dummy output
+    {{1.0}}  // NAND(0, 0) = 1
   };
 
   push_all(LSTM, Xt_i, (long double *)inputs);
   push_all(LSTM, Yt_k, (long double *)outputs);
-  for (unsigned int epoch = 0; epoch < 25; epoch++) run_LSTM(LSTM);
+  for (unsigned int epoch = 0; epoch < 2500; epoch++) run_LSTM(LSTM);
   print_LSTM(LSTM);
   LSTM = destroy_LSTM(LSTM);
   return 0;
@@ -40,8 +40,8 @@ void run_LSTM(LSTM_type *LSTM) {
   }
   LSTM_copy_last_matrix_to_beginning(LSTM, GATES_BEGIN, GATES_END);
   LSTM_copy_last_matrix_to_beginning(LSTM, ERRORS_BEGIN, ERRORS_END);
-  for (unsigned int epoch = 0; epoch < 4; epoch++) {
-    feedback_once(LSTM);
-    update_forward_once(LSTM);
+  for (unsigned int epoch = 4; epoch > 0; epoch--) {
+    feedback_once(LSTM, epoch);
+    update_forward_once(LSTM, epoch);
   } update_backward_once(LSTM);
 }

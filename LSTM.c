@@ -5,8 +5,8 @@ LSTM_type *make_LSTM(unsigned int t, unsigned int rows, unsigned int columns) {
   LSTM_type *LSTM = NULL;
   LSTM = malloc(sizeof(LSTM_type));
   assert(LSTM);
-  //srand(time(NULL));
-  srand(1);
+  srand(time(NULL));
+  //srand(1);
 
   // Empty input/outputs to initialize (Xt_i, Yt_k):
   LSTM_initialize(LSTM, Xt_i, Yt_k, zero, t, columns, rows);
