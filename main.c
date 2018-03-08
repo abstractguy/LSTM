@@ -35,7 +35,9 @@ int main(void) {
 }
 
 void run_LSTM(LSTM_type *LSTM) {
-  for (unsigned int epoch = 0; epoch < 4; epoch++) feedforward_once(LSTM);
+  for (unsigned int epoch = 0; epoch < 4; epoch++) {
+    feedforward_once(LSTM, epoch);
+  }
   LSTM_copy_last_matrix_to_beginning(LSTM, GATES_BEGIN, GATES_END);
   LSTM_copy_last_matrix_to_beginning(LSTM, ERRORS_BEGIN, ERRORS_END);
   for (unsigned int epoch = 0; epoch < 4; epoch++) {

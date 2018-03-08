@@ -1,10 +1,10 @@
 // feedforward.c
 #include "feedforward.h"
 
-void feedforward_once(LSTM_type *LSTM) {
+void feedforward_once(LSTM_type *LSTM, unsigned int epoch) {
   // Input preactivations:
   push(LSTM, At_iota, 
-    sum(3, dot_product(first(LSTM, Xt_i), 
+    sum(3, dot_product(matrix_copy(LSTM->tensor[Xt_i].matrix[epoch]), 
                        first(LSTM, Wi_iota)), 
            dot_product(second(LSTM, Bt_c), 
                        first(LSTM, Wh_iota)), 
@@ -16,7 +16,7 @@ void feedforward_once(LSTM_type *LSTM) {
 
   // Forget preactivations:
   push(LSTM, At_phi, 
-    sum(3, dot_product(first(LSTM, Xt_i), 
+    sum(3, dot_product(matrix_copy(LSTM->tensor[Xt_i].matrix[epoch]), 
                        first(LSTM, Wi_phi)), 
            dot_product(second(LSTM, Bt_c), 
                        first(LSTM, Wh_phi)), 
@@ -28,7 +28,7 @@ void feedforward_once(LSTM_type *LSTM) {
 
   // Cell preactivations:
   push(LSTM, At_c, 
-    sum(2, dot_product(first(LSTM, Xt_i), 
+    sum(2, dot_product(matrix_copy(LSTM->tensor[Xt_i].matrix[epoch]), 
                        first(LSTM, Wi_c)), 
            dot_product(second(LSTM, Bt_c), 
                        first(LSTM, Wh_c))));
@@ -42,7 +42,7 @@ void feedforward_once(LSTM_type *LSTM) {
 
   // Output preactivations:
   push(LSTM, At_omega, 
-    sum(3, dot_product(first(LSTM, Xt_i), 
+    sum(3, dot_product(matrix_copy(LSTM->tensor[Xt_i].matrix[epoch]), 
                        first(LSTM, Wi_omega)), 
            dot_product(second(LSTM, Bt_c), 
                        first(LSTM, Wh_omega)), 
