@@ -58,7 +58,7 @@ void update_forward_once(LSTM_type *LSTM, unsigned int epoch) {
 }
 
 void update_backward_once(LSTM_type *LSTM) {
-  matrix *learning_rate = make_matrix(1, 1);
+  matrix_type *learning_rate = make_matrix(1, 1);
   learning_rate->matrix[0][0] = 0.1;
   // Update input gates
   push(LSTM, Wi_iota, 

@@ -2,7 +2,7 @@
 #include "feedback.h"
 
 void feedback_once(LSTM_type *LSTM, unsigned int epoch) {
-  matrix *net_error = 
+  matrix_type *net_error = 
     subtract(2, matrix_copy(LSTM->tensor[Yt_k].matrix[epoch - 1]), 
                 second(LSTM, Bt_c));
 

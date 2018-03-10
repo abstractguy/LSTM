@@ -1,36 +1,38 @@
-// LSTM.h
-#ifndef LSTM_H
-  #define LSTM_H
+// _LSTM.h
+#ifndef _LSTM_H
+  #define _LSTM_H
   #include "matrix.h"
   #include <time.h>
-  #define LSTM_SIZE            39
-  #define GATES_BEGIN          Bt_c
-  #define INPUT_WEIGHTS_BEGIN  Wi_iota
-  #define HIDDEN_WEIGHTS_BEGIN Wh_iota
-  #define CELL_WEIGHTS_BEGIN   Wc_iota
-  #define ERRORS_BEGIN         Dt_k
-  #define INPUT_UPDATES_BEGIN  Ui_iota
-  #define HIDDEN_UPDATES_BEGIN Uh_iota
-  #define CELL_UPDATES_BEGIN   Uc_iota
+  #define LSTM_SIZE            49
+  #define GATES_BEGIN          Yt
+  #define INPUT_WEIGHTS_BEGIN  Wz
+  #define HIDDEN_WEIGHTS_BEGIN Rz
+  #define CELL_WEIGHTS_BEGIN   Pi
+  #define BIAS_WEIGHTS_BEGIN   Bz
+  #define ERRORS_BEGIN         DYt
+  #define INPUT_UPDATES_BEGIN  DW_z
+  #define HIDDEN_UPDATES_BEGIN DR_z
+  #define CELL_UPDATES_BEGIN   DPi
+  #define BIAS_UPDATES_BEGIN   DB_z
   #define GATES_END            INPUT_WEIGHTS_BEGIN
   #define INPUT_WEIGHTS_END    HIDDEN_WEIGHTS_BEGIN
   #define HIDDEN_WEIGHTS_END   CELL_WEIGHTS_BEGIN
-  #define CELL_WEIGHTS_END     ERRORS_BEGIN
+  #define CELL_WEIGHTS_END     BIAS_WEIGHTS_BEGIN
+  #define BIAS_WEIGHTS_END     ERRORS_BEGIN
   #define ERRORS_END           INPUT_UPDATES_BEGIN
   #define INPUT_UPDATES_END    HIDDEN_UPDATES_BEGIN
   #define HIDDEN_UPDATES_END   CELL_UPDATES_BEGIN
-  #define CELL_UPDATES_END     LSTM_SIZE
+  #define CELL_UPDATES_END     BIAS_UPDATES_BEGIN
+  #define BIAS_UPDATES_END     LSTM_SIZE
   #define WEIGHTS_BEGIN        INPUT_WEIGHTS_BEGIN
-  #define WEIGHTS_END          CELL_WEIGHTS_END
+  #define WEIGHTS_END          BIAS_WEIGHTS_END
   #define UPDATES_BEGIN        INPUT_UPDATES_BEGIN
-  #define UPDATES_END          CELL_UPDATES_END
+  #define UPDATES_END          BIAS_UPDATES_END
 
   typedef enum {
-    Xt_i, Yt_k, Bt_c, St_c, At_iota, Bt_iota, At_phi, Bt_phi, At_c,
-    At_omega, Bt_omega, Wi_iota, Wi_phi, Wi_c, Wi_omega, Wh_iota, Wh_phi,
-    Wh_c, Wh_omega, Wc_iota, Wc_phi, Wc_omega, Dt_k, Dt_c, Dt_s, Dt_omega,
-    Dt_phi, Dt_iota, Ui_iota, Ui_phi, Ui_c, Ui_omega, Uh_iota, Uh_phi,
-    Uh_c, Uh_omega, Uc_iota, Uc_phi, Uc_omega
+    Input, Output, Xt, Yt, Ct, _Zt, _It, _Ft, _Ot, Zt, It, Ft, Ot, Wz, Wi, Wf, Wo, Rz, Ri, Rf, 
+    Ro, Pi, Pf, Po, Bz, Bi, Bf, Bo, DYt, D_Ot, DCt, D_Ft, D_It, D_Zt, DW_z, DW_i, DW_f, DW_o, 
+    DR_z, DR_i, DR_f, DR_o, DPi, DPf, DPo, DB_z, DB_i, DB_f, DB_o
   } index_type;
 
   typedef struct {
@@ -40,7 +42,7 @@
     } tensor[LSTM_SIZE];
   } LSTM_type;
 
-  LSTM_type *make_LSTM(unsigned int, unsigned int, unsigned int);
+  LSTM_type *make_LSTM(long double *, long double *, unsigned int, unsigned int, unsigned int);
   LSTM_type *destroy_LSTM(LSTM_type *);
   void LSTM_initialize(LSTM_type *, index_type, index_type, long double (*)(long double), unsigned int, unsigned int, unsigned int);
   matrix_type *first(LSTM_type *, index_type);

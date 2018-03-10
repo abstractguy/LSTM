@@ -2,8 +2,8 @@
 #include "matrix.h"
 #include "printing.h"
 int main(void) {
-  matrix *in      = make_matrix(4, 4), *out    = make_matrix(4, 1),
-         *weights = make_matrix(4, 1), *errors = NULL, *answer = NULL;
+  matrix_type *in      = make_matrix(4, 4), *out    = make_matrix(4, 1),
+              *weights = make_matrix(4, 1), *errors = NULL, *answer = NULL;
   long double input[4][4]   = {{0.0, 0.0, 1.0, 1.0},
                                {0.0, 1.0, 1.0, 1.0},
                                {1.0, 0.0, 1.0, 1.0},
@@ -13,8 +13,8 @@ int main(void) {
                                {1.0},
                                {0.0}};
   matrix_for_each(random_long_double, weights);
-  matrix_push_all(in,      (long double *)input);
-  matrix_push_all(out,     (long double *)output);
+  matrix_push_all(in,  (long double *)input);
+  matrix_push_all(out, (long double *)output);
   puts("Input:");   print_matrix(in); puts("Output:"); print_matrix(out);
   puts("Weights:"); print_matrix(weights);
   for (unsigned int epoch = 0; epoch < 60000; epoch++) {

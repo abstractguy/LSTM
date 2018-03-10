@@ -18,29 +18,29 @@
   typedef struct {
     unsigned int rows, columns;
     long double **matrix;
-  } matrix;
+  } matrix_type;
 
-  matrix *make_matrix(unsigned int, unsigned int);
-  matrix *destroy_matrix(matrix *);
+  matrix_type *make_matrix(unsigned int, unsigned int);
+  matrix_type *destroy_matrix(matrix_type *);
   long double random_long_double(long double);
   long double zero(long double);
   long double one(long double);
-  void matrix_for_each(long double (*)(long double), matrix *);
-  matrix *dot_product(matrix *, matrix *);
-  matrix *matrix_copy_shape(matrix *);
-  matrix *matrix_copy(matrix *);
+  void matrix_for_each(long double (*)(long double), matrix_type *);
+  matrix_type *dot_product(matrix_type *, matrix_type *);
+  matrix_type *matrix_copy_shape(matrix_type *);
+  matrix_type *matrix_copy(matrix_type *);
   long double sigmoid(long double);
-  matrix *matrix_sigmoid(matrix *);
-  matrix *matrix_tanh(matrix *);
+  matrix_type *matrix_sigmoid(matrix_type *);
+  matrix_type *matrix_tanh(matrix_type *);
   long double sigmoid_derivative_helper(long double);
   long double tanh_derivative_helper(long double);
-  matrix *sigmoid_derivative(matrix *);
-  matrix *tanh_derivative(matrix *);
-  matrix *broadcast_function(long double (*)(long double, long double), matrix *, matrix *);
-  matrix *fold(unsigned int, long double (*)(long double, long double), matrix *, ...);
+  matrix_type *sigmoid_derivative(matrix_type *);
+  matrix_type *tanh_derivative(matrix_type *);
+  matrix_type *broadcast_function(long double (*)(long double, long double), matrix_type *, matrix_type *);
+  matrix_type *fold(unsigned int, long double (*)(long double, long double), matrix_type *, ...);
   long double add(long double, long double);
   long double multiply(long double, long double);
   long double minus(long double, long double);
-  matrix *transpose(matrix *);
-  void matrix_push_all(matrix *, long double *);
+  matrix_type *transpose(matrix_type *);
+  void matrix_push_all(matrix_type *, long double *);
 #endif

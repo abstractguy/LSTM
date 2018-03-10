@@ -4,6 +4,6 @@
   #include <stdio.h>
   #include "LSTM.h"
 
-  void print_matrix(matrix *);
+  void print_matrix(matrix_type *);
   void print_LSTM(LSTM_type *);
 #endif

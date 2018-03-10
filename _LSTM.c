@@ -1,14 +1,14 @@
-// LSTM.c
-#include "LSTM.h"
+// _LSTM.c
+#include "_LSTM.h"
 
-LSTM_type *make_LSTM(unsigned int t, unsigned int rows, unsigned int columns) {
+LSTM_type *make_LSTM(long double * input, long double *output, unsigned int t, unsigned int rows, unsigned int columns) {
   LSTM_type *LSTM = NULL;
   LSTM = malloc(sizeof(LSTM_type));
   assert(LSTM);
   srand(time(NULL));
   //srand(1);
 
-  // Empty input/outputs to initialize (Xt_i, Yt_k):
+  // Empty input/outputs to initialize (Input, Output):
   LSTM_initialize(LSTM, Xt_i, Yt_k, zero, t, columns, rows);
   LSTM_initialize(LSTM, Yt_k, GATES_BEGIN, zero, t, rows, columns);
 
@@ -28,6 +28,10 @@ LSTM_type *make_LSTM(unsigned int t, unsigned int rows, unsigned int columns) {
                   zero, 1, rows, rows);
   LSTM_initialize(LSTM, CELL_UPDATES_BEGIN, CELL_UPDATES_END, 
                   zero, 1, rows, columns);
+
+  push_all(LSTM, Input,  (long double *)input);
+  push_all(LSTM, Output, (long double *)output);
+
   return LSTM;
 }
 
