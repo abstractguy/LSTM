@@ -72,8 +72,8 @@ void push(LSTM_type *LSTM, index_type tensor, matrix_type *matrix) {
 }
 
 matrix_type *pop(LSTM_type *LSTM, index_type tensor) {
-  matrix_type *matrix = first(LSTM, tensor);
-  LSTM->tensor[tensor].matrix = realloc(LSTM->tensor[tensor].matrix, sizeof(matrix_type *) + sizeof(matrix_type) * LSTM->tensor[tensor].time - 1);
+  matrix_type *matrix = LSTM->tensor[tensor].matrix[LSTM->tensor[tensor].time - 1];
+  LSTM->tensor[tensor].matrix = realloc(LSTM->tensor[tensor].matrix, sizeof(matrix_type *) + sizeof(matrix_type) * --LSTM->tensor[tensor].time);
   assert(LSTM->tensor[tensor].matrix);
   return matrix;
 }

@@ -4,9 +4,9 @@
   #include "matrix.h"
   //#include <time.h>
   #define LSTM_BEGIN           0
-  #define LSTM_SIZE            49
+  #define LSTM_SIZE            50
   #define LSTM_END             LSTM_SIZE
-  #define GATES_BEGIN          _Zt
+  #define GATES_BEGIN          Yt
 
   #define INPUT_WEIGHTS_BEGIN  Wz
   #define HIDDEN_WEIGHTS_BEGIN Rz
@@ -39,10 +39,10 @@
   #define BIAS_UPDATES_END     UPDATES_END
 
   typedef enum {
-    Input, Xt, Output, Yt, _Zt, _It, _Ft, _Ot, Zt, It, Ft, Ot, Ct, Wz, Wi, 
-    Wf, Wo, Rz, Ri, Rf, Ro, Pi, Pf, Po, Bz, Bi, Bf, Bo, DYt, D_Ot, DCt, 
-    D_Ft, D_It, D_Zt, DW_z, DW_i, DW_f, DW_o, DR_z, DR_i, DR_f, DR_o, DPi, 
-    DPf, DPo, DB_z, DB_i, DB_f, DB_o
+    Input, Xt, Output, Answer, Yt, _Zt, _It, _Ft, _Ot, Zt, It, Ft, Ot, Ct, 
+    Wz, Wi, Wf, Wo, Rz, Ri, Rf, Ro, Pi, Pf, Po, Bz, Bi, Bf, Bo, DYt, D_Ot, 
+    DCt, D_Ft, D_It, D_Zt, DW_z, DW_i, DW_f, DW_o, DR_z, DR_i, DR_f, DR_o, 
+    DPi, DPf, DPo, DB_z, DB_i, DB_f, DB_o
   } index_type;
 
   typedef struct {
@@ -62,4 +62,5 @@
   matrix_type *pop(LSTM_type *, index_type);
   void push_all(LSTM_type *, index_type, long double *);
   void LSTM_copy_last_matrix_to_beginning(LSTM_type *, index_type, index_type);
+  //void copy_tensor(LSTM_type *, index_type, index_type);
 #endif

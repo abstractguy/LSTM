@@ -25,7 +25,6 @@ LSTM_type *make_LSTM(long double *input, long double *output, unsigned int t, un
 
   push_all(LSTM, Input,  (long double *)input);
   push_all(LSTM, Output, (long double *)output);
-  push_all(LSTM, Xt,     (long double *)input);
 
   return LSTM;
 }
@@ -71,8 +70,8 @@ void push(LSTM_type *LSTM, index_type tensor, matrix_type *matrix) {
 }
 
 matrix_type *pop(LSTM_type *LSTM, index_type tensor) {
-  matrix_type *matrix = first(LSTM, tensor);
-  LSTM->tensor[tensor].matrix = realloc(LSTM->tensor[tensor].matrix, sizeof(matrix_type *) + sizeof(matrix_type) * LSTM->tensor[tensor].time - 1);
+  matrix_type *matrix = LSTM->tensor[tensor].matrix[LSTM->tensor[tensor].time - 1];
+  LSTM->tensor[tensor].matrix = realloc(LSTM->tensor[tensor].matrix, sizeof(matrix_type *) + sizeof(matrix_type) * --LSTM->tensor[tensor].time);
   assert(LSTM->tensor[tensor].matrix);
   return matrix;
 }
@@ -84,7 +83,7 @@ void push_all(LSTM_type *LSTM, index_type tensor, long double *steps) {
     columns = LSTM->tensor[tensor].matrix[n]->columns;
     for (unsigned int row = 0; row < rows; row++) {
       for (unsigned int column = 0; column < columns; column++) {
-        LSTM->tensor[tensor].matrix[n]->matrix[row][column] = *(steps + n * rows * columns + row * columns + column);
+        LSTM->tensor[tensor].matrix[n]->matrix[row][column] = steps[n * rows * columns + row * columns + column];
       }
     }
   }
@@ -95,3 +94,7 @@ void LSTM_copy_last_matrix_to_beginning(LSTM_type *LSTM, index_type beginning, i
     push(LSTM, tensor, matrix_copy(LSTM->tensor[tensor].matrix[0]));
   }
 }
+
+//void copy_tensor(LSTM_type *LSTM, index_type tensor1, index_type tensor2) {
+//  assert(
+//}
