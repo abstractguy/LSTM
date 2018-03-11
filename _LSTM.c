@@ -5,8 +5,7 @@ LSTM_type *allocate_LSTM(void) {
   LSTM_type *LSTM = NULL;
   LSTM = malloc(sizeof(LSTM_type));
   assert(LSTM);
-  //srand(time(NULL));
-  srand(1);
+  
   for index_type tensor = LSTM_BEGIN; tensor < LSTM_END; tensor++) {
     LSTM->tensor[tensor].time = 0;
     LSTM->tensor[tensor].matrix = calloc(1, sizeof(matrix_type *));
@@ -16,6 +15,8 @@ LSTM_type *allocate_LSTM(void) {
 
 LSTM_type *make_LSTM(long double *input, long double *output, unsigned int t, unsigned int rows, unsigned int columns) {
   LSTM_type *LSTM = allocate_LSTM();
+  //srand(time(NULL));
+  srand(1);
   
 }
 
