@@ -3,7 +3,7 @@
 //#include "_feedback.h"
 //#include "_update.h"
 #include "_LSTM.h"
-#include "printing.h"
+#include "_printing.h"
 
 //void run_LSTM(LSTM_type *);
 
@@ -27,7 +27,7 @@ int main(void) {
     {{1.0}}  // NAND(0, 0) = 1
   };
 
-  LSTM = make_LSTM(input, output, 4, 1, 1);
+  LSTM = make_LSTM((long double *)input, (long double *)output, 4, 1, 1);
   //for (unsigned int epoch = 0; epoch < 25; epoch++) run_LSTM(LSTM);
 
   print_LSTM(LSTM);
