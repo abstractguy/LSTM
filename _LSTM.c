@@ -26,7 +26,6 @@ LSTM_type *make_LSTM(long double *input, long double *output, unsigned int t, un
   push_all(LSTM, Input,  (long double *)input);
   push_all(LSTM, Output, (long double *)output);
   push_all(LSTM, Xt,     (long double *)input);
-  push_all(LSTM, Yt,     (long double *)output);
 
   return LSTM;
 }
