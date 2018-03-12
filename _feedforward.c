@@ -2,16 +2,17 @@
 #include "_feedforward.h"
 
 void feedforward(LSTM_type *LSTM) {
-  matrix_type *matrix = NULL;
+  matrix_type *input = NULL;
   copy_tensor(LSTM, Input, Xt);
 
-  do {
+  while (LSTM->tensor[Xt].time) {
+    input = pop(LSTM, Xt);
     // Block input preactivations:
     push(LSTM, _Zt, 
       sum(3, 
         dot_product(
           first(LSTM, Wz), 
-          first(LSTM, Xt)), 
+          matrix_copy(input)), 
         dot_product(
           first(LSTM, Rz), 
           second(LSTM, Yt)), 
@@ -25,7 +26,7 @@ void feedforward(LSTM_type *LSTM) {
       sum(4, 
         dot_product(
           first(LSTM, Wi), 
-          first(LSTM, Xt)), 
+          matrix_copy(input)), 
         dot_product(
           first(LSTM, Ri), 
           second(LSTM, Yt)), 
@@ -42,7 +43,7 @@ void feedforward(LSTM_type *LSTM) {
       sum(4, 
         dot_product(
           first(LSTM, Wf), 
-          first(LSTM, Xt)), 
+          matrix_copy(input)), 
         dot_product(
           first(LSTM, Rf), 
           second(LSTM, Yt)), 
@@ -69,7 +70,7 @@ void feedforward(LSTM_type *LSTM) {
       sum(4, 
         dot_product(
           first(LSTM, Wo), 
-          first(LSTM, Xt)), 
+          input), 
         dot_product(
           first(LSTM, Ro), 
           second(LSTM, Yt)), 
@@ -86,9 +87,5 @@ void feedforward(LSTM_type *LSTM) {
       product(2, 
         matrix_tanh(first(LSTM, Ct)), 
         first(LSTM, Ot)));
-
-    // Next round:
-    matrix = pop(LSTM, Xt);
-    matrix = destroy_matrix(matrix);
-  } while (LSTM->tensor[Xt].time);
+  }
 }
