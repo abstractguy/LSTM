@@ -95,6 +95,17 @@ void LSTM_copy_last_matrix_to_beginning(LSTM_type *LSTM, index_type beginning, i
   }
 }
 
-//void copy_tensor(LSTM_type *LSTM, index_type tensor1, index_type tensor2) {
-//  assert(
-//}
+void empty_tensor(LSTM_type *LSTM, index_type tensor) {
+  matrix_type *matrix = NULL;
+  while (LSTM->tensor[tensor].time) {
+    matrix = pop(LSTM, tensor);
+    matrix = destroy_matrix(matrix);
+  }
+}
+
+void copy_tensor(LSTM_type *LSTM, index_type tensor1, index_type tensor2) {
+  empty_tensor(LSTM, tensor2);
+  for (unsigned int time = 0; time < LSTM->tensor[tensor1].time; time++) {
+    push(LSTM, tensor2, matrix_copy(LSTM->tensor[tensor1].matrix[time]));
+  }
+}

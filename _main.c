@@ -8,7 +8,6 @@ void run_LSTM(LSTM_type *);
 
 int main(void) {
   LSTM_type *LSTM = NULL;
-  matrix_type *temp = NULL;
 
   // NAND inputs (Input):
   long double input[4][1][1] = {
@@ -32,14 +31,9 @@ int main(void) {
     run_LSTM(LSTM);
   //}
 
+  copy_tensor(LSTM, Input, Xt);
+  copy_tensor(LSTM, Output, Answer);
   print_LSTM(LSTM);
-
-  while (LSTM->tensor[Input].time) {
-    temp = pop(LSTM, Input);
-    printf("\nTime: %u\n", LSTM->tensor[Input].time);
-    print_matrix(temp);
-    temp = destroy_matrix(temp);
-  }
 
   LSTM = destroy_LSTM(LSTM);
   return 0;

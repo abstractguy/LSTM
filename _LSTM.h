@@ -62,5 +62,6 @@
   matrix_type *pop(LSTM_type *, index_type);
   void push_all(LSTM_type *, index_type, long double *);
   void LSTM_copy_last_matrix_to_beginning(LSTM_type *, index_type, index_type);
-  //void copy_tensor(LSTM_type *, index_type, index_type);
+  void empty_tensor(LSTM_type *, index_type);
+  void copy_tensor(LSTM_type *, index_type, index_type);
 #endif
