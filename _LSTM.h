@@ -40,8 +40,8 @@
 
   typedef enum {
     Input, Xt, Output, Answer, Yt, _Zt, _It, _Ft, _Ot, Zt, It, Ft, Ot, Ct, 
-    Wz, Wi, Wf, Wo, Rz, Ri, Rf, Ro, Pi, Pf, Po, Bz, Bi, Bf, Bo, DYt, D_Ot, 
-    DCt, D_Ft, D_It, D_Zt, DW_z, DW_i, DW_f, DW_o, DR_z, DR_i, DR_f, DR_o, 
+    Wz, Wi, Wf, Wo, Rz, Ri, Rf, Ro, Pi, Pf, Po, Bz, Bi, Bf, Bo, DYt, DOt, 
+    DCt, DFt, DIt, DZt, DW_z, DW_i, DW_f, DW_o, DR_z, DR_i, DR_f, DR_o, 
     DPi, DPf, DPo, DB_z, DB_i, DB_f, DB_o
   } index_type;
 

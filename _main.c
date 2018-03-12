@@ -1,6 +1,6 @@
 // main.c
 #include "_feedforward.h"
-//#include "_feedback.h"
+#include "_feedback.h"
 //#include "_update.h"
 #include "_printing.h"
 
@@ -40,13 +40,6 @@ int main(void) {
 
 void run_LSTM(LSTM_type *LSTM) {
   feedforward(LSTM);
-  //for (unsigned int epoch = 0; epoch < 4; epoch++) {
-    //feedforward_once(LSTM);
-  //}
-  //LSTM_copy_last_matrix_to_beginning(LSTM, GATES_BEGIN, GATES_END);
-  //LSTM_copy_last_matrix_to_beginning(LSTM, ERRORS_BEGIN, ERRORS_END);
-  //for (unsigned int epoch = 4; epoch > 0; epoch--) {
-  //  feedback_once(LSTM, epoch);
-  //  update_forward_once(LSTM, epoch);
-  //} update_backward_once(LSTM);
+  feedback(LSTM);
+  //update(LSTM);
 }
