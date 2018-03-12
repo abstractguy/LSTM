@@ -31,7 +31,6 @@ int main(void) {
     run_LSTM(LSTM);
   //}
 
-  copy_tensor(LSTM, Input, Xt);
   copy_tensor(LSTM, Output, Answer);
   print_LSTM(LSTM);
 
@@ -40,8 +39,9 @@ int main(void) {
 }
 
 void run_LSTM(LSTM_type *LSTM) {
+  feedforward(LSTM);
   //for (unsigned int epoch = 0; epoch < 4; epoch++) {
-    feedforward_once(LSTM);
+    //feedforward_once(LSTM);
   //}
   //LSTM_copy_last_matrix_to_beginning(LSTM, GATES_BEGIN, GATES_END);
   //LSTM_copy_last_matrix_to_beginning(LSTM, ERRORS_BEGIN, ERRORS_END);

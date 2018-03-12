@@ -3,5 +3,5 @@
   #define _FEEDFORWARD_H
   #include "_LSTM.h"
 
-  void feedforward_once(LSTM_type *);
+  void feedforward(LSTM_type *);
 #endif
