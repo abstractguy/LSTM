@@ -19,7 +19,7 @@ void feedback(LSTM_type *LSTM) {
   copy_tensor(LSTM, Input_reversed, Xt_reversed);
   copy_tensor(LSTM, Output, Answer);
 
-  //while (LSTM->tensor[Answer].time) {
+  while (LSTM->tensor[Answer].time) {
     // FEEDBACK PART:
     // Block output errors:
     push(LSTM, DYt, 
@@ -45,14 +45,14 @@ void feedback(LSTM_type *LSTM) {
       product(3, 
         first(LSTM, DYt), 
         matrix_tanh(first(LSTM, Ct)), 
-        sigmoid_derivative(first(LSTM, _Ot))));
+        sigmoid_derivative(pop(LSTM, _Ot))));
 
     // Cell memory errors:
     push(LSTM, DCt, 
       sum(5, 
         product(3, 
-          first(LSTM, DYt), 
-          first(LSTM, Ot), 
+          pop(LSTM, DYt), 
+          pop(LSTM, Ot), 
           tanh_derivative(first(LSTM, Ct))), 
         product(2, 
           first(LSTM, Po), 
@@ -72,21 +72,21 @@ void feedback(LSTM_type *LSTM) {
       product(3, 
         first(LSTM, DCt), 
         second(LSTM, Ct), 
-        sigmoid_derivative(first(LSTM, _Ft))));
+        sigmoid_derivative(pop(LSTM, _Ft))));
 
     // Input gate errors:
     push(LSTM, DIt, 
       product(3, 
         first(LSTM, DCt), 
-        first(LSTM, Zt), 
-        sigmoid_derivative(first(LSTM, _It))));
+        pop(LSTM, Zt), 
+        sigmoid_derivative(pop(LSTM, _It))));
 
     // Block input errors:
     push(LSTM, DZt, 
       product(3, 
         first(LSTM, DCt), 
-        first(LSTM, It), 
-        tanh_derivative(first(LSTM, _Zt))));
+        pop(LSTM, It), 
+        tanh_derivative(pop(LSTM, _Zt))));
 
     // UPDATE PART:
     // Block input input weight updates:
@@ -119,7 +119,7 @@ void feedback(LSTM_type *LSTM) {
         pop(LSTM, DWo), 
         dot_product(
           transpose(first(LSTM, DOt)), 
-          first(LSTM, Xt_reversed))));
+          pop(LSTM, Xt_reversed))));
 
     // Block input recurrent weight updates:
     push(LSTM, DRz, 
@@ -151,7 +151,7 @@ void feedback(LSTM_type *LSTM) {
         pop(LSTM, DRo), 
         dot_product(
           transpose(DOt_plus_1), 
-          first(LSTM, Yt))));
+          pop(LSTM, Yt))));
 
     // Input gate peephole weight updates:
     push(LSTM, DPi, 
@@ -174,7 +174,7 @@ void feedback(LSTM_type *LSTM) {
       sum(2, 
         pop(LSTM, DPo), 
         product(2, 
-          first(LSTM, Ct), 
+          pop(LSTM, Ct), 
           first(LSTM, DOt))));
 
     // Block input bias weight updates:
@@ -202,7 +202,6 @@ void feedback(LSTM_type *LSTM) {
         first(LSTM, DOt)));
 
     // Prepare next iteration:
-    /*
     if (LSTM->tensor[Answer].time) {
       DZt_plus_1 = pop(LSTM, DZt), 
       DIt_plus_1 = pop(LSTM, DIt), 
@@ -211,6 +210,5 @@ void feedback(LSTM_type *LSTM) {
       DCt_plus_1 = pop(LSTM, DCt), 
       Ft_plus_1  = pop(LSTM, Ft);
     }
-    */
-  //}
+  }
 }

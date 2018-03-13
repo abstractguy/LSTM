@@ -26,12 +26,11 @@ int main(void) {
   };
 
   // NAND outputs (Output & Answer):
-  long double output[5][1][1] = {
-    {{0.0}}, // Dummy output
-    {{1.0}}, // NAND(1, 0) = 1
-    {{0.0}}, // NAND(1, 1) = 0
+  long double output[4][1][1] = {
+    {{1.0}}, // NAND(0, 0) = 1
     {{1.0}}, // NAND(0, 1) = 1
-    {{1.0}}  // NAND(0, 0) = 1
+    {{0.0}}, // NAND(1, 1) = 0
+    {{1.0}}  // NAND(1, 0) = 1
   };
 
   LSTM = make_LSTM((long double *)input, (long double *)input_reversed, (long double *)output, 4, 1, 1);

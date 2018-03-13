@@ -10,7 +10,7 @@ LSTM_type *make_LSTM(long double *input, long double *input_reversed, long doubl
 
   // Empty input/outputs to initialize (Input, Output):
   LSTM_initialize(LSTM, Input, Output, zero, t, columns, rows);
-  LSTM_initialize(LSTM, Output, GATES_BEGIN, zero, t + 1, rows, columns);
+  LSTM_initialize(LSTM, Output, GATES_BEGIN, zero, t, rows, columns);
 
   LSTM_initialize(LSTM, GATES_BEGIN, GATES_END, one, 2, columns, rows);
   LSTM_initialize(LSTM, INPUT_WEIGHTS_BEGIN, INPUT_WEIGHTS_END, random_long_double, 1, rows, columns);
