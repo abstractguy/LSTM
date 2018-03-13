@@ -1,7 +1,7 @@
 // _LSTM.c
 #include "_LSTM.h"
 
-LSTM_type *make_LSTM(long double *input, long double *output, unsigned int t, unsigned int rows, unsigned int columns) {
+LSTM_type *make_LSTM(long double *input, long double *input_reversed, long double *output, unsigned int t, unsigned int rows, unsigned int columns) {
   LSTM_type *LSTM = NULL;
   LSTM = malloc(sizeof(LSTM_type));
   assert(LSTM);
@@ -25,6 +25,7 @@ LSTM_type *make_LSTM(long double *input, long double *output, unsigned int t, un
 
   push_all(LSTM, Input,  (long double *)input);
   push_all(LSTM, Output, (long double *)output);
+  push_all(LSTM, Input_reversed, (long double *)input_reversed);
 
   return LSTM;
 }

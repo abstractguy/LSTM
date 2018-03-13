@@ -4,7 +4,7 @@
   #include "matrix.h"
   //#include <time.h>
   #define LSTM_BEGIN           0
-  #define LSTM_SIZE            50
+  #define LSTM_SIZE            52
   #define LSTM_END             LSTM_SIZE
   #define GATES_BEGIN          Yt
 
@@ -39,10 +39,10 @@
   #define BIAS_UPDATES_END     UPDATES_END
 
   typedef enum {
-    Input, Xt, Output, Answer, Yt, _Zt, _It, _Ft, _Ot, Zt, It, Ft, Ot, Ct, 
-    Wz, Wi, Wf, Wo, Rz, Ri, Rf, Ro, Pi, Pf, Po, Bz, Bi, Bf, Bo, DYt, DOt, 
-    DCt, DFt, DIt, DZt, DWz, DWi, DWf, DWo, DRz, DRi, DRf, DRo, 
-    DPi, DPf, DPo, DBz, DBi, DBf, DBo
+    Input, Input_reversed, Xt, Xt_reversed, Output, Answer, Yt, _Zt, _It,
+    _Ft, _Ot, Zt, It, Ft, Ot, Ct, Wz, Wi, Wf, Wo, Rz, Ri, Rf, Ro, Pi, Pf,
+    Po, Bz, Bi, Bf, Bo, DYt, DOt, DCt, DFt, DIt, DZt, DWz, DWi, DWf, DWo,
+    DRz, DRi, DRf, DRo, DPi, DPf, DPo, DBz, DBi, DBf, DBo
   } index_type;
 
   typedef struct {
@@ -52,7 +52,7 @@
     } tensor[LSTM_SIZE];
   } LSTM_type;
 
-  LSTM_type *make_LSTM(long double *, long double *, unsigned int, unsigned int, unsigned int);
+  LSTM_type *make_LSTM(long double *, long double *, long double *, unsigned int, unsigned int, unsigned int);
   LSTM_type *destroy_LSTM(LSTM_type *);
   void LSTM_initialize(LSTM_type *, index_type, index_type, long double (*)(long double), unsigned int, unsigned int, unsigned int);
   matrix_type *first(LSTM_type *, index_type);
