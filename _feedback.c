@@ -64,8 +64,8 @@ void feedback(LSTM_type *LSTM) {
           first(LSTM, Pf), 
           matrix_copy(DFt_plus_1)), 
         product(2, 
-          matrix_copy(DCt_plus_1), 
-          matrix_copy(Ft_plus_1))));
+          DCt_plus_1, 
+          Ft_plus_1)));
 
     // Forget gate errors:
     push(LSTM, DFt, 
@@ -126,7 +126,7 @@ void feedback(LSTM_type *LSTM) {
       sum(2, 
         pop(LSTM, DRz), 
         dot_product(
-          transpose(matrix_copy(DZt_plus_1)), 
+          transpose(DZt_plus_1), 
           first(LSTM, Yt))));
 
     // Input gate recurrent weight updates:
@@ -150,7 +150,7 @@ void feedback(LSTM_type *LSTM) {
       sum(2, 
         pop(LSTM, DRo), 
         dot_product(
-          transpose(matrix_copy(DOt_plus_1)), 
+          transpose(DOt_plus_1), 
           first(LSTM, Yt))));
 
     // Input gate peephole weight updates:
@@ -159,7 +159,7 @@ void feedback(LSTM_type *LSTM) {
         pop(LSTM, DPi), 
         product(2, 
           first(LSTM, Ct), 
-          matrix_copy(DIt_plus_1))));
+          DIt_plus_1)));
 
     // Forget gate peephole weight updates:
     push(LSTM, DPf, 
@@ -167,7 +167,7 @@ void feedback(LSTM_type *LSTM) {
         pop(LSTM, DPf), 
         product(2, 
           first(LSTM, Ct), 
-          matrix_copy(DFt_plus_1))));
+          DFt_plus_1)));
 
     // Output gate peephole weight updates:
     push(LSTM, DPo, 
@@ -204,13 +204,6 @@ void feedback(LSTM_type *LSTM) {
     // Prepare next iteration:
     
   //}
-
-  DZt_plus_1 = destroy_matrix(DZt_plus_1), 
-  DIt_plus_1 = destroy_matrix(DIt_plus_1), 
-  DFt_plus_1 = destroy_matrix(DFt_plus_1), 
-  DOt_plus_1 = destroy_matrix(DOt_plus_1), 
-  DCt_plus_1 = destroy_matrix(DCt_plus_1), 
-  Ft_plus_1  = destroy_matrix(Ft_plus_1);
 }
 
 /*
