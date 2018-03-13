@@ -16,9 +16,11 @@ void feedback(LSTM_type *LSTM) {
   matrix_for_each(zero, DCt_plus_1);
   matrix_for_each(zero, Ft_plus_1);
 
+  copy_tensor(LSTM, Input,  Xt);
   copy_tensor(LSTM, Output, Answer);
 
   //while (LSTM->tensor[Answer].time) {
+    // FEEDBACK PART:
     // Block output errors:
     push(LSTM, DYt, 
       sum(5, 
@@ -86,6 +88,120 @@ void feedback(LSTM_type *LSTM) {
         first(LSTM, It), 
         tanh_derivative(first(LSTM, _Zt))));
 
+    // UPDATE PART:
+    // Block input input weight updates:
+    push(LSTM, DWz, 
+      sum(2, 
+        pop(LSTM, DWz), 
+        dot_product(
+          transpose(first(LSTM, DZt)), 
+          first(LSTM, Xt))));
+
+    // Input gate input weight updates:
+    push(LSTM, DWi, 
+      sum(2, 
+        pop(LSTM, DWi), 
+        dot_product(
+          transpose(first(LSTM, DIt)), 
+          first(LSTM, Xt))));
+
+    // Forget gate input weight updates:
+    push(LSTM, DWf, 
+      sum(2, 
+        pop(LSTM, DWf), 
+        dot_product(
+          transpose(first(LSTM, DFt)), 
+          first(LSTM, Xt))));
+
+    // Output gate input weight updates:
+    push(LSTM, DWo, 
+      sum(2, 
+        pop(LSTM, DWo), 
+        dot_product(
+          transpose(first(LSTM, DOt)), 
+          first(LSTM, Xt))));
+
+    // Block input recurrent weight updates:
+    push(LSTM, DRz, 
+      sum(2, 
+        pop(LSTM, DRz), 
+        dot_product(
+          transpose(matrix_copy(DZt_plus_1)), 
+          first(LSTM, Yt))));
+
+    // Input gate recurrent weight updates:
+    push(LSTM, DRi, 
+      sum(2, 
+        pop(LSTM, DRi), 
+        dot_product(
+          transpose(matrix_copy(DIt_plus_1)), 
+          first(LSTM, Yt))));
+
+    // Forget gate recurrent weight updates:
+    push(LSTM, DRf, 
+      sum(2, 
+        pop(LSTM, DRf), 
+        dot_product(
+          transpose(matrix_copy(DFt_plus_1)), 
+          first(LSTM, Yt))));
+
+    // Block output recurrent weight updates:
+    push(LSTM, DRo, 
+      sum(2, 
+        pop(LSTM, DRo), 
+        dot_product(
+          transpose(matrix_copy(DOt_plus_1)), 
+          first(LSTM, Yt))));
+
+    // Input gate peephole weight updates:
+    push(LSTM, DPi, 
+      sum(2, 
+        pop(LSTM, DPi), 
+        product(2, 
+          first(LSTM, Ct), 
+          matrix_copy(DIt_plus_1))));
+
+    // Forget gate peephole weight updates:
+    push(LSTM, DPf, 
+      sum(2, 
+        pop(LSTM, DPf), 
+        product(2, 
+          first(LSTM, Ct), 
+          matrix_copy(DFt_plus_1))));
+
+    // Output gate peephole weight updates:
+    push(LSTM, DPo, 
+      sum(2, 
+        pop(LSTM, DPo), 
+        product(2, 
+          first(LSTM, Ct), 
+          first(LSTM, DOt))));
+
+    // Block input bias weight updates:
+    push(LSTM, DBz, 
+      sum(2, 
+        pop(LSTM, DBz), 
+        first(LSTM, DZt)));
+
+    // Input gate bias weight updates:
+    push(LSTM, DBi, 
+      sum(2, 
+        pop(LSTM, DBi), 
+        first(LSTM, DIt)));
+
+    // Forget gate bias weight updates:
+    push(LSTM, DBf, 
+      sum(2, 
+        pop(LSTM, DBf), 
+        first(LSTM, DFt)));
+
+    // Output gate bias weight updates:
+    push(LSTM, DBo, 
+      sum(2, 
+        pop(LSTM, DBo), 
+        first(LSTM, DOt)));
+
+    // Prepare next iteration:
     
   //}
 

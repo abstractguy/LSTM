@@ -16,10 +16,10 @@
 
   #define ERRORS_BEGIN         DYt
 
-  #define INPUT_UPDATES_BEGIN  DW_z
-  #define HIDDEN_UPDATES_BEGIN DR_z
+  #define INPUT_UPDATES_BEGIN  DWz
+  #define HIDDEN_UPDATES_BEGIN DRz
   #define CELL_UPDATES_BEGIN   DPi
-  #define BIAS_UPDATES_BEGIN   DB_z
+  #define BIAS_UPDATES_BEGIN   DBz
   #define UPDATES_BEGIN        INPUT_UPDATES_BEGIN
 
   #define GATES_END            WEIGHTS_BEGIN
@@ -41,8 +41,8 @@
   typedef enum {
     Input, Xt, Output, Answer, Yt, _Zt, _It, _Ft, _Ot, Zt, It, Ft, Ot, Ct, 
     Wz, Wi, Wf, Wo, Rz, Ri, Rf, Ro, Pi, Pf, Po, Bz, Bi, Bf, Bo, DYt, DOt, 
-    DCt, DFt, DIt, DZt, DW_z, DW_i, DW_f, DW_o, DR_z, DR_i, DR_f, DR_o, 
-    DPi, DPf, DPo, DB_z, DB_i, DB_f, DB_o
+    DCt, DFt, DIt, DZt, DWz, DWi, DWf, DWo, DRz, DRi, DRf, DRo, 
+    DPi, DPf, DPo, DBz, DBi, DBf, DBo
   } index_type;
 
   typedef struct {
