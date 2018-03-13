@@ -1,59 +1,91 @@
 // feedforward.c
 #include "feedforward.h"
 
-void feedforward_once(LSTM_type *LSTM, unsigned int epoch) {
-  // Input preactivations:
-  push(LSTM, At_iota, 
-    sum(3, dot_product(matrix_copy(LSTM->tensor[Xt_i].matrix[epoch]), 
-                       first(LSTM, Wi_iota)), 
-           dot_product(second(LSTM, Bt_c), 
-                       first(LSTM, Wh_iota)), 
-           dot_product(second(LSTM, St_c),
-                       first(LSTM, Wc_iota))));
+void feedforward(LSTM_type *LSTM) {
+  matrix_type *input = NULL;
+  copy_tensor(LSTM, Input, Xt);
 
-  // Input activations:
-  push(LSTM, Bt_iota, matrix_sigmoid(first(LSTM, At_iota)));
+  while (LSTM->tensor[Xt].time) {
+    input = pop(LSTM, Xt);
+    // Block input preactivations:
+    push(LSTM, _Zt, 
+      sum(3, 
+        dot_product(
+          first(LSTM, Wz), 
+          matrix_copy(input)), 
+        dot_product(
+          first(LSTM, Rz), 
+          second(LSTM, Yt)), 
+        first(LSTM, Bz)));
 
-  // Forget preactivations:
-  push(LSTM, At_phi, 
-    sum(3, dot_product(matrix_copy(LSTM->tensor[Xt_i].matrix[epoch]), 
-                       first(LSTM, Wi_phi)), 
-           dot_product(second(LSTM, Bt_c), 
-                       first(LSTM, Wh_phi)), 
-           dot_product(second(LSTM, St_c),
-                       first(LSTM, Wc_phi))));
+    // Block input activations:
+    push(LSTM, Zt, matrix_tanh(first(LSTM, _Zt)));
 
-  // Forget activations
-  push(LSTM, Bt_phi, matrix_sigmoid(first(LSTM, At_phi)));
+    // Input gate preactivations:
+    push(LSTM, _It, 
+      sum(4, 
+        dot_product(
+          first(LSTM, Wi), 
+          matrix_copy(input)), 
+        dot_product(
+          first(LSTM, Ri), 
+          second(LSTM, Yt)), 
+        product(2, 
+          first(LSTM, Pi), 
+          second(LSTM, Ct)), 
+        first(LSTM, Bi)));
 
-  // Cell preactivations:
-  push(LSTM, At_c, 
-    sum(2, dot_product(matrix_copy(LSTM->tensor[Xt_i].matrix[epoch]), 
-                       first(LSTM, Wi_c)), 
-           dot_product(second(LSTM, Bt_c), 
-                       first(LSTM, Wh_c))));
+    // Input gate activations:
+    push(LSTM, It, matrix_sigmoid(first(LSTM, _It)));
 
-  // Cell activations:
-  push(LSTM, St_c, 
-    sum(2, product(2, matrix_tanh(first(LSTM, At_c)), 
-                      first(LSTM, Bt_iota)), 
-           product(2, second(LSTM, St_c), 
-                      first(LSTM, Bt_phi))));
+    // Forget gate preactivations:
+    push(LSTM, _Ft, 
+      sum(4, 
+        dot_product(
+          first(LSTM, Wf), 
+          matrix_copy(input)), 
+        dot_product(
+          first(LSTM, Rf), 
+          second(LSTM, Yt)), 
+        product(2, 
+          first(LSTM, Pf), 
+          second(LSTM, Ct)), 
+        first(LSTM, Bf)));
 
-  // Output preactivations:
-  push(LSTM, At_omega, 
-    sum(3, dot_product(matrix_copy(LSTM->tensor[Xt_i].matrix[epoch]), 
-                       first(LSTM, Wi_omega)), 
-           dot_product(second(LSTM, Bt_c), 
-                       first(LSTM, Wh_omega)), 
-           dot_product(first(LSTM, St_c), 
-                       first(LSTM, Wc_omega))));
+    // Forget gate activations:
+    push(LSTM, Ft, matrix_sigmoid(first(LSTM, _Ft)));
 
-  // Output activations:
-  push(LSTM, Bt_omega, matrix_sigmoid(first(LSTM, At_omega)));
+    // Cell memory:
+    push(LSTM, Ct, 
+      sum(2, 
+        product(2, 
+          first(LSTM, Zt), 
+          first(LSTM, It)), 
+        product(2, 
+          second(LSTM, Ct), 
+          first(LSTM, Ft))));
 
-  // Cell outputs:
-  push(LSTM, Bt_c, 
-    product(2, matrix_sigmoid(first(LSTM, St_c)), 
-               first(LSTM, Bt_omega)));
+    // Output gate preactivations:
+    push(LSTM, _Ot, 
+      sum(4, 
+        dot_product(
+          first(LSTM, Wo), 
+          input), 
+        dot_product(
+          first(LSTM, Ro), 
+          second(LSTM, Yt)), 
+        product(2, 
+          first(LSTM, Po), 
+          first(LSTM, Ct)), 
+        first(LSTM, Bo)));
+
+    // Output gate activations:
+    push(LSTM, Ot, matrix_sigmoid(first(LSTM, _Ot)));
+
+    // Block output activations:
+    push(LSTM, Yt, 
+      product(2, 
+        matrix_tanh(first(LSTM, Ct)), 
+        first(LSTM, Ot)));
+  }
 }

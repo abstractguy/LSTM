@@ -1,33 +1,32 @@
 // LSTM.c
 #include "LSTM.h"
 
-LSTM_type *make_LSTM(unsigned int t, unsigned int rows, unsigned int columns) {
+LSTM_type *make_LSTM(long double *input, long double *input_reversed, long double *output, unsigned int t, unsigned int rows, unsigned int columns) {
   LSTM_type *LSTM = NULL;
   LSTM = malloc(sizeof(LSTM_type));
   assert(LSTM);
   srand(time(NULL));
   //srand(1);
 
-  // Empty input/outputs to initialize (Xt_i, Yt_k):
-  LSTM_initialize(LSTM, Xt_i, Yt_k, zero, t, columns, rows);
-  LSTM_initialize(LSTM, Yt_k, GATES_BEGIN, zero, t, rows, columns);
+  // Empty input/outputs to initialize (Input, Output):
+  LSTM_initialize(LSTM, Input, Output, zero, t, columns, rows);
+  LSTM_initialize(LSTM, Output, GATES_BEGIN, zero, t, rows, columns);
 
-  LSTM_initialize(LSTM, GATES_BEGIN, GATES_END, 
-                  one, 2, columns, rows);
-  LSTM_initialize(LSTM, INPUT_WEIGHTS_BEGIN, INPUT_WEIGHTS_END, 
-                  random_long_double, 1, rows, columns);
-  LSTM_initialize(LSTM, HIDDEN_WEIGHTS_BEGIN, HIDDEN_WEIGHTS_END, 
-                  random_long_double, 1, rows, rows);
-  LSTM_initialize(LSTM, CELL_WEIGHTS_BEGIN, CELL_WEIGHTS_END, 
-                  random_long_double, 1, rows, columns);
-  LSTM_initialize(LSTM, ERRORS_BEGIN, ERRORS_END, 
-                  zero, 2, columns, rows);
-  LSTM_initialize(LSTM, INPUT_UPDATES_BEGIN, INPUT_UPDATES_END, 
-                  zero, 1, rows, columns);
-  LSTM_initialize(LSTM, HIDDEN_UPDATES_BEGIN, HIDDEN_UPDATES_END, 
-                  zero, 1, rows, rows);
-  LSTM_initialize(LSTM, CELL_UPDATES_BEGIN, CELL_UPDATES_END, 
-                  zero, 1, rows, columns);
+  LSTM_initialize(LSTM, GATES_BEGIN, GATES_END, one, 2, columns, rows);
+  LSTM_initialize(LSTM, INPUT_WEIGHTS_BEGIN, INPUT_WEIGHTS_END, random_long_double, 1, rows, columns);
+  LSTM_initialize(LSTM, HIDDEN_WEIGHTS_BEGIN, HIDDEN_WEIGHTS_END, random_long_double, 1, rows, rows);
+  LSTM_initialize(LSTM, CELL_WEIGHTS_BEGIN, CELL_WEIGHTS_END, random_long_double, 1, rows, columns);
+  LSTM_initialize(LSTM, BIAS_WEIGHTS_BEGIN, BIAS_WEIGHTS_END, one, 1, rows, columns);
+  LSTM_initialize(LSTM, ERRORS_BEGIN, ERRORS_END, zero, 2, columns, rows);
+  LSTM_initialize(LSTM, INPUT_UPDATES_BEGIN, INPUT_UPDATES_END, zero, 1, rows, columns);
+  LSTM_initialize(LSTM, HIDDEN_UPDATES_BEGIN, HIDDEN_UPDATES_END, zero, 1, rows, rows);
+  LSTM_initialize(LSTM, CELL_UPDATES_BEGIN, CELL_UPDATES_END, zero, 1, rows, columns);
+  LSTM_initialize(LSTM, BIAS_UPDATES_BEGIN, BIAS_UPDATES_END, one, 1, rows, columns);
+
+  push_all(LSTM, Input,  (long double *)input);
+  push_all(LSTM, Output, (long double *)output);
+  push_all(LSTM, Input_reversed, (long double *)input_reversed);
+
   return LSTM;
 }
 
@@ -85,7 +84,7 @@ void push_all(LSTM_type *LSTM, index_type tensor, long double *steps) {
     columns = LSTM->tensor[tensor].matrix[n]->columns;
     for (unsigned int row = 0; row < rows; row++) {
       for (unsigned int column = 0; column < columns; column++) {
-        LSTM->tensor[tensor].matrix[n]->matrix[row][column] = *(steps + n * rows * columns + row * columns + column);
+        LSTM->tensor[tensor].matrix[n]->matrix[row][column] = steps[n * rows * columns + row * columns + column];
       }
     }
   }
@@ -94,5 +93,20 @@ void push_all(LSTM_type *LSTM, index_type tensor, long double *steps) {
 void LSTM_copy_last_matrix_to_beginning(LSTM_type *LSTM, index_type beginning, index_type end) {
   for (unsigned int tensor = beginning; tensor < end; tensor++) {
     push(LSTM, tensor, matrix_copy(LSTM->tensor[tensor].matrix[0]));
+  }
+}
+
+void empty_tensor(LSTM_type *LSTM, index_type tensor) {
+  matrix_type *matrix = NULL;
+  while (LSTM->tensor[tensor].time) {
+    matrix = pop(LSTM, tensor);
+    matrix = destroy_matrix(matrix);
+  }
+}
+
+void copy_tensor(LSTM_type *LSTM, index_type tensor1, index_type tensor2) {
+  empty_tensor(LSTM, tensor2);
+  for (unsigned int time = 0; time < LSTM->tensor[tensor1].time; time++) {
+    push(LSTM, tensor2, matrix_copy(LSTM->tensor[tensor1].matrix[time]));
   }
 }
