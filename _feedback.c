@@ -18,7 +18,76 @@ void feedback(LSTM_type *LSTM) {
 
   copy_tensor(LSTM, Output, Answer);
 
-  
+  //while (LSTM->tensor[Answer].time) {
+    // Block output errors:
+    push(LSTM, DYt, 
+      sum(5, 
+        subtract(2, 
+          pop(LSTM, Answer), 
+          first(LSTM, Yt)), 
+        dot_product(
+          transpose(first(LSTM, Rz)),
+          matrix_copy(DZt_plus_1)), 
+        dot_product(
+          transpose(first(LSTM, Ri)),
+          matrix_copy(DIt_plus_1)), 
+        dot_product(
+          transpose(first(LSTM, Rf)),
+          matrix_copy(DFt_plus_1)), 
+        dot_product(
+          transpose(first(LSTM, Ro)),
+          matrix_copy(DOt_plus_1))));
+
+    // Output gate errors:
+    push(LSTM, DOt, 
+      product(3, 
+        first(LSTM, DYt), 
+        matrix_tanh(first(LSTM, Ct)), 
+        sigmoid_derivative(first(LSTM, _Ot))));
+
+    // Cell memory errors:
+    push(LSTM, DCt, 
+      sum(5, 
+        product(3, 
+          first(LSTM, DYt), 
+          first(LSTM, Ot), 
+          tanh_derivative(first(LSTM, Ct))), 
+        product(2, 
+          first(LSTM, Po), 
+          first(LSTM, DOt)), 
+        product(2, 
+          first(LSTM, Pi), 
+          matrix_copy(DIt_plus_1)), 
+        product(2, 
+          first(LSTM, Pf), 
+          matrix_copy(DFt_plus_1)), 
+        product(2, 
+          matrix_copy(DCt_plus_1), 
+          matrix_copy(Ft_plus_1))));
+
+    // Forget gate errors:
+    push(LSTM, DFt, 
+      product(3, 
+        first(LSTM, DCt), 
+        second(LSTM, Ct), 
+        sigmoid_derivative(first(LSTM, _Ft))));
+
+    // Input gate errors:
+    push(LSTM, DIt, 
+      product(3, 
+        first(LSTM, DCt), 
+        first(LSTM, Zt), 
+        sigmoid_derivative(first(LSTM, _It))));
+
+    // Block input errors:
+    push(LSTM, DZt, 
+      product(3, 
+        first(LSTM, DCt), 
+        first(LSTM, It), 
+        tanh_derivative(first(LSTM, _Zt))));
+
+    
+  //}
 
   DZt_plus_1 = destroy_matrix(DZt_plus_1), 
   DIt_plus_1 = destroy_matrix(DIt_plus_1), 
