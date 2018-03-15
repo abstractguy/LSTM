@@ -52,14 +52,20 @@ void LSTM_initialize(LSTM_type *LSTM, index_type begin, index_type end, long dou
   }
 }
 
-matrix_type *LSTM_read(LSTM_type *LSTM, index_type tensor, long index) {
+matrix_type *LSTM_matrix(LSTM_type *LSTM, index_type tensor, long index) {
   long time = LSTM->tensor[tensor].time;
-  assert(((index < 0) && (index >= (-time))) || ((index >= 0) && (index <= time - 1)));
-  if (index < 0) {
-    return matrix_copy(LSTM->tensor[tensor].matrix[(unsigned int)(time + index)]);
-  } else {
-    return matrix_copy(LSTM->tensor[tensor].matrix[(unsigned int)index]);
-  }
+  assert(index >= -time && index < time);
+  return LSTM->tensor[tensor].matrix[(unsigned int)(index < 0 ? time + index : index)];
+}
+
+matrix_type *LSTM_read(LSTM_type *LSTM, index_type tensor, long index) {
+  return matrix_copy(LSTM_matrix(LSTM, tensor, index));
+}
+
+void LSTM_write(LSTM_type *LSTM, index_type tensor, long time, matrix_type *matrix1) {
+  matrix_type *matrix2 = LSTM_matrix(LSTM, tensor, time);
+  matrix2 = destroy_matrix(matrix2);
+  matrix2 = matrix1;
 }
 
 void push(LSTM_type *LSTM, index_type tensor, matrix_type *matrix) {
