@@ -8,6 +8,7 @@ void run_LSTM(LSTM_type *);
 
 int main(void) {
   LSTM_type *LSTM = NULL;
+  matrix_type *temp = NULL;
 
   // NAND inputs (Input & Xt):
   long double input[4][1][1] = {
@@ -38,8 +39,13 @@ int main(void) {
     run_LSTM(LSTM);
   }
 
+  temp = make_matrix(4, 1);
+  matrix_for_each(one, temp);
+  LSTM_write(LSTM, DBo, 0, temp);
+
   print_LSTM(LSTM);
 
+  temp = destroy_matrix(temp);
   LSTM = destroy_LSTM(LSTM);
   return 0;
 }
@@ -47,5 +53,5 @@ int main(void) {
 void run_LSTM(LSTM_type *LSTM) {
   feedforward(LSTM);
   feedback(LSTM);
-  update(LSTM);
+  //update(LSTM);
 }

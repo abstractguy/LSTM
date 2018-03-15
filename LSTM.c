@@ -64,7 +64,6 @@ matrix_type *LSTM_read(LSTM_type *LSTM, index_type tensor, long index) {
 
 void LSTM_write(LSTM_type *LSTM, index_type tensor, long time, matrix_type *matrix1) {
   matrix_type *matrix2 = LSTM_matrix(LSTM, tensor, time);
-  matrix2 = destroy_matrix(matrix2);
   matrix2 = matrix1;
 }
 
