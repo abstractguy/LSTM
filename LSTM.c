@@ -55,7 +55,7 @@ void LSTM_initialize(LSTM_type *LSTM, index_type begin, index_type end, long dou
 matrix_type *LSTM_matrix(LSTM_type *LSTM, index_type tensor, long index) {
   long time = LSTM->tensor[tensor].time;
   assert(index >= -time && index < time);
-  return LSTM->tensor[tensor].matrix[(unsigned int)(index < 0 ? time + index : index)];
+  return LSTM->tensor[tensor].matrix[index < 0 ? time + index : index];
 }
 
 matrix_type *LSTM_read(LSTM_type *LSTM, index_type tensor, long index) {
