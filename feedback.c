@@ -2,12 +2,12 @@
 #include "feedback.h"
 
 void feedback(LSTM_type *LSTM) {
-  matrix_type *DZt_plus_1 = first(LSTM, DZt), 
-              *DIt_plus_1 = first(LSTM, DIt), 
-              *DFt_plus_1 = first(LSTM, DFt), 
-              *DOt_plus_1 = first(LSTM, DOt), 
-              *DCt_plus_1 = first(LSTM, DCt), 
-              *Ft_plus_1  = first(LSTM, Ft);
+  matrix_type *DZt_plus_1 = LSTM_read(LSTM, DZt, -1), 
+              *DIt_plus_1 = LSTM_read(LSTM, DIt, -1), 
+              *DFt_plus_1 = LSTM_read(LSTM, DFt, -1), 
+              *DOt_plus_1 = LSTM_read(LSTM, DOt, -1), 
+              *DCt_plus_1 = LSTM_read(LSTM, DCt, -1), 
+              *Ft_plus_1  = LSTM_read(LSTM, Ft,  -1);
 
   matrix_for_each(zero, DZt_plus_1);
   matrix_for_each(zero, DIt_plus_1);
@@ -26,25 +26,25 @@ void feedback(LSTM_type *LSTM) {
       sum(5, 
         subtract(2, 
           pop(LSTM, Answer), 
-          first(LSTM, Yt)), 
+          LSTM_read(LSTM, Yt, -1)), 
         dot_product(
-          transpose(first(LSTM, Rz)),
+          transpose(LSTM_read(LSTM, Rz, 0)),
           matrix_copy(DZt_plus_1)), 
         dot_product(
-          transpose(first(LSTM, Ri)),
+          transpose(LSTM_read(LSTM, Ri, 0)),
           matrix_copy(DIt_plus_1)), 
         dot_product(
-          transpose(first(LSTM, Rf)),
+          transpose(LSTM_read(LSTM, Rf, 0)),
           matrix_copy(DFt_plus_1)), 
         dot_product(
-          transpose(first(LSTM, Ro)),
+          transpose(LSTM_read(LSTM, Ro, 0)),
           matrix_copy(DOt_plus_1))));
 
     // Output gate errors:
     push(LSTM, DOt, 
       product(3, 
-        first(LSTM, DYt), 
-        matrix_tanh(first(LSTM, Ct)), 
+        LSTM_read(LSTM, DYt, -1), 
+        matrix_tanh(LSTM_read(LSTM, Ct, -1)), 
         sigmoid_derivative(pop(LSTM, _Ot))));
 
     // Cell memory errors:
@@ -53,15 +53,15 @@ void feedback(LSTM_type *LSTM) {
         product(3, 
           pop(LSTM, DYt), 
           pop(LSTM, Ot), 
-          tanh_derivative(first(LSTM, Ct))), 
+          tanh_derivative(LSTM_read(LSTM, Ct, -1))), 
         product(2, 
-          first(LSTM, Po), 
-          first(LSTM, DOt)), 
+          LSTM_read(LSTM, Po, -1), 
+          LSTM_read(LSTM, DOt, -1)), 
         product(2, 
-          first(LSTM, Pi), 
+          LSTM_read(LSTM, Pi, -1), 
           matrix_copy(DIt_plus_1)), 
         product(2, 
-          first(LSTM, Pf), 
+          LSTM_read(LSTM, Pf, -1), 
           matrix_copy(DFt_plus_1)), 
         product(2, 
           DCt_plus_1, 
@@ -70,21 +70,21 @@ void feedback(LSTM_type *LSTM) {
     // Forget gate errors:
     push(LSTM, DFt, 
       product(3, 
-        first(LSTM, DCt), 
-        second(LSTM, Ct), 
+        LSTM_read(LSTM, DCt, -1), 
+        LSTM_read(LSTM, Ct, -2), 
         sigmoid_derivative(pop(LSTM, _Ft))));
 
     // Input gate errors:
     push(LSTM, DIt, 
       product(3, 
-        first(LSTM, DCt), 
+        LSTM_read(LSTM, DCt, -1), 
         pop(LSTM, Zt), 
         sigmoid_derivative(pop(LSTM, _It))));
 
     // Block input errors:
     push(LSTM, DZt, 
       product(3, 
-        first(LSTM, DCt), 
+        LSTM_read(LSTM, DCt, -1), 
         pop(LSTM, It), 
         tanh_derivative(pop(LSTM, _Zt))));
 
@@ -94,31 +94,31 @@ void feedback(LSTM_type *LSTM) {
       sum(2, 
         pop(LSTM, DWz), 
         dot_product(
-          transpose(first(LSTM, DZt)), 
-          first(LSTM, Xt_reversed))));
+          transpose(LSTM_read(LSTM, DZt, -1)), 
+          LSTM_read(LSTM, Xt_reversed, -1))));
 
     // Input gate input weight updates:
     push(LSTM, DWi, 
       sum(2, 
         pop(LSTM, DWi), 
         dot_product(
-          transpose(first(LSTM, DIt)), 
-          first(LSTM, Xt_reversed))));
+          transpose(LSTM_read(LSTM, DIt, -1)), 
+          LSTM_read(LSTM, Xt_reversed, -1))));
 
     // Forget gate input weight updates:
     push(LSTM, DWf, 
       sum(2, 
         pop(LSTM, DWf), 
         dot_product(
-          transpose(first(LSTM, DFt)), 
-          first(LSTM, Xt_reversed))));
+          transpose(LSTM_read(LSTM, DFt, -1)), 
+          LSTM_read(LSTM, Xt_reversed, -1))));
 
     // Output gate input weight updates:
     push(LSTM, DWo, 
       sum(2, 
         pop(LSTM, DWo), 
         dot_product(
-          transpose(first(LSTM, DOt)), 
+          transpose(LSTM_read(LSTM, DOt, -1)), 
           pop(LSTM, Xt_reversed))));
 
     // Block input recurrent weight updates:
@@ -127,7 +127,7 @@ void feedback(LSTM_type *LSTM) {
         pop(LSTM, DRz), 
         dot_product(
           transpose(DZt_plus_1), 
-          first(LSTM, Yt))));
+          LSTM_read(LSTM, Yt, -1))));
 
     // Input gate recurrent weight updates:
     push(LSTM, DRi, 
@@ -135,7 +135,7 @@ void feedback(LSTM_type *LSTM) {
         pop(LSTM, DRi), 
         dot_product(
           transpose(matrix_copy(DIt_plus_1)), 
-          first(LSTM, Yt))));
+          LSTM_read(LSTM, Yt, -1))));
 
     // Forget gate recurrent weight updates:
     push(LSTM, DRf, 
@@ -143,7 +143,7 @@ void feedback(LSTM_type *LSTM) {
         pop(LSTM, DRf), 
         dot_product(
           transpose(matrix_copy(DFt_plus_1)), 
-          first(LSTM, Yt))));
+          LSTM_read(LSTM, Yt, -1))));
 
     // Block output recurrent weight updates:
     push(LSTM, DRo, 
@@ -158,7 +158,7 @@ void feedback(LSTM_type *LSTM) {
       sum(2, 
         pop(LSTM, DPi), 
         product(2, 
-          first(LSTM, Ct), 
+          LSTM_read(LSTM, Ct, -1), 
           DIt_plus_1)));
 
     // Forget gate peephole weight updates:
@@ -166,7 +166,7 @@ void feedback(LSTM_type *LSTM) {
       sum(2, 
         pop(LSTM, DPf), 
         product(2, 
-          first(LSTM, Ct), 
+          LSTM_read(LSTM, Ct, -1), 
           DFt_plus_1)));
 
     // Output gate peephole weight updates:
@@ -175,31 +175,31 @@ void feedback(LSTM_type *LSTM) {
         pop(LSTM, DPo), 
         product(2, 
           pop(LSTM, Ct), 
-          first(LSTM, DOt))));
+          LSTM_read(LSTM, DOt, -1))));
 
     // Block input bias weight updates:
     push(LSTM, DBz, 
       sum(2, 
         pop(LSTM, DBz), 
-        first(LSTM, DZt)));
+        LSTM_read(LSTM, DZt, -1)));
 
     // Input gate bias weight updates:
     push(LSTM, DBi, 
       sum(2, 
         pop(LSTM, DBi), 
-        first(LSTM, DIt)));
+        LSTM_read(LSTM, DIt, -1)));
 
     // Forget gate bias weight updates:
     push(LSTM, DBf, 
       sum(2, 
         pop(LSTM, DBf), 
-        first(LSTM, DFt)));
+        LSTM_read(LSTM, DFt, -1)));
 
     // Output gate bias weight updates:
     push(LSTM, DBo, 
       sum(2, 
         pop(LSTM, DBo), 
-        first(LSTM, DOt)));
+        LSTM_read(LSTM, DOt, -1)));
 
     // Prepare next iteration:
     if (LSTM->tensor[Answer].time) {

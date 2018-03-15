@@ -5,8 +5,8 @@ LSTM_type *make_LSTM(long double *input, long double *input_reversed, long doubl
   LSTM_type *LSTM = NULL;
   LSTM = malloc(sizeof(LSTM_type));
   assert(LSTM);
-  srand(time(NULL));
-  //srand(1);
+  //srand(time(NULL));
+  srand(1);
 
   // Empty input/outputs to initialize (Input, Output):
   LSTM_initialize(LSTM, Input, Output, zero, t, columns, rows);
@@ -52,16 +52,14 @@ void LSTM_initialize(LSTM_type *LSTM, index_type begin, index_type end, long dou
   }
 }
 
-matrix_type *first(LSTM_type *LSTM, index_type tensor) {
-  return matrix_copy(LSTM->tensor[tensor].matrix[LSTM->tensor[tensor].time - 1]);
-}
-
-matrix_type *second(LSTM_type *LSTM, index_type tensor) {
-  return matrix_copy(LSTM->tensor[tensor].matrix[LSTM->tensor[tensor].time - 2]);
-}
-
-matrix_type *third(LSTM_type *LSTM, index_type tensor) {
-  return matrix_copy(LSTM->tensor[tensor].matrix[LSTM->tensor[tensor].time - 3]);
+matrix_type *LSTM_read(LSTM_type *LSTM, index_type tensor, long index) {
+  long time = LSTM->tensor[tensor].time;
+  assert(((index < 0) && (index >= (-time))) || ((index >= 0) && (index <= time - 1)));
+  if (index < 0) {
+    return matrix_copy(LSTM->tensor[tensor].matrix[(unsigned int)(time + index)]);
+  } else {
+    return matrix_copy(LSTM->tensor[tensor].matrix[(unsigned int)index]);
+  }
 }
 
 void push(LSTM_type *LSTM, index_type tensor, matrix_type *matrix) {
@@ -87,12 +85,6 @@ void push_all(LSTM_type *LSTM, index_type tensor, long double *steps) {
         LSTM->tensor[tensor].matrix[n]->matrix[row][column] = steps[n * rows * columns + row * columns + column];
       }
     }
-  }
-}
-
-void LSTM_copy_last_matrix_to_beginning(LSTM_type *LSTM, index_type beginning, index_type end) {
-  for (unsigned int tensor = beginning; tensor < end; tensor++) {
-    push(LSTM, tensor, matrix_copy(LSTM->tensor[tensor].matrix[0]));
   }
 }
 

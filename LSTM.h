@@ -2,7 +2,7 @@
 #ifndef LSTM_H
   #define LSTM_H
   #include "matrix.h"
-  #include <time.h>
+  //#include <time.h>
   #define LSTM_BEGIN           0
   #define LSTM_SIZE            52
   #define LSTM_END             LSTM_SIZE
@@ -55,13 +55,10 @@
   LSTM_type *make_LSTM(long double *, long double *, long double *, unsigned int, unsigned int, unsigned int);
   LSTM_type *destroy_LSTM(LSTM_type *);
   void LSTM_initialize(LSTM_type *, index_type, index_type, long double (*)(long double), unsigned int, unsigned int, unsigned int);
-  matrix_type *first(LSTM_type *, index_type);
-  matrix_type *second(LSTM_type *, index_type);
-  matrix_type *third(LSTM_type *, index_type);
+  matrix_type *LSTM_read(LSTM_type *, index_type, long);
   void push(LSTM_type *, index_type, matrix_type *);
   matrix_type *pop(LSTM_type *, index_type);
   void push_all(LSTM_type *, index_type, long double *);
-  void LSTM_copy_last_matrix_to_beginning(LSTM_type *, index_type, index_type);
   void empty_tensor(LSTM_type *, index_type);
   void copy_tensor(LSTM_type *, index_type, index_type);
 #endif

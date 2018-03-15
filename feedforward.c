@@ -11,81 +11,81 @@ void feedforward(LSTM_type *LSTM) {
     push(LSTM, _Zt, 
       sum(3, 
         dot_product(
-          first(LSTM, Wz), 
+          LSTM_read(LSTM, Wz, -1), 
           matrix_copy(input)), 
         dot_product(
-          first(LSTM, Rz), 
-          second(LSTM, Yt)), 
-        first(LSTM, Bz)));
+          LSTM_read(LSTM, Rz, -1), 
+          LSTM_read(LSTM, Yt, -2)), 
+        LSTM_read(LSTM, Bz, -1)));
 
     // Block input activations:
-    push(LSTM, Zt, matrix_tanh(first(LSTM, _Zt)));
+    push(LSTM, Zt, matrix_tanh(LSTM_read(LSTM, _Zt, -1)));
 
     // Input gate preactivations:
     push(LSTM, _It, 
       sum(4, 
         dot_product(
-          first(LSTM, Wi), 
+          LSTM_read(LSTM, Wi, 0), 
           matrix_copy(input)), 
         dot_product(
-          first(LSTM, Ri), 
-          second(LSTM, Yt)), 
+          LSTM_read(LSTM, Ri, 0), 
+          LSTM_read(LSTM, Yt, -2)), 
         product(2, 
-          first(LSTM, Pi), 
-          second(LSTM, Ct)), 
-        first(LSTM, Bi)));
+          LSTM_read(LSTM, Pi, -1), 
+          LSTM_read(LSTM, Ct, -2)), 
+        LSTM_read(LSTM, Bi, 0)));
 
     // Input gate activations:
-    push(LSTM, It, matrix_sigmoid(first(LSTM, _It)));
+    push(LSTM, It, matrix_sigmoid(LSTM_read(LSTM, _It, -1)));
 
     // Forget gate preactivations:
     push(LSTM, _Ft, 
       sum(4, 
         dot_product(
-          first(LSTM, Wf), 
+          LSTM_read(LSTM, Wf, 0), 
           matrix_copy(input)), 
         dot_product(
-          first(LSTM, Rf), 
-          second(LSTM, Yt)), 
+          LSTM_read(LSTM, Rf, 0), 
+          LSTM_read(LSTM, Yt, -2)), 
         product(2, 
-          first(LSTM, Pf), 
-          second(LSTM, Ct)), 
-        first(LSTM, Bf)));
+          LSTM_read(LSTM, Pf, -1), 
+          LSTM_read(LSTM, Ct, -2)), 
+        LSTM_read(LSTM, Bf, 0)));
 
     // Forget gate activations:
-    push(LSTM, Ft, matrix_sigmoid(first(LSTM, _Ft)));
+    push(LSTM, Ft, matrix_sigmoid(LSTM_read(LSTM, _Ft, -1)));
 
     // Cell memory:
     push(LSTM, Ct, 
       sum(2, 
         product(2, 
-          first(LSTM, Zt), 
-          first(LSTM, It)), 
+          LSTM_read(LSTM, Zt, -1), 
+          LSTM_read(LSTM, It, -1)), 
         product(2, 
-          second(LSTM, Ct), 
-          first(LSTM, Ft))));
+          LSTM_read(LSTM, Ct, -2), 
+          LSTM_read(LSTM, Ft, -1))));
 
     // Output gate preactivations:
     push(LSTM, _Ot, 
       sum(4, 
         dot_product(
-          first(LSTM, Wo), 
+          LSTM_read(LSTM, Wo, 0), 
           input), 
         dot_product(
-          first(LSTM, Ro), 
-          second(LSTM, Yt)), 
+          LSTM_read(LSTM, Ro, 0), 
+          LSTM_read(LSTM, Yt, -2)), 
         product(2, 
-          first(LSTM, Po), 
-          first(LSTM, Ct)), 
-        first(LSTM, Bo)));
+          LSTM_read(LSTM, Po, -1), 
+          LSTM_read(LSTM, Ct, -1)), 
+        LSTM_read(LSTM, Bo, 0)));
 
     // Output gate activations:
-    push(LSTM, Ot, matrix_sigmoid(first(LSTM, _Ot)));
+    push(LSTM, Ot, matrix_sigmoid(LSTM_read(LSTM, _Ot, -1)));
 
     // Block output activations:
     push(LSTM, Yt, 
       product(2, 
-        matrix_tanh(first(LSTM, Ct)), 
-        first(LSTM, Ot)));
+        matrix_tanh(LSTM_read(LSTM, Ct, -1)), 
+        LSTM_read(LSTM, Ot, -1)));
   }
 }
