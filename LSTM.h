@@ -55,7 +55,8 @@
   LSTM_type *make_LSTM(long double *, long double *, long double *, unsigned int, unsigned int, unsigned int);
   LSTM_type *destroy_LSTM(LSTM_type *);
   void LSTM_initialize(LSTM_type *, index_type, index_type, long double (*)(long double), unsigned int, unsigned int, unsigned int);
-  matrix_type *LSTM_matrix(LSTM_type *, index_type, long);
+  unsigned int convert_index(LSTM_type *, index_type, long);
+  //matrix_type *LSTM_matrix(LSTM_type *, index_type, long);
   matrix_type *LSTM_read(LSTM_type *, index_type, long);
   void LSTM_write(LSTM_type *, index_type, long, matrix_type *);
   void push(LSTM_type *, index_type, matrix_type *);

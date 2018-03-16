@@ -47,5 +47,5 @@ int main(void) {
 void run_LSTM(LSTM_type *LSTM) {
   feedforward(LSTM);
   feedback(LSTM);
-  //update(LSTM);
+  update(LSTM);
 }
