@@ -3,14 +3,14 @@
 
 matrix_type *make_matrix(unsigned int rows, unsigned int columns) {
   matrix_type *matrix = NULL;
-  matrix = calloc(1, sizeof(matrix_type));
+  matrix = malloc(sizeof(matrix_type));
   assert(matrix);
   matrix->rows = rows;
   matrix->columns = columns;
-  matrix->matrix = calloc(rows, sizeof(long double *));
+  matrix->matrix = malloc(sizeof(long double *) * rows);
   assert(matrix->matrix);
   for (unsigned int row = 0; row < rows; row++) {
-    matrix->matrix[row] = calloc(columns, sizeof(long double));
+    matrix->matrix[row] = malloc(sizeof(long double) * columns);
     assert(matrix->matrix[row]);
   } return matrix;
 }

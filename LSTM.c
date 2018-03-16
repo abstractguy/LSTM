@@ -43,7 +43,7 @@ LSTM_type *destroy_LSTM(LSTM_type *LSTM) {
 void LSTM_initialize(LSTM_type *LSTM, index_type begin, index_type end, long double (*init)(long double), unsigned int time, unsigned int rows, unsigned int columns) {
   for (index_type tensor = begin; tensor < end; tensor++) {
     LSTM->tensor[tensor].time = time;
-    LSTM->tensor[tensor].matrix = calloc(1, sizeof(matrix_type *) + sizeof(matrix_type) * time);
+    LSTM->tensor[tensor].matrix = malloc(sizeof(matrix_type *) + sizeof(matrix_type) * time);
     assert(LSTM->tensor[tensor].matrix);
     for (unsigned int t = 0; t < time; t++) {
       LSTM->tensor[tensor].matrix[t] = make_matrix(rows, columns);
