@@ -87,5 +87,5 @@ void feedforward(LSTM_type *LSTM) {
       product(2, 
         matrix_tanh(LSTM_read(LSTM, Ct, -1)), 
         LSTM_read(LSTM, Ot, -1)));
-  }
+  } copy_tensor(LSTM, Yt, Yt_backup);
 }
