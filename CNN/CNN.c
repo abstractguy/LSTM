@@ -11,11 +11,8 @@ typedef struct {
 
 matrix_type *make_matrix(unsigned int, unsigned int);
 void destroy_matrix(matrix_type *);
-matrix_type *matrix_copy(matrix_type *);
-long double sigmoid_double(long double);
-matrix_type *sigmoid(matrix_type *);
+long double sigmoid(long double);
 void print_matrix(char *, matrix_type *);
-void matrix_push_all(char *, matrix_type *, long double *);
 
 int main(void) {
   matrix_type *in       = make_matrix(4, 4), 
@@ -40,8 +37,15 @@ int main(void) {
     for (unsigned int column = 0; column < synapses->columns; column++)
       synapses->matrix[row][column] = (2.0 * rand() / RAND_MAX) - 1.0;
 
-  matrix_push_all("Input:",  in,  (long double *)input);
-  matrix_push_all("Output:", out, (long double *)output);
+  for (unsigned int row = 0; row < in->rows; row++)
+    for (unsigned int column = 0; column < in->columns; column++)
+      in->matrix[row][column] = input[row][column];
+  print_matrix("Input:", in);
+
+  for (unsigned int row = 0; row < out->rows; row++)
+    for (unsigned int column = 0; column < out->columns; column++)
+      out->matrix[row][column] = output[row][column];
+  print_matrix("Output:", out);
 
   for (unsigned int epoch = 0; epoch < EPOCH; epoch++) {
 
@@ -55,7 +59,10 @@ int main(void) {
             in->matrix[row1][column1] * synapses->matrix[column1][column2];
       }
 
-    answer = sigmoid(answer);
+    for (unsigned int row = 0; row < answer->rows; row++)
+      for (unsigned int column = 0; column < answer->columns; column++)
+        answer->matrix[row][column] = 
+          sigmoid(answer->matrix[row][column]);
 
     if (epoch == EPOCH-1) print_matrix("Feedforward:", answer);
 
@@ -69,8 +76,8 @@ int main(void) {
     for (unsigned int row = 0; row < answer->rows; row++)
       for (unsigned int column = 0; column < answer->columns; column++)
         answer->matrix[row][column] = 
-          (1.0 - sigmoid_double(answer->matrix[row][column]) *
-                 sigmoid_double(answer->matrix[row][column]));
+          (1.0 - sigmoid(answer->matrix[row][column]) *
+                 sigmoid(answer->matrix[row][column]));
 
     errors = make_matrix(temp1->rows, temp1->columns);
 
@@ -138,25 +145,7 @@ void destroy_matrix(matrix_type *matrix) {
   free(matrix);
 }
 
-matrix_type *matrix_copy(matrix_type *matrix1) {
-  matrix_type *matrix2 = make_matrix(matrix1->rows, matrix1->columns);
-  for (unsigned int row = 0; row < matrix1->rows; row++)
-    for (unsigned int column = 0; column < matrix1->columns; column++)
-      matrix2->matrix[row][column] = matrix1->matrix[row][column];
-  return matrix2;
-}
-
-long double sigmoid_double(long double x) {
-  return 1.0 / (1.0 + expl(-x));
-}
-
-matrix_type *sigmoid(matrix_type *matrix) {
-  for (unsigned int row = 0; row < matrix->rows; row++)
-    for (unsigned int column = 0; column < matrix->columns; column++)
-      matrix->matrix[row][column] = 
-        sigmoid_double(matrix->matrix[row][column]);
-  return matrix;
-}
+long double sigmoid(long double x) {return 1.0 / (1.0 + expl(-x));}
 
 void print_matrix(char *string, matrix_type *matrix) {
   puts(string);
@@ -165,11 +154,4 @@ void print_matrix(char *string, matrix_type *matrix) {
       printf("%+5.4Lf ", matrix->matrix[row][column]);
     } putchar('\n');
   }
-}
-
-void matrix_push_all(char *string, matrix_type *matrix, long double *array) {
-  for (unsigned int row = 0; row < matrix->rows; row++)
-    for (unsigned int column = 0; column < matrix->columns; column++)
-      matrix->matrix[row][column] = array[row * matrix->columns + column];
-  print_matrix(string, matrix);
 }
