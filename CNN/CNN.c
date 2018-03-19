@@ -13,14 +13,17 @@ int main(void) {
                                {1.0},
                                {1.0},
                                {0.0}};
-  matrix_for_each(random_long_double, weights);
+  for (unsigned int row = 0; row < weights->rows; row++)
+    for (unsigned int column = 0; column < weights->columns; column++)
+      weights->matrix[row][column] = 
+        2.0 * (((long double)rand()) / ((long double)RAND_MAX)) - 1.0;
   matrix_push_all(in,  (long double *)input);
   matrix_push_all(out, (long double *)output);
   print_matrix("Input:",   in);
   print_matrix("Output:",  out);
   for (unsigned int epoch = 0; epoch < EPOCH; epoch++) {
-    answer  = matrix_sigmoid(dot_product(matrix_copy(in),
-                                         matrix_copy(weights)));
+    answer  = sigmoid(dot_product(matrix_copy(in),
+                                  matrix_copy(weights)));
     if (epoch == EPOCH-1) print_matrix("Feedforward:", answer);
 
     errors  = product(sigmoid_derivative(answer),
