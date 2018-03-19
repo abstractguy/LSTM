@@ -1,6 +1,7 @@
 // matrix.h
 #ifndef MATRIX_H
   #define MATRIX_H
+  #include <stdio.h>
   #include <stdlib.h>
   #include <assert.h>
   #include <math.h>
@@ -27,5 +28,6 @@
   long double multiply(long double, long double);
   long double minus(long double, long double);
   matrix_type *transpose(matrix_type *);
-  void matrix_push_all(matrix_type *, long double *);
+  void print_matrix(char *, matrix_type *);
+  void matrix_push_all(char *, matrix_type *, long double *);
 #endif

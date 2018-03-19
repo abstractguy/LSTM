@@ -100,8 +100,18 @@ matrix_type *transpose(matrix_type *matrix1) {
   return matrix2;
 }
 
-void matrix_push_all(matrix_type *matrix, long double *array) {
+void print_matrix(char *string, matrix_type *matrix) {
+  puts(string);
+  for (unsigned int row = 0; row < matrix->rows; row++) {
+    for (unsigned int column = 0; column < matrix->columns; column++) {
+      printf("%+5.4Lf ", matrix->matrix[row][column]);
+    } putchar('\n');
+  }
+}
+
+void matrix_push_all(char *string, matrix_type *matrix, long double *array) {
   for (unsigned int row = 0; row < matrix->rows; row++)
     for (unsigned int column = 0; column < matrix->columns; column++)
       matrix->matrix[row][column] = array[row * matrix->columns + column];
+  print_matrix(string, matrix);
 }
