@@ -14,8 +14,6 @@ void destroy_matrix(matrix_type *);
 matrix_type *matrix_copy(matrix_type *);
 long double sigmoid_double(long double);
 matrix_type *sigmoid(matrix_type *);
-matrix_type *sigmoid_derivative(matrix_type *);
-matrix_type *product(matrix_type *, matrix_type *);
 void print_matrix(char *, matrix_type *);
 void matrix_push_all(char *, matrix_type *, long double *);
 
@@ -61,8 +59,6 @@ int main(void) {
 
     if (epoch == EPOCH-1) print_matrix("Feedforward:", answer);
 
-
-
     temp1 = make_matrix(answer->rows, answer->columns);
 
     for (unsigned int row = 0; row < answer->rows; row++)
@@ -70,10 +66,23 @@ int main(void) {
         temp1->matrix[row][column] =
           out->matrix[row][column] - answer->matrix[row][column];
 
-    errors   = product(sigmoid_derivative(answer), temp1);
+    for (unsigned int row = 0; row < answer->rows; row++)
+      for (unsigned int column = 0; column < answer->columns; column++)
+        answer->matrix[row][column] = 
+          (1.0 - sigmoid_double(answer->matrix[row][column]) *
+                 sigmoid_double(answer->matrix[row][column]));
+
+    errors = make_matrix(temp1->rows, temp1->columns);
+
+    for (unsigned int row = 0; row < temp1->rows; row++)
+      for (unsigned int column = 0; column < temp1->columns; column++)
+        errors->matrix[row][column] = 
+          answer->matrix[row][column] * temp1->matrix[row][column];
+
+    destroy_matrix(answer);
+    destroy_matrix(temp1);
 
     if (epoch == EPOCH-1) print_matrix("Feedback:", errors);
-
 
     temp1 = make_matrix(in->columns, in->rows);
 
@@ -90,9 +99,9 @@ int main(void) {
           temp2->matrix[row1][column2] += 
             temp1->matrix[row1][column1] * errors->matrix[column1][column2];
       }
+
     destroy_matrix(temp1);
     destroy_matrix(errors);
-
 
     temp1 = make_matrix(temp2->rows, temp2->columns);
 
@@ -147,29 +156,6 @@ matrix_type *sigmoid(matrix_type *matrix) {
       matrix->matrix[row][column] = 
         sigmoid_double(matrix->matrix[row][column]);
   return matrix;
-}
-
-matrix_type *sigmoid_derivative(matrix_type *matrix) {
-  for (unsigned int row = 0; row < matrix->rows; row++)
-    for (unsigned int column = 0; column < matrix->columns; column++)
-      matrix->matrix[row][column] = 
-        (1.0 - sigmoid_double(matrix->matrix[row][column]) *
-               sigmoid_double(matrix->matrix[row][column]));
-  return matrix;
-}
-
-matrix_type *product(matrix_type *matrix1, matrix_type *matrix2) {
-  matrix_type *matrix3 = make_matrix(matrix2->rows, matrix2->columns);
-
-  for (unsigned int row = 0; row < matrix2->rows; row++)
-    for (unsigned int column = 0; column < matrix2->columns; column++)
-      matrix3->matrix[row][column] = 
-        matrix1->matrix[row][column] * matrix2->matrix[row][column];
-
-  destroy_matrix(matrix1);
-  destroy_matrix(matrix2);
-
-  return matrix3;
 }
 
 void print_matrix(char *string, matrix_type *matrix) {
