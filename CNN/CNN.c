@@ -24,16 +24,22 @@ void print_matrix(char *, matrix_type *);
 void matrix_push_all(char *, matrix_type *, long double *);
 
 int main(void) {
-  matrix_type *in       = make_matrix(4, 4), *out    = make_matrix(4, 1),
-              *synapses = make_matrix(4, 1), *errors = NULL, *answer = NULL;
+  matrix_type *in       = make_matrix(4, 4), 
+              *out      = make_matrix(4, 1), 
+              *synapses = make_matrix(4, 1), 
+              *errors   = NULL, 
+              *answer   = NULL;
+
   long double input[4][4]   = {{0.0, 0.0, 1.0, 1.0},
                                {0.0, 1.0, 1.0, 1.0},
                                {1.0, 0.0, 1.0, 1.0},
                                {1.0, 1.0, 1.0, 1.0}};
+
   long double output[4][1]  = {{1.0},
                                {1.0},
                                {1.0},
                                {0.0}};
+
   for (unsigned int row = 0; row < synapses->rows; row++)
     for (unsigned int column = 0; column < synapses->columns; column++)
       synapses->matrix[row][column] = (2.0 * rand() / RAND_MAX) - 1.0;
@@ -102,17 +108,17 @@ long double sigmoid_double(long double x) {
 matrix_type *sigmoid(matrix_type *matrix) {
   for (unsigned int row = 0; row < matrix->rows; row++)
     for (unsigned int column = 0; column < matrix->columns; column++)
-      matrix->matrix[row][column] = sigmoid_double(matrix->matrix[row][column]);
+      matrix->matrix[row][column] = 
+        sigmoid_double(matrix->matrix[row][column]);
   return matrix;
 }
 
 matrix_type *sigmoid_derivative(matrix_type *matrix) {
-  long double y;
   for (unsigned int row = 0; row < matrix->rows; row++)
-    for (unsigned int column = 0; column < matrix->columns; column++) {
-      y = sigmoid_double(matrix->matrix[row][column]);
-      matrix->matrix[row][column] = y * (1.0 - y);
-    }
+    for (unsigned int column = 0; column < matrix->columns; column++)
+      matrix->matrix[row][column] = 
+        (1.0 - sigmoid_double(matrix->matrix[row][column]) *
+               sigmoid_double(matrix->matrix[row][column]));
   return matrix;
 }
 
