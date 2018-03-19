@@ -1,4 +1,6 @@
-// CNN.c    -- NAND gate
+// Convolutional neural network emulating an NAND gate.
+// Hacker: Samuel Duclos
+// Github: https://github.com/abstractguy/
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -33,24 +35,36 @@ int main(void) {
                                {1.0},
                                {0.0}};
 
+
+  // Initialize synapses to random floats between -1 and 1.
   for (unsigned int row = 0; row < synapses->rows; row++)
     for (unsigned int column = 0; column < synapses->columns; column++)
       synapses->matrix[row][column] = (2.0 * rand() / RAND_MAX) - 1.0;
 
+
+  // Convert input array to in matrix.
   for (unsigned int row = 0; row < in->rows; row++)
     for (unsigned int column = 0; column < in->columns; column++)
       in->matrix[row][column] = input[row][column];
   print_matrix("Input:", in);
 
+
+  // Convert output array to out matrix.
   for (unsigned int row = 0; row < out->rows; row++)
     for (unsigned int column = 0; column < out->columns; column++)
       out->matrix[row][column] = output[row][column];
   print_matrix("Output:", out);
 
+
+
+
+
+  // Train network EPOCH times.
   for (unsigned int epoch = 0; epoch < EPOCH; epoch++) {
 
-    answer = make_matrix(in->rows, synapses->columns);
 
+    // V = RI
+    answer = make_matrix(in->rows, synapses->columns);
     for (unsigned int row1 = 0; row1 < in->rows; row1++)
       for (unsigned int column2 = 0; column2 < synapses->columns; column2++) {
         answer->matrix[row1][column2] = 0.0;
@@ -59,6 +73,8 @@ int main(void) {
             in->matrix[row1][column1] * synapses->matrix[column1][column2];
       }
 
+
+    // Neuron transfer function.
     for (unsigned int row = 0; row < answer->rows; row++)
       for (unsigned int column = 0; column < answer->columns; column++)
         answer->matrix[row][column] = 
@@ -66,26 +82,29 @@ int main(void) {
 
     if (epoch == EPOCH-1) print_matrix("Feedforward:", answer);
 
-    temp1 = make_matrix(answer->rows, answer->columns);
 
+    // error = answer - output.
+    temp1 = make_matrix(answer->rows, answer->columns);
     for (unsigned int row = 0; row < answer->rows; row++)
       for (unsigned int column = 0; column < answer->columns; column++)
         temp1->matrix[row][column] =
           out->matrix[row][column] - answer->matrix[row][column];
 
+
+    // Output derivative.
     for (unsigned int row = 0; row < answer->rows; row++)
       for (unsigned int column = 0; column < answer->columns; column++)
         answer->matrix[row][column] = 
           (1.0 - sigmoid(answer->matrix[row][column]) *
                  sigmoid(answer->matrix[row][column]));
 
-    errors = make_matrix(temp1->rows, temp1->columns);
 
+    // Error feedback.
+    errors = make_matrix(temp1->rows, temp1->columns);
     for (unsigned int row = 0; row < temp1->rows; row++)
       for (unsigned int column = 0; column < temp1->columns; column++)
         errors->matrix[row][column] = 
           answer->matrix[row][column] * temp1->matrix[row][column];
-
     destroy_matrix(answer);
     destroy_matrix(temp1);
 
@@ -93,12 +112,18 @@ int main(void) {
 
     temp1 = make_matrix(in->columns, in->rows);
 
+
+    // Rotate matrix 90°.
     for (unsigned int row = 0; row < in->columns; row++)
       for (unsigned int column = 0; column < in->rows; column++)
         temp1->matrix[row][column] = in->matrix[column][row];
 
-    temp2 = make_matrix(temp1->rows, errors->columns);
 
+
+
+
+    // V = RI
+    temp2 = make_matrix(temp1->rows, errors->columns);
     for (unsigned int row1 = 0; row1 < temp1->rows; row1++)
       for (unsigned int column2 = 0; column2 < errors->columns; column2++) {
         temp2->matrix[row1][column2] = 0.0;
@@ -106,20 +131,18 @@ int main(void) {
           temp2->matrix[row1][column2] += 
             temp1->matrix[row1][column1] * errors->matrix[column1][column2];
       }
-
     destroy_matrix(temp1);
     destroy_matrix(errors);
 
-    temp1 = make_matrix(temp2->rows, temp2->columns);
 
+    // Update synaptic weights.
+    temp1 = make_matrix(temp2->rows, temp2->columns);
     for (unsigned int row = 0; row < temp2->rows; row++)
       for (unsigned int column = 0; column < temp2->columns; column++)
         temp1->matrix[row][column] =
           synapses->matrix[row][column] + temp2->matrix[row][0];
-
     destroy_matrix(synapses);
     destroy_matrix(temp2);
-
     synapses = temp1;
 
     if (epoch == EPOCH-1) print_matrix("New synapses:", synapses);
