@@ -5,7 +5,6 @@
   //#include <time.h>
   #define TIME_SIZE   4
   #define BATCH_SIZE  1
-  #define WORD_SIZE   1
   #define HIDDEN_SIZE 16
   #define LSTM_BEGIN           0
   #define LSTM_SIZE            53

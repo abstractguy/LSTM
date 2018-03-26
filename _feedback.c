@@ -19,7 +19,7 @@ void feedback(LSTM_type *LSTM) {
   copy_tensor(LSTM, Input_reversed, Xt_reversed);
   copy_tensor(LSTM, Output, Answer);
 
-  while (LSTM->tensor[Answer].time) {
+  //while (LSTM->tensor[Answer].time) {
     // FEEDBACK PART:
     // Block output errors:
     push(LSTM, DYt, 
@@ -46,7 +46,7 @@ void feedback(LSTM_type *LSTM) {
         LSTM_read(LSTM, DYt, -1), 
         matrix_tanh(LSTM_read(LSTM, Ct, -1)), 
         sigmoid_derivative(pop(LSTM, _Ot))));
-
+/*
     // Cell memory errors:
     push(LSTM, DCt, 
       sum(5, 
@@ -209,6 +209,13 @@ void feedback(LSTM_type *LSTM) {
       DOt_plus_1 = pop(LSTM, DOt);
       DCt_plus_1 = pop(LSTM, DCt);
       Ft_plus_1  = pop(LSTM, Ft);
-    }
-  }
+    }*/
+  //}
+
+  DZt_plus_1 = destroy_matrix(DZt_plus_1);
+  DIt_plus_1 = destroy_matrix(DIt_plus_1);
+  DFt_plus_1 = destroy_matrix(DFt_plus_1);
+  DOt_plus_1 = destroy_matrix(DOt_plus_1);
+  DCt_plus_1 = destroy_matrix(DCt_plus_1);
+  Ft_plus_1  = destroy_matrix(Ft_plus_1);
 }

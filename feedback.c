@@ -203,11 +203,11 @@ void feedback(LSTM_type *LSTM) {
 
     // Prepare next iteration:
     if (LSTM->tensor[Answer].time) {
-      DZt_plus_1 = pop(LSTM, DZt), 
-      DIt_plus_1 = pop(LSTM, DIt), 
-      DFt_plus_1 = pop(LSTM, DFt), 
-      DOt_plus_1 = pop(LSTM, DOt), 
-      DCt_plus_1 = pop(LSTM, DCt), 
+      DZt_plus_1 = pop(LSTM, DZt);
+      DIt_plus_1 = pop(LSTM, DIt);
+      DFt_plus_1 = pop(LSTM, DFt);
+      DOt_plus_1 = pop(LSTM, DOt);
+      DCt_plus_1 = pop(LSTM, DCt);
       Ft_plus_1  = pop(LSTM, Ft);
     }
   }
