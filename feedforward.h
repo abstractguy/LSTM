@@ -1,7 +1,7 @@
 // feedforward.h
 #ifndef FEEDFORWARD_H
   #define FEEDFORWARD_H
-  #include "LSTM.h"
+  #include "_LSTM.h"
 
   void feedforward(LSTM_type *);
 #endif

@@ -8,12 +8,9 @@
 
   #define NOT_USED(x) ((void)x)
 
-  #define sum(n, matrix1, ...) \
-    fold(n, add, matrix1, __VA_ARGS__)
-  #define product(n, matrix1, ...) \
-    fold(n, multiply, matrix1, __VA_ARGS__)
-  #define subtract(n, matrix1, ...) \
-    fold(n, minus, matrix1, __VA_ARGS__)
+  #define sum(n, matrix1, ...)      fold(n, add, matrix1, __VA_ARGS__)
+  #define product(n, matrix1, ...)  fold(n, multiply, matrix1, __VA_ARGS__)
+  #define subtract(n, matrix1, ...) fold(n, minus, matrix1, __VA_ARGS__)
 
   typedef struct {
     unsigned int rows, columns;
