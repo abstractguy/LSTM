@@ -46,10 +46,10 @@ void feedback(LSTM_type *LSTM) {
         LSTM_read(LSTM, DYt, -1), 
         matrix_tanh(LSTM_read(LSTM, Ct, -1)), 
         sigmoid_derivative(pop(LSTM, _Ot))));
-/*
+
     // Cell memory errors:
     push(LSTM, DCt, 
-      sum(5, 
+      sum(4, 
         product(3, 
           pop(LSTM, DYt), 
           pop(LSTM, Ot), 
@@ -64,9 +64,9 @@ void feedback(LSTM_type *LSTM) {
           LSTM_read(LSTM, Pf, -1), 
           matrix_copy(DFt_plus_1)), 
         product(2, 
-          DCt_plus_1, 
-          Ft_plus_1)));
-
+          matrix_copy(DCt_plus_1), 
+          matrix_copy(Ft_plus_1))));
+/*
     // Forget gate errors:
     push(LSTM, DFt, 
       product(3, 
