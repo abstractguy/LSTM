@@ -13,7 +13,7 @@ char *LSTM_string[53] = {
 void print_matrix(matrix_type *matrix) {
   for (unsigned int row = 0; row < matrix->rows; row++) {
     for (unsigned int column = 0; column < matrix->columns; column++) {
-      printf("%+5.8Lf ", matrix->matrix[row][column]);
+      printf("%+5.4Lf ", matrix->matrix[row][column]);
     } putchar('\n');
   }
 }
