@@ -5,6 +5,7 @@
   //#include <time.h>
   #define TIME_SIZE   1
   #define BATCH_SIZE  4
+  #define WORD_SIZE   2
   #define HIDDEN_SIZE 16
   #define LSTM_BEGIN           0
   #define LSTM_SIZE            53
@@ -55,7 +56,7 @@
     } tensor[LSTM_SIZE];
   } LSTM_type;
 
-  LSTM_type *make_LSTM(long double *, long double *, long double *, unsigned int, unsigned int, unsigned int);
+  LSTM_type *make_LSTM(long double *, long double *, long double *, unsigned int, unsigned int, unsigned int, unsigned int);
   LSTM_type *destroy_LSTM(LSTM_type *);
   void LSTM_initialize(LSTM_type *, index_type, index_type, long double (*)(long double), unsigned int, unsigned int, unsigned int);
   unsigned int convert_index(LSTM_type *, index_type, long);

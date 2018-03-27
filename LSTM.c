@@ -1,6 +1,39 @@
 // LSTM.c
 #include "LSTM.h"
 
+/*
+LSTM_type *make_LSTM(long double *input, long double *input_reversed, long double *output, unsigned int t, unsigned int rows, unsigned int columns) {
+  LSTM_type *LSTM = NULL;
+  LSTM = malloc(sizeof(LSTM_type));
+  assert(LSTM);
+  //srand(time(NULL));
+  srand(1);
+
+  LSTM_initialize(LSTM, Yt_backup, Input, zero, t, columns, rows);
+
+  // Empty input/outputs to initialize (Input, Output):
+  LSTM_initialize(LSTM, Input, Output, zero, t, columns, rows);
+  LSTM_initialize(LSTM, Output, GATES_BEGIN, zero, t, rows, columns);
+
+  LSTM_initialize(LSTM, GATES_BEGIN, GATES_END, one, 2, columns, rows);
+  LSTM_initialize(LSTM, INPUT_WEIGHTS_BEGIN, INPUT_WEIGHTS_END, random_long_double, 1, rows, columns);
+  LSTM_initialize(LSTM, HIDDEN_WEIGHTS_BEGIN, HIDDEN_WEIGHTS_END, random_long_double, 1, rows, rows);
+  LSTM_initialize(LSTM, CELL_WEIGHTS_BEGIN, CELL_WEIGHTS_END, random_long_double, 1, rows, columns);
+  LSTM_initialize(LSTM, BIAS_WEIGHTS_BEGIN, BIAS_WEIGHTS_END, one, 1, rows, columns);
+  LSTM_initialize(LSTM, ERRORS_BEGIN, ERRORS_END, zero, 2, columns, rows);
+  LSTM_initialize(LSTM, INPUT_UPDATES_BEGIN, INPUT_UPDATES_END, zero, 1, rows, columns);
+  LSTM_initialize(LSTM, HIDDEN_UPDATES_BEGIN, HIDDEN_UPDATES_END, zero, 1, rows, rows);
+  LSTM_initialize(LSTM, CELL_UPDATES_BEGIN, CELL_UPDATES_END, zero, 1, rows, columns);
+  LSTM_initialize(LSTM, BIAS_UPDATES_BEGIN, BIAS_UPDATES_END, one, 1, rows, columns);
+
+  push_all(LSTM, Input,  (long double *)input);
+  push_all(LSTM, Output, (long double *)output);
+  push_all(LSTM, Input_reversed, (long double *)input_reversed);
+
+  return LSTM;
+}
+*/
+
 LSTM_type *make_LSTM(long double *input, long double *input_reversed, long double *output, unsigned int t, unsigned int rows, unsigned int columns) {
   LSTM_type *LSTM = NULL;
   LSTM = malloc(sizeof(LSTM_type));

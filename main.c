@@ -45,8 +45,9 @@ int main(void) {
     // NAND(1, 0) = 1
   };
 
-  LSTM = make_LSTM((long double *)input, (long double *)input_reversed, (long double *)output, TIME_SIZE, BATCH_SIZE, HIDDEN_SIZE);
-  for (unsigned int epoch = 0; epoch < 1000; epoch++) {
+  LSTM = make_LSTM((long double *)input, (long double *)input_reversed, (long double *)output, TIME_SIZE, WORD_SIZE, BATCH_SIZE, HIDDEN_SIZE);
+
+  for (unsigned int epoch = 0; epoch < 200; epoch++) {
     run_LSTM(LSTM);
   }
 
