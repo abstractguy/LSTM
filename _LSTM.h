@@ -3,10 +3,10 @@
   #define _LSTM_H
   #include "matrix.h"
   //#include <time.h>
-  #define TIME_SIZE   1
-  #define BATCH_SIZE  4
-  #define WORD_SIZE   2
-  #define HIDDEN_SIZE 16
+  #define TIME_SIZE            1
+  #define BATCH_SIZE           4
+  #define WORD_SIZE            2
+  #define HIDDEN_SIZE          16
   #define LSTM_BEGIN           0
   #define LSTM_SIZE            53
   #define LSTM_END             LSTM_SIZE
