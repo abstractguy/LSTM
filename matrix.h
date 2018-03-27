@@ -18,7 +18,7 @@
   } matrix_type;
 
   matrix_type *make_matrix(unsigned int, unsigned int);
-  matrix_type *destroy_matrix(matrix_type *);
+  void destroy_matrix(matrix_type *);
   long double random_long_double(long double);
   long double zero(long double);
   long double one(long double);

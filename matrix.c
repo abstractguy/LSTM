@@ -15,14 +15,14 @@ matrix_type *make_matrix(unsigned int rows, unsigned int columns) {
   } return matrix;
 }
 
-matrix_type *destroy_matrix(matrix_type *matrix) {
+void destroy_matrix(matrix_type *matrix) {
   for (unsigned int row = 0; row < matrix->rows; row++) {
     free(matrix->matrix[row]);
     matrix->matrix[row] = NULL;
   } free(matrix->matrix);
     matrix->matrix = NULL;
     free(matrix);
-    return NULL;
+    matrix = NULL;
 }
 
 long double random_long_double(long double x) {
@@ -53,8 +53,8 @@ matrix_type *dot_product(matrix_type *matrix1, matrix_type *matrix2) {
         matrix3->matrix[row1][column2] += matrix1->matrix[row1][column1] * matrix2->matrix[column1][column2];
       }
     }
-  } matrix1 = destroy_matrix(matrix1);
-    matrix2 = destroy_matrix(matrix2);
+  } destroy_matrix(matrix1);
+    destroy_matrix(matrix2);
     return matrix3;
 }
 
@@ -132,12 +132,9 @@ matrix_type *broadcast_function(long double (*f)(long double, long double), matr
         f(matrix1->matrix[A ? 0 : row][B ? 0 : column],
           matrix2->matrix[C ? 0 : row][D ? 0 : column]);
     }
-  }
-
-  matrix1 = destroy_matrix(matrix1);
-  matrix2 = destroy_matrix(matrix2);
-
-  return matrix3;
+  } destroy_matrix(matrix1);
+    destroy_matrix(matrix2);
+    return matrix3;
 }
 
 long double add(long double x, long double y) {return x + y;}
@@ -163,7 +160,7 @@ matrix_type *transpose(matrix_type *matrix1) {
     }
   }
 
-  matrix1 = destroy_matrix(matrix1);
+  destroy_matrix(matrix1);
   return matrix2;
 }
 

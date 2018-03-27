@@ -68,7 +68,7 @@ LSTM_type *make_LSTM(long double *input, long double *input_reversed, long doubl
 LSTM_type *destroy_LSTM(LSTM_type *LSTM) {
   for (index_type tensor = 0; tensor < LSTM_SIZE; tensor++) {
     for (unsigned int time = 0; time < LSTM->tensor[tensor].time; time++) {
-      LSTM->tensor[tensor].matrix[time] = destroy_matrix(LSTM->tensor[tensor].matrix[time]);
+      destroy_matrix(LSTM->tensor[tensor].matrix[time]);
     } free(LSTM->tensor[tensor].matrix);
       LSTM->tensor[tensor].matrix = NULL;
   }   free(LSTM);
@@ -99,7 +99,7 @@ matrix_type *LSTM_read(LSTM_type *LSTM, index_type tensor, long index) {
 
 void LSTM_write(LSTM_type *LSTM, index_type tensor, long index, matrix_type *matrix) {
   unsigned char time = convert_index(LSTM, tensor, index);
-  LSTM->tensor[tensor].matrix[time] = destroy_matrix(LSTM->tensor[tensor].matrix[time]);
+  destroy_matrix(LSTM->tensor[tensor].matrix[time]);
   LSTM->tensor[tensor].matrix[time] = matrix;
 }
 
@@ -130,11 +130,7 @@ void push_all(LSTM_type *LSTM, index_type tensor, long double *steps) {
 }
 
 void empty_tensor(LSTM_type *LSTM, index_type tensor) {
-  matrix_type *matrix = NULL;
-  while (LSTM->tensor[tensor].time) {
-    matrix = pop(LSTM, tensor);
-    matrix = destroy_matrix(matrix);
-  }
+  while (LSTM->tensor[tensor].time) destroy_matrix(pop(LSTM, tensor));
 }
 
 void copy_tensor(LSTM_type *LSTM, index_type tensor1, index_type tensor2) {
