@@ -211,4 +211,10 @@ void feedback(LSTM_type *LSTM) {
       Ft_plus_1  = pop(LSTM, Ft);
     }
   }
+  destroy_matrix(pop(LSTM, Ft));
+  destroy_matrix(pop(LSTM, DOt));
+  destroy_matrix(pop(LSTM, DCt));
+  destroy_matrix(pop(LSTM, DFt));
+  destroy_matrix(pop(LSTM, DIt));
+  destroy_matrix(pop(LSTM, DZt));
 }
