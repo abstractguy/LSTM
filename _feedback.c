@@ -49,7 +49,7 @@ void feedback(LSTM_type *LSTM) {
 
     // Cell memory errors:
     push(LSTM, DCt, 
-      sum(4, 
+      sum(5, 
         product(3, 
           pop(LSTM, DYt), 
           pop(LSTM, Ot), 
@@ -64,9 +64,9 @@ void feedback(LSTM_type *LSTM) {
           LSTM_read(LSTM, Pf, -1), 
           matrix_copy(DFt_plus_1)), 
         product(2, 
-          matrix_copy(DCt_plus_1), 
-          matrix_copy(Ft_plus_1))));
-/*
+          DCt_plus_1, 
+          Ft_plus_1)));
+
     // Forget gate errors:
     push(LSTM, DFt, 
       product(3, 
@@ -94,64 +94,64 @@ void feedback(LSTM_type *LSTM) {
       sum(2, 
         pop(LSTM, DWz), 
         dot_product(
-          LSTM_read(LSTM, Xt_reversed, -1), 
-          transpose(LSTM_read(LSTM, DZt, -1)))));
+          transpose(LSTM_read(LSTM, Xt_reversed, -1)), 
+          LSTM_read(LSTM, DZt, -1))));
 
     // Input gate input weight updates:
     push(LSTM, DWi, 
       sum(2, 
         pop(LSTM, DWi), 
         dot_product(
-          LSTM_read(LSTM, Xt_reversed, -1), 
-          transpose(LSTM_read(LSTM, DIt, -1)))));
+          transpose(LSTM_read(LSTM, Xt_reversed, -1)), 
+          LSTM_read(LSTM, DIt, -1))));
 
     // Forget gate input weight updates:
     push(LSTM, DWf, 
       sum(2, 
         pop(LSTM, DWf), 
         dot_product(
-          LSTM_read(LSTM, Xt_reversed, -1), 
-          transpose(LSTM_read(LSTM, DFt, -1)))));
+          transpose(LSTM_read(LSTM, Xt_reversed, -1)), 
+          LSTM_read(LSTM, DFt, -1))));
 
     // Output gate input weight updates:
     push(LSTM, DWo, 
       sum(2, 
         pop(LSTM, DWo), 
         dot_product(
-          pop(LSTM, Xt_reversed), 
-          transpose(LSTM_read(LSTM, DOt, -1)))));
+          transpose(pop(LSTM, Xt_reversed)), 
+          LSTM_read(LSTM, DOt, -1))));
 
     // Block input recurrent weight updates:
     push(LSTM, DRz, 
       sum(2, 
         pop(LSTM, DRz), 
         dot_product(
-          LSTM_read(LSTM, Yt, -1), 
-          transpose(DZt_plus_1))));
+          transpose(LSTM_read(LSTM, Yt, -1)), 
+          DZt_plus_1)));
 
     // Input gate recurrent weight updates:
     push(LSTM, DRi, 
       sum(2, 
         pop(LSTM, DRi), 
         dot_product(
-          LSTM_read(LSTM, Yt, -1), 
-          transpose(matrix_copy(DIt_plus_1)))));
+          transpose(LSTM_read(LSTM, Yt, -1)), 
+          matrix_copy(DIt_plus_1))));
 
     // Forget gate recurrent weight updates:
     push(LSTM, DRf, 
       sum(2, 
         pop(LSTM, DRf), 
         dot_product(
-          LSTM_read(LSTM, Yt, -1), 
-          transpose(matrix_copy(DFt_plus_1)))));
+          transpose(LSTM_read(LSTM, Yt, -1)), 
+          matrix_copy(DFt_plus_1))));
 
     // Block output recurrent weight updates:
     push(LSTM, DRo, 
       sum(2, 
         pop(LSTM, DRo), 
         dot_product(
-          pop(LSTM, Yt), 
-          transpose(DOt_plus_1))));
+          transpose(pop(LSTM, Yt)), 
+          DOt_plus_1)));
 
     // Input gate peephole weight updates:
     push(LSTM, DPi, 
@@ -200,7 +200,7 @@ void feedback(LSTM_type *LSTM) {
       sum(2, 
         pop(LSTM, DBo), 
         LSTM_read(LSTM, DOt, -1)));
-
+/*
     // Prepare next iteration:
     if (LSTM->tensor[Answer].time) {
       DZt_plus_1 = pop(LSTM, DZt);
@@ -211,11 +211,4 @@ void feedback(LSTM_type *LSTM) {
       Ft_plus_1  = pop(LSTM, Ft);
     }*/
   //}
-
-  DZt_plus_1 = destroy_matrix(DZt_plus_1);
-  DIt_plus_1 = destroy_matrix(DIt_plus_1);
-  DFt_plus_1 = destroy_matrix(DFt_plus_1);
-  DOt_plus_1 = destroy_matrix(DOt_plus_1);
-  DCt_plus_1 = destroy_matrix(DCt_plus_1);
-  Ft_plus_1  = destroy_matrix(Ft_plus_1);
 }
