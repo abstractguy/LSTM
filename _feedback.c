@@ -19,7 +19,7 @@ void feedback(LSTM_type *LSTM) {
   copy_tensor(LSTM, Input_reversed, Xt_reversed);
   copy_tensor(LSTM, Output, Answer);
 
-  //while (LSTM->tensor[Answer].time) {
+  while (LSTM->tensor[Answer].time) {
     // FEEDBACK PART:
     // Block output errors:
     push(LSTM, DYt, 
@@ -200,7 +200,7 @@ void feedback(LSTM_type *LSTM) {
       sum(2, 
         pop(LSTM, DBo), 
         LSTM_read(LSTM, DOt, -1)));
-/*
+
     // Prepare next iteration:
     if (LSTM->tensor[Answer].time) {
       DZt_plus_1 = pop(LSTM, DZt);
@@ -209,6 +209,6 @@ void feedback(LSTM_type *LSTM) {
       DOt_plus_1 = pop(LSTM, DOt);
       DCt_plus_1 = pop(LSTM, DCt);
       Ft_plus_1  = pop(LSTM, Ft);
-    }*/
-  //}
+    }
+  }
 }
