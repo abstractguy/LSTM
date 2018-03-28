@@ -1,7 +1,7 @@
 // main.c
-#include "_feedforward.h"
-#include "_feedback.h"
-#include "update.h"
+#include "feedforward.h"
+//#include "feedback.h"
+//#include "update.h"
 #include "printing.h"
 
 void run_LSTM(LSTM_type *);
@@ -44,42 +44,38 @@ int main(void) {
   */
 
   // Batch mode.
-  // TIME_SIZE: 1, WORD_SIZE: 2, BATCH_SIZE: 4, HIDDEN_SIZE: 16
-  // NAND inputs (Input & Xt):
+  // TIME_SIZE: 1, WORD_SIZE: 2, BATCH_SIZE: 4, HIDDEN_SIZE: 4
+  // Count inputs (Input & Xt):
   long double input[TIME_SIZE][BATCH_SIZE][WORD_SIZE] = {
-    {{0.0, 0.0}, // NAND(0, 0) = 1
-     {0.0, 1.0}, // NAND(0, 1) = 1
-     {1.0, 0.0}, // NAND(1, 0) = 1
-     {1.0, 1.0}} // NAND(1, 1) = 0
+    {{0.0, 0.0}, // count(0, 0) = (0, 1)
+     {0.0, 1.0}, // count(0, 1) = (1, 0)
+     {1.0, 0.0}, // count(1, 0) = (1, 1)
+     {1.0, 1.0}} // count(1, 1) = (0, 0)
   };
 
-  // TIME_SIZE: 1, WORD_SIZE: 2, BATCH_SIZE: 4, HIDDEN_SIZE: 16
-  // NAND inputs (Xt_reversed):
+  // TIME_SIZE: 1, WORD_SIZE: 2, BATCH_SIZE: 4, HIDDEN_SIZE: 4
+  // Count inputs (Xt_reversed):
   long double input_reversed[TIME_SIZE][BATCH_SIZE][WORD_SIZE] = {
-    {{0.0, 0.0}, // NAND(0, 0) = 1
-     {0.0, 1.0}, // NAND(0, 1) = 1
-     {1.0, 0.0}, // NAND(1, 0) = 1
-     {1.0, 1.0}} // NAND(1, 1) = 0
+    {{0.0, 0.0}, // count(0, 0) = (0, 1)
+     {0.0, 1.0}, // count(0, 1) = (1, 0)
+     {1.0, 0.0}, // count(1, 0) = (1, 1)
+     {1.0, 1.0}} // count(1, 1) = (0, 0)
   };
 
-  // TIME_SIZE: 1, WORD_SIZE: 2, BATCH_SIZE: 4, HIDDEN_SIZE: 16
-  // NAND outputs (Output & Answer):
+  // TIME_SIZE: 1, WORD_SIZE: 2, BATCH_SIZE: 4, HIDDEN_SIZE: 4
+  // Count outputs (Output & Answer):
   long double output[TIME_SIZE][BATCH_SIZE][HIDDEN_SIZE] = {
-     // NAND(0, 0) = 1
-    {{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}, 
-     // NAND(0, 1) = 1
-     {1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}, 
-     // NAND(1, 0) = 1
-     {1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}, 
-     // NAND(1, 1) = 0
-     {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}}
+    {{0.0, 1.0, 0.0, 0.0}, // count(0, 0) = (0, 1)
+     {1.0, 0.0, 0.0, 0.0}, // count(0, 1) = (1, 0)
+     {1.0, 1.0, 0.0, 0.0}, // count(1, 0) = (1, 1)
+     {0.0, 0.0, 0.0, 0.0}} // count(1, 1) = (0, 0)
   };
 
   LSTM = make_LSTM((long double *)input, (long double *)input_reversed, (long double *)output, TIME_SIZE, WORD_SIZE, BATCH_SIZE, HIDDEN_SIZE);
 
-  for (unsigned int epoch = 0; epoch < 200; epoch++) {
+  //for (unsigned int epoch = 0; epoch < 200; epoch++) {
     run_LSTM(LSTM);
-  }
+  //}
 
   print_LSTM(LSTM);
 
@@ -89,6 +85,6 @@ int main(void) {
 
 void run_LSTM(LSTM_type *LSTM) {
   feedforward(LSTM);
-  feedback(LSTM);
-  update(LSTM);
+  //feedback(LSTM);
+  //update(LSTM);
 }

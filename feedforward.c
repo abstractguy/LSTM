@@ -7,15 +7,16 @@ void feedforward(LSTM_type *LSTM) {
 
   while (LSTM->tensor[Xt].time) {
     input = pop(LSTM, Xt);
+
     // Block input preactivations:
     push(LSTM, _Zt, 
       sum(3, 
         dot_product(
-          LSTM_read(LSTM, Wz, -1), 
-          matrix_copy(input)), 
+          matrix_copy(input), 
+          LSTM_read(LSTM, Wz, -1)), 
         dot_product(
-          LSTM_read(LSTM, Rz, -1), 
-          LSTM_read(LSTM, Yt, -2)), 
+          LSTM_read(LSTM, Yt, -2), 
+          LSTM_read(LSTM, Rz, -1)), 
         LSTM_read(LSTM, Bz, -1)));
 
     // Block input activations:
@@ -25,11 +26,11 @@ void feedforward(LSTM_type *LSTM) {
     push(LSTM, _It, 
       sum(4, 
         dot_product(
-          LSTM_read(LSTM, Wi, 0), 
-          matrix_copy(input)), 
+          matrix_copy(input), 
+          LSTM_read(LSTM, Wi, 0)), 
         dot_product(
-          LSTM_read(LSTM, Ri, 0), 
-          LSTM_read(LSTM, Yt, -2)), 
+          LSTM_read(LSTM, Yt, -2), 
+          LSTM_read(LSTM, Ri, 0)), 
         product(2, 
           LSTM_read(LSTM, Pi, -1), 
           LSTM_read(LSTM, Ct, -2)), 
@@ -42,11 +43,11 @@ void feedforward(LSTM_type *LSTM) {
     push(LSTM, _Ft, 
       sum(4, 
         dot_product(
-          LSTM_read(LSTM, Wf, 0), 
-          matrix_copy(input)), 
+          matrix_copy(input), 
+          LSTM_read(LSTM, Wf, 0)), 
         dot_product(
-          LSTM_read(LSTM, Rf, 0), 
-          LSTM_read(LSTM, Yt, -2)), 
+          LSTM_read(LSTM, Yt, -2), 
+          LSTM_read(LSTM, Rf, 0)), 
         product(2, 
           LSTM_read(LSTM, Pf, -1), 
           LSTM_read(LSTM, Ct, -2)), 
@@ -69,11 +70,11 @@ void feedforward(LSTM_type *LSTM) {
     push(LSTM, _Ot, 
       sum(4, 
         dot_product(
-          LSTM_read(LSTM, Wo, 0), 
-          input), 
+          input, 
+          LSTM_read(LSTM, Wo, 0)), 
         dot_product(
-          LSTM_read(LSTM, Ro, 0), 
-          LSTM_read(LSTM, Yt, -2)), 
+          LSTM_read(LSTM, Yt, -2), 
+          LSTM_read(LSTM, Ro, 0)), 
         product(2, 
           LSTM_read(LSTM, Po, -1), 
           LSTM_read(LSTM, Ct, -1)), 
@@ -87,5 +88,6 @@ void feedforward(LSTM_type *LSTM) {
       product(2, 
         matrix_tanh(LSTM_read(LSTM, Ct, -1)), 
         LSTM_read(LSTM, Ot, -1)));
-  } copy_tensor(LSTM, Yt, Yt_backup);
+  }
+  copy_tensor(LSTM, Yt, Yt_backup);
 }
