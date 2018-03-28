@@ -79,7 +79,7 @@ int main(void) {
 
   print_LSTM(LSTM);
 
-  LSTM = destroy_LSTM(LSTM);
+  destroy_LSTM(LSTM);
   return 0;
 }
 
