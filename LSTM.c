@@ -14,19 +14,19 @@ LSTM_type *make_LSTM(long double *input, long double *input_reversed, long doubl
   LSTM_initialize(LSTM, Input, Output, zero, t, batch, word);
   LSTM_initialize(LSTM, Output, GATES_BEGIN, zero, t, batch, hidden);
 
-  LSTM_initialize(LSTM, GATES_BEGIN, GATES_END, one, 2, batch, hidden);
+  LSTM_initialize(LSTM, GATES_BEGIN, GATES_END, zero, 2, batch, hidden);
   LSTM_initialize(LSTM, INPUT_WEIGHTS_BEGIN, INPUT_WEIGHTS_END, random_long_double, 1, word, hidden);
   LSTM_initialize(LSTM, HIDDEN_WEIGHTS_BEGIN, HIDDEN_WEIGHTS_END, random_long_double, 1, hidden, hidden);
   LSTM_initialize(LSTM, CELL_WEIGHTS_BEGIN, CELL_WEIGHTS_END, random_long_double, 1, batch, hidden);
   LSTM_initialize(LSTM, BIAS_WEIGHTS_BEGIN, BIAS_WEIGHTS_END, one, 1, batch, hidden);
-  LSTM_initialize(LSTM, ERRORS_BEGIN, ERRORS_END, zero, 2, hidden, batch);
+  LSTM_initialize(LSTM, ERRORS_BEGIN, ERRORS_END, zero, 2, batch, hidden);
   LSTM_initialize(LSTM, INPUT_UPDATES_BEGIN, INPUT_UPDATES_END, zero, 1, word, hidden);
   LSTM_initialize(LSTM, HIDDEN_UPDATES_BEGIN, HIDDEN_UPDATES_END, zero, 1, hidden, hidden);
   LSTM_initialize(LSTM, CELL_UPDATES_BEGIN, CELL_UPDATES_END, zero, 1, batch, hidden);
-  LSTM_initialize(LSTM, BIAS_UPDATES_BEGIN, BIAS_UPDATES_END, one, 1, batch, hidden);
+  LSTM_initialize(LSTM, BIAS_UPDATES_BEGIN, BIAS_UPDATES_END, zero, 1, batch, hidden);
 
-  push_all(LSTM, Input,  (long double *)input);
-  push_all(LSTM, Output, (long double *)output);
+  push_all(LSTM, Input,          (long double *)input);
+  push_all(LSTM, Output,         (long double *)output);
   push_all(LSTM, Input_reversed, (long double *)input_reversed);
 
   return LSTM;
