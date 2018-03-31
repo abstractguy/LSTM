@@ -45,7 +45,7 @@ void feedback(LSTM_type *LSTM) {
       product(3, 
         LSTM_read(LSTM, DYt, -1), 
         matrix_tanh(LSTM_read(LSTM, Ct, -1)), 
-        sigmoid_derivative(pop(LSTM, _Ot))));
+        sigmoid_derivative(LSTM_read(LSTM, Ot, -1))));
 
     // Cell memory errors:
     push(LSTM, DCt, 
@@ -72,21 +72,21 @@ void feedback(LSTM_type *LSTM) {
       product(3, 
         LSTM_read(LSTM, DCt, -1), 
         LSTM_read(LSTM, Ct, -2), 
-        sigmoid_derivative(pop(LSTM, _Ft))));
+        sigmoid_derivative(LSTM_read(LSTM, Ft, -1))));
 
     // Input gate errors:
     push(LSTM, DIt, 
       product(3, 
         LSTM_read(LSTM, DCt, -1), 
-        pop(LSTM, Zt), 
-        sigmoid_derivative(pop(LSTM, _It))));
+        LSTM_read(LSTM, Zt, -1), 
+        sigmoid_derivative(LSTM_read(LSTM, It, -1))));
 
     // Block input errors:
     push(LSTM, DZt, 
       product(3, 
         LSTM_read(LSTM, DCt, -1), 
         pop(LSTM, It), 
-        tanh_derivative(pop(LSTM, _Zt))));
+        tanh_derivative(pop(LSTM, Zt))));
 
     // UPDATE PART:
     // Block input input weight updates:

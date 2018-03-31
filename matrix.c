@@ -87,13 +87,11 @@ matrix_type *matrix_tanh(matrix_type *matrix) {
 }
 
 long double sigmoid_derivative_helper(long double x) {
-  long double y = sigmoid(x);
-  return y * (1.0 - y);
+  return x * (1.0 - x);
 }
 
 long double tanh_derivative_helper(long double x) {
-  long double y = tanhl(x);
-  return 1.0 - y * y;
+  return 1.0 - x * x;
 }
 
 matrix_type *sigmoid_derivative(matrix_type *matrix) {

@@ -8,7 +8,7 @@
   #define WORD_SIZE            2
   #define HIDDEN_SIZE          16
   #define LSTM_BEGIN           0
-  #define LSTM_SIZE            53
+  #define LSTM_SIZE            49
   #define LSTM_END             LSTM_SIZE
   #define GATES_BEGIN          Yt
 
@@ -44,9 +44,9 @@
 
   typedef enum {
     Yt_backup, Input, Input_reversed, Xt, Xt_reversed, Output, Answer, Yt,
-    _Zt, _It, _Ft, _Ot, Zt, It, Ft, Ot, Ct, Wz, Wi, Wf, Wo, Rz, Ri, Rf,
-    Ro, Pi, Pf, Po, Bz, Bi, Bf, Bo, DYt, DOt, DCt, DFt, DIt, DZt, DWz,
-    DWi, DWf, DWo, DRz, DRi, DRf, DRo, DPi, DPf, DPo, DBz, DBi, DBf, DBo
+    Zt, It, Ft, Ot, Ct, Wz, Wi, Wf, Wo, Rz, Ri, Rf, Ro, Pi, Pf, Po, Bz,
+    Bi, Bf, Bo, DYt, DOt, DCt, DFt, DIt, DZt, DWz, DWi, DWf, DWo, DRz,
+    DRi, DRf, DRo, DPi, DPf, DPo, DBz, DBi, DBf, DBo
   } index_type;
 
   typedef struct {

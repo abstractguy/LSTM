@@ -1,13 +1,12 @@
 // printing.c
 #include "printing.h"
 
-char *LSTM_string[53] = {
+char *LSTM_string[49] = {
   "Yt_backup", "Input", "Input_reversed", "Xt", "Xt_reversed", "Output",
-  "Answer", "Yt", "_Zt", "_It", "_Ft", "_Ot", "Zt", "It", "Ft", "Ot",
-  "Ct", "Wz", "Wi", "Wf", "Wo", "Rz", "Ri", "Rf", "Ro", "Pi", "Pf", "Po",
-  "Bz", "Bi", "Bf", "Bo", "DYt", "DOt", "DCt", "DFt", "DIt", "DZt", "DWz",
-  "DWi", "DWf", "DWo", "DRz", "DRi", "DRf", "DRo", "DPi", "DPf", "DPo",
-  "DBz", "DBi", "DBf", "DBo"
+  "Answer", "Yt", "Zt", "It", "Ft", "Ot", "Ct", "Wz", "Wi", "Wf", "Wo",
+  "Rz", "Ri", "Rf", "Ro", "Pi", "Pf", "Po", "Bz", "Bi", "Bf", "Bo", "DYt",
+  "DOt", "DCt", "DFt", "DIt", "DZt", "DWz", "DWi", "DWf", "DWo", "DRz",
+  "DRi", "DRf", "DRo", "DPi", "DPf", "DPo", "DBz", "DBi", "DBf", "DBo"
 };
 
 void print_matrix(matrix_type *matrix) {
