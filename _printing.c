@@ -1,10 +1,9 @@
-// printing.c
-#include "printing.h"
+// _printing.c
+#include "_printing.h"
 
 char *LSTM_string[LSTM_SIZE] = {
-  "Yt_backup", "Input", "Input_reversed", "Xt", "Xt_reversed", "Output",
-  "Answer", "Yt", "Zt", "It", "Ft", "Ot", "Ct", "Wz", "Wi", "Wf", "Wo",
-  "Rz", "Ri", "Rf", "Ro", "Pi", "Pf", "Po", "Bz", "Bi", "Bf", "Bo", "DYt",
+  "Xt", "Yt", "Ht", "Zt", "It", "Ft", "Ot", "Ct", "Wz", "Wi", "Wf", "Wo",
+  "Rz", "Ri", "Rf", "Ro", "Pi", "Pf", "Po", "Bz", "Bi", "Bf", "Bo", "DHt",
   "DOt", "DCt", "DFt", "DIt", "DZt", "DWz", "DWi", "DWf", "DWo", "DRz",
   "DRi", "DRf", "DRo", "DPi", "DPf", "DPo", "DBz", "DBi", "DBf", "DBo"
 };
