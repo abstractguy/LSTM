@@ -77,5 +77,11 @@ void feedforward(LSTM_type *LSTM) {
       product(2, 
         matrix_tanh(LSTM_read(LSTM, Ct, -1)), 
         LSTM_read(LSTM, Ot, -1)));
+
+    // Precalculate errors:
+    push(LSTM, DHt, 
+      subtract(2, 
+        LSTM_read(LSTM, Yt, t), 
+        LSTM_read(LSTM, Ht, t + 2)));
   }
 }
