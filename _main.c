@@ -1,10 +1,10 @@
 // _main.c
-//#include "feedforward.h"
+#include "_feedforward.h"
 //#include "feedback.h"
 //#include "update.h"
 #include "_printing.h"
 
-//void run_LSTM(LSTM_type *);
+void run_LSTM(LSTM_type *);
 
 int main(void) {
   LSTM_type *LSTM = NULL;
@@ -34,7 +34,8 @@ int main(void) {
 
   LSTM = make_LSTM((long double *)input, (long double *)output, TIME_SIZE, WORD_SIZE, BATCH_SIZE, HIDDEN_SIZE);
 
-  //for (unsigned int epoch = 0; epoch < 500; epoch++) run_LSTM(LSTM);
+  //for (unsigned int epoch = 0; epoch < 500; epoch++)
+    run_LSTM(LSTM);
 
   print_LSTM(LSTM);
 
@@ -43,10 +44,8 @@ int main(void) {
   return 0;
 }
 
-/*
 void run_LSTM(LSTM_type *LSTM) {
   feedforward(LSTM);
-  feedback(LSTM);
-  update(LSTM);
+  //feedback(LSTM);
+  //update(LSTM);
 }
-*/
