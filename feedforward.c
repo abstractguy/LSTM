@@ -8,19 +8,18 @@ void feedforward(LSTM_type *LSTM) {
     // Block input activations:
     push(LSTM, Zt, 
       matrix_tanh(
-        sum(3, 
+        sum(2, 
           dot_product(
             LSTM_read(LSTM, Xt, t), 
             LSTM_read(LSTM, Wz, -1)), 
           dot_product(
             LSTM_read(LSTM, Ht, -2), 
-            LSTM_read(LSTM, Rz, -1)), 
-          LSTM_read(LSTM, Bz, -1))));
+            LSTM_read(LSTM, Rz, -1)))));
 
     // Input gate activations:
     push(LSTM, It, 
       matrix_sigmoid(
-        sum(4, 
+        sum(3, 
           dot_product(
             LSTM_read(LSTM, Xt, t), 
             LSTM_read(LSTM, Wi, 0)), 
@@ -29,13 +28,12 @@ void feedforward(LSTM_type *LSTM) {
             LSTM_read(LSTM, Ri, 0)), 
           product(2, 
             LSTM_read(LSTM, Pi, -1), 
-            LSTM_read(LSTM, Ct, -2)), 
-          LSTM_read(LSTM, Bi, 0))));
+            LSTM_read(LSTM, Ct, -2)))));
 
     // Forget gate activations:
     push(LSTM, Ft, 
       matrix_sigmoid(
-        sum(4, 
+        sum(3, 
           dot_product(
             LSTM_read(LSTM, Xt, t), 
             LSTM_read(LSTM, Wf, 0)), 
@@ -44,8 +42,7 @@ void feedforward(LSTM_type *LSTM) {
             LSTM_read(LSTM, Rf, 0)), 
           product(2, 
             LSTM_read(LSTM, Pf, -1), 
-            LSTM_read(LSTM, Ct, -2)), 
-          LSTM_read(LSTM, Bf, 0))));
+            LSTM_read(LSTM, Ct, -2)))));
 
     // Cell memory:
     push(LSTM, Ct, 
@@ -60,7 +57,7 @@ void feedforward(LSTM_type *LSTM) {
     // Output gate activations:
     push(LSTM, Ot, 
       matrix_sigmoid(
-        sum(4, 
+        sum(3, 
           dot_product(
             LSTM_read(LSTM, Xt, t), 
             LSTM_read(LSTM, Wo, 0)), 
@@ -69,8 +66,7 @@ void feedforward(LSTM_type *LSTM) {
             LSTM_read(LSTM, Ro, 0)), 
           product(2, 
             LSTM_read(LSTM, Po, -1), 
-            LSTM_read(LSTM, Ct, -1)), 
-          LSTM_read(LSTM, Bo, 0))));
+            LSTM_read(LSTM, Ct, -1)))));
 
     // Block output activations:
     push(LSTM, Ht, 

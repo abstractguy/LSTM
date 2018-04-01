@@ -12,7 +12,7 @@ void feedback(LSTM_type *LSTM) {
 
   matrix_for_each(zero, DZt_plus_1);
   matrix_for_each(zero, DIt_plus_1);
-  matrix_for_each(one,  DFt_plus_1);
+  matrix_for_each(zero, DFt_plus_1);
   matrix_for_each(zero, DOt_plus_1);
   matrix_for_each(zero, DCt_plus_1);
   matrix_for_each(zero, Ft_plus_1);
@@ -172,30 +172,6 @@ void feedback(LSTM_type *LSTM) {
         product(2, 
           pop(LSTM, Ct), 
           LSTM_read(LSTM, DOt, -1))));
-
-    // Block input bias weight updates:
-    push(LSTM, DBz, 
-      sum(2, 
-        pop(LSTM, DBz), 
-        LSTM_read(LSTM, DZt, -1)));
-
-    // Input gate bias weight updates:
-    push(LSTM, DBi, 
-      sum(2, 
-        pop(LSTM, DBi), 
-        LSTM_read(LSTM, DIt, -1)));
-
-    // Forget gate bias weight updates:
-    push(LSTM, DBf, 
-      sum(2, 
-        pop(LSTM, DBf), 
-        LSTM_read(LSTM, DFt, -1)));
-
-    // Output gate bias weight updates:
-    push(LSTM, DBo, 
-      sum(2, 
-        pop(LSTM, DBo), 
-        LSTM_read(LSTM, DOt, -1)));
 
     // Prepare next iteration:
     if (t < time - 1) {
