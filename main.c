@@ -11,7 +11,7 @@ int main(void) {
 
   // Stochastic mode.
   // TIME_SIZE: 4, WORD_SIZE: 2, BATCH_SIZE: 1, HIDDEN_SIZE: 16
-  // Count inputs (Input & Xt):
+  // Count inputs (Xt):
   long double input[TIME_SIZE][BATCH_SIZE][WORD_SIZE] = {
     {{0.0, 0.0}}, // Count(0, 0) = (0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
     {{0.0, 1.0}}, // Count(0, 1) = (1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
@@ -20,16 +20,7 @@ int main(void) {
   };
 
   // TIME_SIZE: 4, WORD_SIZE: 2, BATCH_SIZE: 1, HIDDEN_SIZE: 16
-  // Count inputs (Xt_reversed):
-  long double input_reversed[TIME_SIZE][BATCH_SIZE][WORD_SIZE] = {
-    {{1.0, 1.0}}, // Count(1, 1) = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-    {{1.0, 0.0}}, // Count(1, 0) = (1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-    {{0.0, 1.0}}, // Count(0, 1) = (1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-    {{0.0, 0.0}}  // Count(0, 0) = (0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-  };
-
-  // TIME_SIZE: 4, WORD_SIZE: 2, BATCH_SIZE: 1, HIDDEN_SIZE: 16
-  // Count outputs (Output & Answer):
+  // Count outputs (Yt):
   long double output[TIME_SIZE][BATCH_SIZE][HIDDEN_SIZE] = {
     // Count(0, 0) = (0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
     {{0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}}, 
@@ -41,9 +32,10 @@ int main(void) {
     {{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}}
   };
 
-  LSTM = make_LSTM((long double *)input, (long double *)input_reversed, (long double *)output, TIME_SIZE, WORD_SIZE, BATCH_SIZE, HIDDEN_SIZE);
+  LSTM = make_LSTM((long double *)input, (long double *)output, TIME_SIZE, WORD_SIZE, BATCH_SIZE, HIDDEN_SIZE);
 
-  for (unsigned int epoch = 0; epoch < 500; epoch++) run_LSTM(LSTM);
+  for (unsigned int epoch = 0; epoch < 100; epoch++)
+    run_LSTM(LSTM);
 
   print_LSTM(LSTM);
 

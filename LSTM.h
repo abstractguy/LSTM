@@ -8,9 +8,9 @@
   #define WORD_SIZE            2
   #define HIDDEN_SIZE          16
   #define LSTM_BEGIN           0
-  #define LSTM_SIZE            49
+  #define LSTM_SIZE            45
   #define LSTM_END             LSTM_SIZE
-  #define GATES_BEGIN          Yt
+  #define GATES_BEGIN          Ht
 
   #define INPUT_WEIGHTS_BEGIN  Wz
   #define HIDDEN_WEIGHTS_BEGIN Rz
@@ -18,7 +18,7 @@
   #define BIAS_WEIGHTS_BEGIN   Bz
   #define WEIGHTS_BEGIN        INPUT_WEIGHTS_BEGIN
 
-  #define ERRORS_BEGIN         DYt
+  #define ERRORS_BEGIN         DHt
 
   #define INPUT_UPDATES_BEGIN  DWz
   #define HIDDEN_UPDATES_BEGIN DRz
@@ -43,10 +43,9 @@
   #define BIAS_UPDATES_END     UPDATES_END
 
   typedef enum {
-    Yt_backup, Input, Input_reversed, Xt, Xt_reversed, Output, Answer, Yt,
-    Zt, It, Ft, Ot, Ct, Wz, Wi, Wf, Wo, Rz, Ri, Rf, Ro, Pi, Pf, Po, Bz,
-    Bi, Bf, Bo, DYt, DOt, DCt, DFt, DIt, DZt, DWz, DWi, DWf, DWo, DRz,
-    DRi, DRf, DRo, DPi, DPf, DPo, DBz, DBi, DBf, DBo
+    Ht_backup, Xt, Yt, Ht, Zt, It, Ft, Ot, Ct, Wz, Wi, Wf, Wo, Rz, Ri, Rf,
+    Ro, Pi, Pf, Po, Bz, Bi, Bf, Bo, DHt, DOt, DCt, DFt, DIt, DZt, DWz, DWi,
+    DWf, DWo, DRz, DRi, DRf, DRo, DPi, DPf, DPo, DBz, DBi, DBf, DBo
   } index_type;
 
   typedef struct {
@@ -56,7 +55,7 @@
     } tensor[LSTM_SIZE];
   } LSTM_type;
 
-  LSTM_type *make_LSTM(long double *, long double *, long double *, unsigned int, unsigned int, unsigned int, unsigned int);
+  LSTM_type *make_LSTM(long double *, long double *, unsigned int, unsigned int, unsigned int, unsigned int);
   void destroy_LSTM(LSTM_type *);
   void LSTM_initialize(LSTM_type *, index_type, index_type, long double (*)(long double), unsigned int, unsigned int, unsigned int);
   unsigned int convert_index(LSTM_type *, index_type, long);

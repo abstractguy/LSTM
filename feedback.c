@@ -8,6 +8,7 @@ void feedback(LSTM_type *LSTM) {
               *DOt_plus_1 = LSTM_read(LSTM, DOt, -1), 
               *DCt_plus_1 = LSTM_read(LSTM, DCt, -1), 
               *Ft_plus_1  = LSTM_read(LSTM, Ft,  -1);
+  long time = LSTM->tensor[Yt].time;
 
   matrix_for_each(zero, DZt_plus_1);
   matrix_for_each(zero, DIt_plus_1);
@@ -16,17 +17,12 @@ void feedback(LSTM_type *LSTM) {
   matrix_for_each(zero, DCt_plus_1);
   matrix_for_each(zero, Ft_plus_1);
 
-  copy_tensor(LSTM, Input_reversed, Xt_reversed);
-  copy_tensor(LSTM, Output, Answer);
-
-  while (LSTM->tensor[Answer].time) {
+  for (long t = 0; t < time; t++) {
     // FEEDBACK PART:
     // Block output errors:
-    push(LSTM, DYt, 
+    push(LSTM, DHt, 
       sum(5, 
-        subtract(2, 
-          pop(LSTM, Answer), 
-          LSTM_read(LSTM, Yt, -1)), 
+        pop(LSTM, DHt), 
         dot_product(
           matrix_copy(DZt_plus_1), 
           transpose(LSTM_read(LSTM, Rz, 0))),
@@ -43,7 +39,7 @@ void feedback(LSTM_type *LSTM) {
     // Output gate errors:
     push(LSTM, DOt, 
       product(3, 
-        LSTM_read(LSTM, DYt, -1), 
+        LSTM_read(LSTM, DHt, -1), 
         matrix_tanh(LSTM_read(LSTM, Ct, -1)), 
         sigmoid_derivative(LSTM_read(LSTM, Ot, -1))));
 
@@ -51,7 +47,7 @@ void feedback(LSTM_type *LSTM) {
     push(LSTM, DCt, 
       sum(5, 
         product(3, 
-          pop(LSTM, DYt), 
+          pop(LSTM, DHt), 
           pop(LSTM, Ot), 
           tanh_derivative(LSTM_read(LSTM, Ct, -1))), 
         product(2, 
@@ -94,7 +90,7 @@ void feedback(LSTM_type *LSTM) {
       sum(2, 
         pop(LSTM, DWz), 
         dot_product(
-          transpose(LSTM_read(LSTM, Xt_reversed, -1)), 
+          transpose(LSTM_read(LSTM, Xt, -t - 1)), 
           LSTM_read(LSTM, DZt, -1))));
 
     // Input gate input weight updates:
@@ -102,7 +98,7 @@ void feedback(LSTM_type *LSTM) {
       sum(2, 
         pop(LSTM, DWi), 
         dot_product(
-          transpose(LSTM_read(LSTM, Xt_reversed, -1)), 
+          transpose(LSTM_read(LSTM, Xt, -t - 1)), 
           LSTM_read(LSTM, DIt, -1))));
 
     // Forget gate input weight updates:
@@ -110,7 +106,7 @@ void feedback(LSTM_type *LSTM) {
       sum(2, 
         pop(LSTM, DWf), 
         dot_product(
-          transpose(LSTM_read(LSTM, Xt_reversed, -1)), 
+          transpose(LSTM_read(LSTM, Xt, -t - 1)), 
           LSTM_read(LSTM, DFt, -1))));
 
     // Output gate input weight updates:
@@ -118,7 +114,7 @@ void feedback(LSTM_type *LSTM) {
       sum(2, 
         pop(LSTM, DWo), 
         dot_product(
-          transpose(pop(LSTM, Xt_reversed)), 
+          transpose(LSTM_read(LSTM, Xt, -t - 1)), 
           LSTM_read(LSTM, DOt, -1))));
 
     // Block input recurrent weight updates:
@@ -126,7 +122,7 @@ void feedback(LSTM_type *LSTM) {
       sum(2, 
         pop(LSTM, DRz), 
         dot_product(
-          transpose(LSTM_read(LSTM, Yt, -1)), 
+          transpose(LSTM_read(LSTM, Ht, -1)), 
           DZt_plus_1)));
 
     // Input gate recurrent weight updates:
@@ -134,7 +130,7 @@ void feedback(LSTM_type *LSTM) {
       sum(2, 
         pop(LSTM, DRi), 
         dot_product(
-          transpose(LSTM_read(LSTM, Yt, -1)), 
+          transpose(LSTM_read(LSTM, Ht, -1)), 
           matrix_copy(DIt_plus_1))));
 
     // Forget gate recurrent weight updates:
@@ -142,7 +138,7 @@ void feedback(LSTM_type *LSTM) {
       sum(2, 
         pop(LSTM, DRf), 
         dot_product(
-          transpose(LSTM_read(LSTM, Yt, -1)), 
+          transpose(LSTM_read(LSTM, Ht, -1)), 
           matrix_copy(DFt_plus_1))));
 
     // Block output recurrent weight updates:
@@ -150,7 +146,7 @@ void feedback(LSTM_type *LSTM) {
       sum(2, 
         pop(LSTM, DRo), 
         dot_product(
-          transpose(pop(LSTM, Yt)), 
+          transpose(pop(LSTM, Ht)), 
           DOt_plus_1)));
 
     // Input gate peephole weight updates:
@@ -202,7 +198,7 @@ void feedback(LSTM_type *LSTM) {
         LSTM_read(LSTM, DOt, -1)));
 
     // Prepare next iteration:
-    if (LSTM->tensor[Answer].time) {
+    if (t < time - 1) {
       DZt_plus_1 = pop(LSTM, DZt);
       DIt_plus_1 = pop(LSTM, DIt);
       DFt_plus_1 = pop(LSTM, DFt);
