@@ -2,10 +2,11 @@
 #include "_printing.h"
 
 char *LSTM_string[LSTM_SIZE] = {
-  "Xt", "Yt", "Ht", "Zt", "It", "Ft", "Ot", "Ct", "Wz", "Wi", "Wf", "Wo",
-  "Rz", "Ri", "Rf", "Ro", "Pi", "Pf", "Po", "Bz", "Bi", "Bf", "Bo", "DHt",
-  "DOt", "DCt", "DFt", "DIt", "DZt", "DWz", "DWi", "DWf", "DWo", "DRz",
-  "DRi", "DRf", "DRo", "DPi", "DPf", "DPo", "DBz", "DBi", "DBf", "DBo"
+  "Ht_backup", "Xt", "Yt", "Ht", "Zt", "It", "Ft", "Ot", "Ct", "Wz", "Wi",
+  "Wf", "Wo", "Rz", "Ri", "Rf", "Ro", "Pi", "Pf", "Po", "Bz", "Bi", "Bf",
+  "Bo", "DHt", "DOt", "DCt", "DFt", "DIt", "DZt", "DWz", "DWi", "DWf",
+  "DWo", "DRz", "DRi", "DRf", "DRo", "DPi", "DPf", "DPo", "DBz", "DBi",
+  "DBf", "DBo"
 };
 
 void print_matrix(matrix_type *matrix) {

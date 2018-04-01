@@ -84,4 +84,5 @@ void feedforward(LSTM_type *LSTM) {
         LSTM_read(LSTM, Yt, t), 
         LSTM_read(LSTM, Ht, t + 2)));
   }
+  copy_tensor(LSTM, Ht, Ht_backup);
 }

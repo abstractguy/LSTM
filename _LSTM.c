@@ -8,6 +8,8 @@ LSTM_type *make_LSTM(long double *input, long double *output, unsigned int t, un
   //srand(time(NULL));
   srand(1);
 
+  LSTM_initialize(LSTM, Ht_backup, Xt, zero, t, batch, hidden);
+
   // Empty input/outputs to initialize (Input, Output):
   LSTM_initialize(LSTM, Xt, Yt, zero, t, batch, word);
   LSTM_initialize(LSTM, Yt, GATES_BEGIN, zero, t, batch, hidden);

@@ -1,6 +1,6 @@
 // _main.c
 #include "_feedforward.h"
-//#include "feedback.h"
+#include "_feedback.h"
 //#include "update.h"
 #include "_printing.h"
 
@@ -46,6 +46,6 @@ int main(void) {
 
 void run_LSTM(LSTM_type *LSTM) {
   feedforward(LSTM);
-  //feedback(LSTM);
+  feedback(LSTM);
   //update(LSTM);
 }
