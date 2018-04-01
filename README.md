@@ -1,6 +1,10 @@
 # LSTM
 Author: Samuel Duclos
 Licence: 2-clause BSD
+<<<<<<< HEAD
+=======
+
+>>>>>>> d7c1e62a7337ef8a14ed9571f1849d1d521081af
 Status: Optimizing
 
 How to build:
