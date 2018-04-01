@@ -3,7 +3,7 @@ Author: Samuel Duclos
 
 Licence: 2-clause BSD
 
-Status: Debugging
+Status: Optimizing
 
 How to build:
 
