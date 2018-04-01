@@ -1,22 +1,14 @@
 # LSTM
 Author: Samuel Duclos
-
 Licence: 2-clause BSD
-
-Status: Debugging
+Status: Optimizing
 
 How to build:
-
-  git clone https://github.com/abstractguy/LSTM/
-  
-  cd LSTM
+  # Clone repository and go to it:
+  cd ~/Desktop && git clone https://github.com/abstractguy/LSTM/ && cd LSTM
 
   # For convolutional network test (NAND gate):
-  gcc -Os -Wall -Wextra -o CNN -lm matrix.c printing.c CNN.c
-
-  ./CNN
+  cd CNN && gcc -Os -Wall -Wextra -o CNN -lm CNN.c && ./CNN | less
 
   # For LSTM tests:
-  gcc -Os -Wall -Wextra -o LSTM -lm matrix.c LSTM.c printing.c feedforward.c feedback.c update.c main.c
-
-  ./LSTM
+  cd LSTM && gcc -Os -Wall -Wextra -o LSTM -lm matrix.c LSTM.c printing.c feedforward.c feedback.c update.c main.c && ./LSTM >output.txt && less output.txt

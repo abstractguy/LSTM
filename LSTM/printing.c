@@ -2,7 +2,7 @@
 #include "printing.h"
 
 char *LSTM_string[LSTM_SIZE] = {
-  "Ht_backup", "Xt", "Yt", "Ht", "Zt", "It", "Ft", "Ot", "Ct", "Wz", "Wi",
+  "Xt", "Yt", "Ht_backup", "Ht", "Zt", "It", "Ft", "Ot", "Ct", "Wz", "Wi",
   "Wf", "Wo", "Rz", "Ri", "Rf", "Ro", "Pi", "Pf", "Po", "DHt", "DOt",
   "DCt", "DFt", "DIt", "DZt", "DWz", "DWi", "DWf", "DWo", "DRz", "DRi",
   "DRf", "DRo", "DPi", "DPf", "DPo"

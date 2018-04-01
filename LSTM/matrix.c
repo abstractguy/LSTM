@@ -151,23 +151,10 @@ matrix_type *fold(unsigned int time, long double (*f)(long double, long double),
 
 matrix_type *transpose(matrix_type *matrix1) {
   matrix_type *matrix2 = make_matrix(matrix1->columns, matrix1->rows);
-
   for (unsigned int row = 0; row < matrix1->columns; row++) {
     for (unsigned int column = 0; column < matrix1->rows; column++) {
       matrix2->matrix[row][column] = matrix1->matrix[column][row];
     }
-  }
-
-  destroy_matrix(matrix1);
-  return matrix2;
-}
-
-void matrix_push_all(matrix_type *matrix, long double *array) {
-  unsigned int rows    = matrix->rows,
-               columns = matrix->columns;
-  for (unsigned int row = 0; row < rows; row++) {
-    for (unsigned int column = 0; column < columns; column++) {
-      matrix->matrix[row][column] = array[row * columns + column];
-    }
-  }
+  } destroy_matrix(matrix1);
+    return matrix2;
 }

@@ -39,5 +39,4 @@
   long double multiply(long double, long double);
   long double minus(long double, long double);
   matrix_type *transpose(matrix_type *);
-  void matrix_push_all(matrix_type *, long double *);
 #endif

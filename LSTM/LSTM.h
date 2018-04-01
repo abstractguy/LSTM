@@ -2,7 +2,7 @@
 #ifndef LSTM_H
   #define LSTM_H
   #include "matrix.h"
-  //#include <time.h>
+  #include <time.h>
   #define TIME_SIZE            6
   #define BATCH_SIZE           1
   #define WORD_SIZE            4
@@ -39,7 +39,7 @@
   #define CELL_UPDATES_END     UPDATES_END
 
   typedef enum {
-    Ht_backup, Xt, Yt, Ht, Zt, It, Ft, Ot, Ct, Wz, Wi, Wf, Wo, Rz, Ri, Rf,
+    Xt, Yt, Ht_backup, Ht, Zt, It, Ft, Ot, Ct, Wz, Wi, Wf, Wo, Rz, Ri, Rf,
     Ro, Pi, Pf, Po, DHt, DOt, DCt, DFt, DIt, DZt, DWz, DWi, DWf, DWo, DRz,
     DRi, DRf, DRo, DPi, DPf, DPo
   } index_type;
@@ -56,10 +56,9 @@
   void LSTM_initialize(LSTM_type *, index_type, index_type, long double (*)(long double), unsigned int, unsigned int, unsigned int);
   unsigned int convert_index(LSTM_type *, index_type, long);
   matrix_type *LSTM_read(LSTM_type *, index_type, long);
-  void LSTM_write(LSTM_type *, index_type, long, matrix_type *);
+  //void LSTM_write(LSTM_type *, index_type, long, matrix_type *);
   void push(LSTM_type *, index_type, matrix_type *);
   matrix_type *pop(LSTM_type *, index_type);
   void push_all(LSTM_type *, index_type, long double *);
-  void empty_tensor(LSTM_type *, index_type);
   void copy_tensor(LSTM_type *, index_type, index_type);
 #endif

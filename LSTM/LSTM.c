@@ -5,10 +5,7 @@ LSTM_type *make_LSTM(long double *input, long double *output, unsigned int t, un
   LSTM_type *LSTM = NULL;
   LSTM = malloc(sizeof(LSTM_type));
   assert(LSTM);
-  //srand(time(NULL));
-  srand(1);
-
-  LSTM_initialize(LSTM, Ht_backup, Xt, zero, t, batch, hidden);
+  srand(time(NULL));
 
   // Empty input/outputs to initialize (Input, Output):
   LSTM_initialize(LSTM, Xt, Yt, zero, t, batch, word);
@@ -61,11 +58,13 @@ matrix_type *LSTM_read(LSTM_type *LSTM, index_type tensor, long index) {
   return matrix_copy(LSTM->tensor[tensor].matrix[convert_index(LSTM, tensor, index)]);
 }
 
+/*
 void LSTM_write(LSTM_type *LSTM, index_type tensor, long index, matrix_type *matrix) {
   unsigned char time = convert_index(LSTM, tensor, index);
   destroy_matrix(LSTM->tensor[tensor].matrix[time]);
   LSTM->tensor[tensor].matrix[time] = matrix;
 }
+*/
 
 void push(LSTM_type *LSTM, index_type tensor, matrix_type *matrix) {
   LSTM->tensor[tensor].matrix = realloc(LSTM->tensor[tensor].matrix, sizeof(matrix_type *) + sizeof(matrix_type) * (LSTM->tensor[tensor].time + 1));
@@ -93,12 +92,8 @@ void push_all(LSTM_type *LSTM, index_type tensor, long double *steps) {
   }
 }
 
-void empty_tensor(LSTM_type *LSTM, index_type tensor) {
-  while (LSTM->tensor[tensor].time) destroy_matrix(pop(LSTM, tensor));
-}
-
 void copy_tensor(LSTM_type *LSTM, index_type tensor1, index_type tensor2) {
-  empty_tensor(LSTM, tensor2);
+  while (LSTM->tensor[tensor2].time) destroy_matrix(pop(LSTM, tensor2));
   for (unsigned int time = 0; time < LSTM->tensor[tensor1].time; time++) {
     push(LSTM, tensor2, matrix_copy(LSTM->tensor[tensor1].matrix[time]));
   }
