@@ -2,20 +2,14 @@
 #include "feedback.h"
 
 void feedback(LSTM_type *LSTM) {
-  matrix_type *DZt_plus_1 = LSTM_read(LSTM, DZt, -1), 
-              *DIt_plus_1 = LSTM_read(LSTM, DIt, -1), 
-              *DFt_plus_1 = LSTM_read(LSTM, DFt, -1), 
-              *DOt_plus_1 = LSTM_read(LSTM, DOt, -1), 
-              *DCt_plus_1 = LSTM_read(LSTM, DCt, -1), 
-              *Ft_plus_1  = LSTM_read(LSTM, Ft,  -1);
+  matrix_type
+    *DZt_plus_1 = matrix_copy_shape(LSTM->tensor[DZt].matrix[0]), 
+    *DIt_plus_1 = matrix_copy_shape(LSTM->tensor[DIt].matrix[0]), 
+    *DFt_plus_1 = matrix_copy_shape(LSTM->tensor[DFt].matrix[0]), 
+    *DOt_plus_1 = matrix_copy_shape(LSTM->tensor[DOt].matrix[0]), 
+    *DCt_plus_1 = matrix_copy_shape(LSTM->tensor[DCt].matrix[0]), 
+    *Ft_plus_1  = matrix_copy_shape(LSTM->tensor[Ft].matrix[0]);
   long time = LSTM->tensor[Yt].time;
-
-  matrix_for_each(zero, DZt_plus_1);
-  matrix_for_each(zero, DIt_plus_1);
-  matrix_for_each(zero, DFt_plus_1);
-  matrix_for_each(zero, DOt_plus_1);
-  matrix_for_each(zero, DCt_plus_1);
-  matrix_for_each(zero, Ft_plus_1);
 
   for (long t = 0; t < time; t++) {
     // FEEDBACK PART:

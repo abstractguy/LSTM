@@ -7,10 +7,10 @@ matrix_type *make_matrix(unsigned int rows, unsigned int columns) {
   assert(matrix);
   matrix->rows = rows;
   matrix->columns = columns;
-  matrix->matrix = malloc(sizeof(long double *) * rows);
+  matrix->matrix = calloc(rows, sizeof(long double *));
   assert(matrix->matrix);
   for (unsigned int row = 0; row < rows; row++) {
-    matrix->matrix[row] = malloc(sizeof(long double) * columns);
+    matrix->matrix[row] = calloc(columns, sizeof(long double));
     assert(matrix->matrix[row]);
   } return matrix;
 }
