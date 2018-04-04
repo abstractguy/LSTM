@@ -78,4 +78,32 @@ void update(LSTM_type *LSTM) {
       LSTM_read(LSTM, DPo, -1)));
 
   matrix_for_each(zero, LSTM->tensor[DPo].matrix[0]);
+
+  push(LSTM, Bz, 
+    sum(2, 
+      pop(LSTM, Bz), 
+      LSTM_read(LSTM, DBz, -1)));
+
+  matrix_for_each(zero, LSTM->tensor[DBz].matrix[0]);
+
+  push(LSTM, Bi, 
+    sum(2, 
+      pop(LSTM, Bi), 
+      LSTM_read(LSTM, DBi, -1)));
+
+  matrix_for_each(zero, LSTM->tensor[DBi].matrix[0]);
+
+  push(LSTM, Bf, 
+    sum(2, 
+      pop(LSTM, Bf), 
+      LSTM_read(LSTM, DBf, -1)));
+
+  matrix_for_each(zero, LSTM->tensor[DBf].matrix[0]);
+
+  push(LSTM, Bo, 
+    sum(2, 
+      pop(LSTM, Bo), 
+      LSTM_read(LSTM, DBo, -1)));
+
+  matrix_for_each(zero, LSTM->tensor[DBo].matrix[0]);
 }

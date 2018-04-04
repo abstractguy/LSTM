@@ -3,9 +3,10 @@
 
 char *LSTM_string[LSTM_SIZE] = {
   "Xt", "Yt", "Ht_backup", "Ht", "Zt", "It", "Ft", "Ot", "Ct", "Wz", "Wi",
-  "Wf", "Wo", "Rz", "Ri", "Rf", "Ro", "Pi", "Pf", "Po", "DHt", "DOt",
-  "DCt", "DFt", "DIt", "DZt", "DWz", "DWi", "DWf", "DWo", "DRz", "DRi",
-  "DRf", "DRo", "DPi", "DPf", "DPo"
+  "Wf", "Wo", "Rz", "Ri", "Rf", "Ro", "Pi", "Pf", "Po", "Bz", "Bi", "Bf",
+  "Bo", "DHt", "DOt", "DCt", "DFt", "DIt", "DZt", "DWz", "DWi", "DWf",
+  "DWo", "DRz", "DRi", "DRf", "DRo", "DPi", "DPf", "DPo", "DBz", "DBi",
+  "DBf", "DBo"
 };
 
 void print_matrix(matrix_type *matrix) {
