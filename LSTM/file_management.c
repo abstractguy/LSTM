@@ -46,10 +46,22 @@ bool parse_tab(FILE *fp, matrix_type *matrix, unsigned int column) {
 bool parse_newline(FILE *fp, matrix_type *matrix, unsigned int column) {
   if (fgetc(fp) == '\r') {
     assert(fgetc(fp) == '\n');
-    matrix->matrix = realloc(matrix->matrix, sizeof(matrix->matrix) + sizeof(long double *) + sizeof(long double) * matrix->columns);
-    matrix->rows++;
-    column = 0;
-    return true;
+    NOT_USED(fgetc(fp));
+    if (feof(fp)) {
+      NOT_USED(matrix);
+      NOT_USED(column);
+      return false;
+    } else {
+      fseek(fp, ftell(fp), -1);
+      matrix->matrix = realloc(matrix->matrix, sizeof(long double *) * (matrix->rows + 1));
+      for (column = 0; column < matrix->columns; column++) {
+        matrix->matrix[matrix->rows] = realloc(matrix->matrix[matrix->rows - 1], sizeof(long double) * matrix->columns);
+        matrix->matrix[matrix->rows][column] = 0.0;
+      }
+      matrix->rows++;
+      column = 0;
+      return true;
+    }
   } else {
     NOT_USED(column);
     NOT_USED(matrix);

@@ -39,7 +39,7 @@ int main(void) {
 
   LSTM = make_LSTM((long double *)input, (long double *)output, TIME_SIZE, WORD_SIZE, BATCH_SIZE, HIDDEN_SIZE);
 
-  for (unsigned int epoch = 0; epoch < 250; epoch++) {
+  for (unsigned int epoch = 0; epoch < 500; epoch++) {
     feedforward(LSTM);
     feedback(LSTM);
     update(LSTM);
