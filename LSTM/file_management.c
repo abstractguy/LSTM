@@ -55,7 +55,7 @@ bool parse_newline(FILE *fp, matrix_type *matrix, unsigned int column) {
       fseek(fp, ftell(fp), -1);
       matrix->matrix = realloc(matrix->matrix, sizeof(long double *) * (matrix->rows + 1));
       for (column = 0; column < matrix->columns; column++) {
-        matrix->matrix[matrix->rows] = realloc(matrix->matrix[matrix->rows - 1], sizeof(long double) * matrix->columns);
+        matrix->matrix[matrix->rows] = realloc(matrix->matrix[matrix->rows], sizeof(long double) * matrix->columns);
         matrix->matrix[matrix->rows][column] = 0.0;
       }
       matrix->rows++;
